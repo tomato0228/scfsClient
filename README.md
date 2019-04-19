@@ -1,6 +1,6 @@
 # tomato_scfs
 
-毕业设计、家校通.
+毕业设计.
 
 ## Getting Started
 
