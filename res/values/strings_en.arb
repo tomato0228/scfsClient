@@ -1,0 +1,11 @@
+{
+  "appHomePage": "home",
+  "appAddressBook": "contacts",
+  "appMessage": "message",
+  "appHomework": "homework",
+  "appPersonal": "my",
+  "tip": "Tip",
+  "exit": "exit",
+  "cancel": "cancel",
+  "exitAppTip": "Are you sure you want to quit？"
+}

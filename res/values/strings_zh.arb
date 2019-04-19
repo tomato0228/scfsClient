@@ -1,0 +1,11 @@
+{
+  "appHomePage": "首页",
+  "appAddressBook": "通讯录",
+  "appMessage": "通知",
+  "appHomework": "作业",
+  "appPersonal": "个人",
+  "tip": "提示",
+  "exit": "退出",
+  "cancel": "关闭",
+  "exitAppTip": "确定退出应用吗？"
+}
