@@ -84,13 +84,11 @@ class HomeworkAddPageState extends State<HomeworkAddPage> {
         );
       } else {
         ApiService().addHomeworkByTeacher((BaseEntity _baseEntity) {
-          if (_baseEntity != null) {
-            if (_baseEntity.status == 0) {
-              Fluttertoast.showToast(msg: "布置作业成功！");
-              Navigator.pop(context, "");
-            } else {
-              Fluttertoast.showToast(msg: "布置作业失败！");
-            }
+          if (_baseEntity != null && _baseEntity.status == 0) {
+            Fluttertoast.showToast(msg: "布置作业成功！");
+            Navigator.pop(context, "");
+          } else {
+            Fluttertoast.showToast(msg: "布置作业失败！");
           }
         }, (TypeError error) {
           print(error.toString());

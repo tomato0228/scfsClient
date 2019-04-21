@@ -22,9 +22,6 @@ class HomeworkPage extends BaseWidget {
 }
 
 class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
-  ScrollController _scrollController = ScrollController();
-  bool showToTopBtn = false; //是否显示“返回到顶部”按钮
-
   List<HomeworkData> _homeworkDatas;
   List<CourseData> _courseDatas;
   List<ClassData> _classDatas;
@@ -75,11 +72,6 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
               overflow: TextOverflow.ellipsis,
             ),
           ),
-//          Text(
-//            '确认删除该作业吗？' + (homeworkData.homeworkContent),
-//            maxLines: 1,
-//            overflow: TextOverflow.ellipsis,
-//          ),
           actions: <Widget>[
             FlatButton(
               child: Text('关闭', style: TextStyle(color: Colors.orange)),
@@ -138,9 +130,10 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
                         splashColor: Colors.white.withOpacity(0.3),
                         highlightColor: Colors.white.withOpacity(0.1),
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  HomeworkShowPage(homeworkData: homework)));
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(builder: (context) {
+                            return HomeworkShowPage(homeworkData: homework);
+                          }));
                         },
                       ),
                     ),
@@ -162,9 +155,10 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
                     FlatButton(
                       child: Text('查看'),
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) =>
-                                HomeworkShowPage(homeworkData: homework)));
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return HomeworkShowPage(homeworkData: homework);
+                        }));
                       },
                     ),
                   ],
@@ -273,7 +267,7 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
     setAppBarVisible(false);
     userData = User.singleton.userData;
     _getCourses();
-    _getClasses();
+    if (userData.userType == '教师') _getClasses();
     showContent();
   }
 
@@ -327,7 +321,9 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
                   ),
                   child: RaisedButton(
                     child: Text('查 询'),
-                    onPressed: () => {_getHomeworks()},
+                    onPressed: () {
+                      _getHomeworks();
+                    },
                     splashColor: Colors.grey,
                     elevation: 0.0,
 //                  textColor: Theme.of(context).accentColor,
@@ -335,6 +331,35 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
                 ),
               ],
             ),
+            userData.userType == '教师' ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(height: 16.0),
+                Theme(
+                  data: Theme.of(context).copyWith(
+                    backgroundColor: Theme.of(context).accentColor,
+                    buttonTheme: ButtonThemeData(
+                      textTheme: ButtonTextTheme.primary,
+                      shape: StadiumBorder(),
+                    ),
+                  ),
+                  child: RaisedButton(
+                    child: Text('布 置 作 业'),
+                    onPressed: () {
+                      Navigator.push<String>(context,
+                          MaterialPageRoute(builder: (context) {
+                            return HomeworkAddPage(
+                                classDatas: _classDatas, courseDatas: _courseDatas);
+                          })).then((String s) {
+                        _getHomeworks();
+                      });
+                    },
+                    splashColor: Colors.grey,
+                    elevation: 0.0,
+                  ),
+                ),
+              ],
+            ) : Container(),
             Divider(
               color: Colors.grey,
               height: 32.0,
@@ -344,25 +369,6 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
           ],
         ),
       ),
-      floatingActionButton: userData.userType == '教师'
-          ? FloatingActionButton(
-              child: Icon(Icons.add),
-              onPressed: () {
-                Navigator.push<String>(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => HomeworkAddPage(
-                            classDatas: _classDatas,
-                            courseDatas: _courseDatas))).then((String s) {
-                  _getHomeworks();
-                });
-//                Navigator.of(context).push(MaterialPageRoute(
-//                    builder: (context) => HomeworkAddPage(
-//                        classDatas: _classDatas, courseDatas: _courseDatas)));
-              },
-              backgroundColor: ThemeUtils.currentColorTheme,
-            )
-          : Container(),
     );
   }
 

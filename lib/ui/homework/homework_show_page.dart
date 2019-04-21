@@ -4,7 +4,6 @@ import 'package:tomato_scfs/model/homework_entity.dart';
 import 'package:tomato_scfs/model/user_entity.dart';
 import 'package:tomato_scfs/ui/homework/homework_edit_page.dart';
 
-// ignore: must_be_immutable
 class HomeworkShowPage extends StatelessWidget {
   HomeworkData homeworkData;
 
