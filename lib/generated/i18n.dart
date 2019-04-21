@@ -19,13 +19,13 @@ class S implements WidgetsLocalizations {
   @override
   TextDirection get textDirection => TextDirection.ltr;
 
-  String get appAddressBook => "contacts";
-  String get appHomePage => "home";
-  String get appHomework => "homework";
-  String get appMessage => "message";
-  String get appPersonal => "my";
-  String get cancel => "cancel";
-  String get exit => "exit";
+  String get appAddressBook => "Contacts";
+  String get appHomePage => "Home";
+  String get appHomework => "Homework";
+  String get appMessage => "Message";
+  String get appPersonal => "My";
+  String get cancel => "Cancel";
+  String get exit => "Exit";
   String get exitAppTip => "Are you sure you want to quit？";
   String get tip => "Tip";
 }
