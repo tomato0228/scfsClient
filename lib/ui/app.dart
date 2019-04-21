@@ -101,11 +101,12 @@ class AppState extends State<App> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      if (index == 2 || index == 4) {
-        elevation = 0.0;
-      } else {
-        elevation = 4.0;
-      }
+//      if (index == 2 || index == 4) {
+//        elevation = 0.0;
+//      } else {
+//        elevation = 4.0;
+//      }
+      elevation = 4.0;
     });
   }
 
