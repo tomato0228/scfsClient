@@ -97,6 +97,12 @@ class Api {
   /// 登录
   static const String USER_LOGIN = "User/login";
 
+  /// 获取科目列表
+  static const String USER_GET_COURSE = "Course/getCourse";
+
+  /// 获取班级列表
+  static const String USER_GET_CLASS = "Class/getClass";
+
   /// 获取作业列表
   static const String USER_GET_HOMEWORK = "Homework/getHomework";
 
@@ -109,11 +115,17 @@ class Api {
   /// 删除作业
   static const String USER_EDIT_HOMEWORK = "Homework/editHomework";
 
-  /// 获取科目列表
-  static const String USER_GET_COURSE = "Course/getCourse";
+  /// 获取作业列表
+  static const String USER_GET_NOTICE = "Notice/getNotice";
 
-  /// 获取班级列表
-  static const String USER_GET_CLASS = "Class/getClass";
+  /// 增加作业
+  static const String USER_ADD_NOTICE = "Notice/addNotice";
+
+  /// 删除作业
+  static const String USER_DELETE_NOTICE = "Notice/deleteNotice";
+
+  /// 删除作业
+  static const String USER_EDIT_NOTICE = "Notice/editNotice";
 
   static String getPath({String root: ROOT, String path}) {
     StringBuffer sb = new StringBuffer(root);

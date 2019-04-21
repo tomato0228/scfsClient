@@ -1,5 +1,6 @@
 import 'package:tomato_scfs/model/class_entity.dart';
 import 'package:tomato_scfs/model/user_entity.dart';
+import 'package:tomato_scfs/model/notice_entity.dart';
 import 'package:tomato_scfs/model/school_entity.dart';
 import 'package:tomato_scfs/model/homework_entity.dart';
 import 'package:tomato_scfs/model/course_entity.dart';
@@ -12,6 +13,8 @@ class EntityFactory {
       return ClassEntity.fromJson(json) as T;
     } else if (T.toString() == "UserEntity") {
       return UserEntity.fromJson(json) as T;
+    } else if (T.toString() == "NoticeEntity") {
+      return NoticeEntity.fromJson(json) as T;
     } else if (T.toString() == "SchoolEntity") {
       return SchoolEntity.fromJson(json) as T;
     } else if (T.toString() == "HomeworkEntity") {

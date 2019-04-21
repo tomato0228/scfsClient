@@ -5,6 +5,7 @@ import 'package:tomato_scfs/model/base_entity.dart';
 import 'package:tomato_scfs/model/class_entity.dart';
 import 'package:tomato_scfs/model/course_entity.dart';
 import 'package:tomato_scfs/model/homework_entity.dart';
+import 'package:tomato_scfs/model/notice_entity.dart';
 import 'package:tomato_scfs/model/school_entity.dart';
 import 'package:tomato_scfs/model/user_entity.dart';
 
@@ -37,11 +38,54 @@ class ApiService {
     });
   }
 
+  /// 获取科目列表
+  void getCourseByUserId(
+      Function callback, Function errorback, int _userId) async {
+    FormData formData = new FormData.from({"userId": _userId});
+    DioManager.singleton.dio
+        .post(Api.getPath(path: Api.USER_GET_COURSE),
+            data: formData, options: _getOptions())
+        .then((response) {
+      callback(CourseEntity.fromJson(response.data));
+    }).catchError((e) {
+      errorback(e);
+    });
+  }
+
+  /// 获取班级列表
+  void getClassByUserId(
+      Function callback, Function errorback, int _userId) async {
+    FormData formData = new FormData.from({"userId": _userId});
+    DioManager.singleton.dio
+        .post(Api.getPath(path: Api.USER_GET_CLASS),
+            data: formData, options: _getOptions())
+        .then((response) {
+      callback(ClassEntity.fromJson(response.data));
+    }).catchError((e) {
+      errorback(e);
+    });
+  }
+
   /// 获取作业列表-教师
   void getHomeworkByTeacher(Function callback, Function errorback, int _userId,
       int _classId, int _courseId) async {
     FormData formData = new FormData.from(
         {"userId": _userId, "classId": _classId, "courseId": _courseId});
+    DioManager.singleton.dio
+        .post(Api.getPath(path: Api.USER_GET_HOMEWORK),
+            data: formData, options: _getOptions())
+        .then((response) {
+      callback(HomeworkEntity.fromJson(response.data));
+    }).catchError((e) {
+      errorback(e);
+    });
+  }
+
+  /// 获取作业列表-学生/家长
+  void getHomework(
+      Function callback, Function errorback, int _userId, int _courseId) async {
+    FormData formData =
+        new FormData.from({"userId": _userId, "courseId": _courseId});
     DioManager.singleton.dio
         .post(Api.getPath(path: Api.USER_GET_HOMEWORK),
             data: formData, options: _getOptions())
@@ -80,10 +124,7 @@ class ApiService {
 
   /// 删除作业-教师
   void deleteHomeworkByTeacher(
-    Function callback,
-    Function errorback,
-    int _homeworkId,
-  ) async {
+      Function callback, Function errorback, int _homeworkId) async {
     FormData formData = new FormData.from({
       "homeworkId": _homeworkId,
     });
@@ -119,44 +160,95 @@ class ApiService {
     });
   }
 
-  /// 获取作业列表-学生/家长
-  void getHomework(
-      Function callback, Function errorback, int _userId, int _courseId) async {
+  /// 获取通知列表-教师
+  void getNoticeByTeacher(
+      Function callback, Function errorback, int _userId, int _classId) async {
     FormData formData =
-        new FormData.from({"userId": _userId, "courseId": _courseId});
+        new FormData.from({"userId": _userId, "classId": _classId});
     DioManager.singleton.dio
-        .post(Api.getPath(path: Api.USER_GET_HOMEWORK),
+        .post(Api.getPath(path: Api.USER_GET_NOTICE),
             data: formData, options: _getOptions())
         .then((response) {
-      callback(HomeworkEntity.fromJson(response.data));
+      callback(NoticeEntity.fromJson(response.data));
     }).catchError((e) {
       errorback(e);
     });
   }
 
-  /// 获取科目列表
-  void getCourseByUserId(
-      Function callback, Function errorback, int _userId) async {
+  /// 获取通知列表-学生/家长
+  void getNotice(Function callback, Function errorback, int _userId) async {
     FormData formData = new FormData.from({"userId": _userId});
     DioManager.singleton.dio
-        .post(Api.getPath(path: Api.USER_GET_COURSE),
+        .post(Api.getPath(path: Api.USER_GET_NOTICE),
             data: formData, options: _getOptions())
         .then((response) {
-      callback(CourseEntity.fromJson(response.data));
+      callback(NoticeEntity.fromJson(response.data));
     }).catchError((e) {
       errorback(e);
     });
   }
 
-  /// 获取班级列表
-  void getClassByUserId(
-      Function callback, Function errorback, int _userId) async {
-    FormData formData = new FormData.from({"userId": _userId});
+  /// 增加通知-教师
+  void addNoticeByTeacher(
+      Function callback,
+      Function errorback,
+      int _userId,
+      int _classId,
+      String _noticeTitle,
+      String _noticeContent,
+      String _noticeAttachment) async {
+    FormData formData = new FormData.from({
+      "userId": _userId,
+      "classId": _classId,
+      "noticeTitle": _noticeTitle,
+      "noticeContent": _noticeContent,
+      "noticeAttachment": _noticeAttachment
+    });
     DioManager.singleton.dio
-        .post(Api.getPath(path: Api.USER_GET_CLASS),
+        .post(Api.getPath(path: Api.USER_ADD_NOTICE),
             data: formData, options: _getOptions())
         .then((response) {
-      callback(ClassEntity.fromJson(response.data));
+      callback(BaseEntity.fromJson(response.data));
+    }).catchError((e) {
+      errorback(e);
+    });
+  }
+
+  /// 删除通知-教师
+  void deleteNoticeByTeacher(
+      Function callback, Function errorback, int _noticeId) async {
+    FormData formData = new FormData.from({
+      "noticeId": _noticeId,
+    });
+    DioManager.singleton.dio
+        .post(Api.getPath(path: Api.USER_DELETE_NOTICE),
+            data: formData, options: _getOptions())
+        .then((response) {
+      callback(BaseEntity.fromJson(response.data));
+    }).catchError((e) {
+      errorback(e);
+    });
+  }
+
+  /// 编辑通知-教师
+  void editNoticeByTeacher(
+      Function callback,
+      Function errorback,
+      int _noticeId,
+      String _noticeTitle,
+      String _noticeContent,
+      String _noticeAttachment) async {
+    FormData formData = new FormData.from({
+      "noticeId": _noticeId,
+      "noticeTitle": _noticeTitle,
+      "noticeContent": _noticeContent,
+      "noticeAttachment": _noticeAttachment
+    });
+    DioManager.singleton.dio
+        .post(Api.getPath(path: Api.USER_EDIT_NOTICE),
+            data: formData, options: _getOptions())
+        .then((response) {
+      callback(BaseEntity.fromJson(response.data));
     }).catchError((e) {
       errorback(e);
     });
