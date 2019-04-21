@@ -18,7 +18,7 @@ class NoticeShowPage extends StatelessWidget {
       appBar: new AppBar(
         title: new Text('通知详情'),
         actions: <Widget>[
-          userData.userType == '教师'
+          userData.userType == '教师' && userData.userId == noticeData.userId
               ? IconButton(
                   icon: Icon(Icons.edit),
                   onPressed: () {
@@ -32,7 +32,6 @@ class NoticeShowPage extends StatelessWidget {
                 )
               : Container(),
         ],
-//        elevation: 0.0,
       ),
       body: Column(
         children: <Widget>[
