@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:tomato_scfs/generated/i18n.dart';
 import 'package:tomato_scfs/ui/drawer/drawer.dart';
 import 'package:tomato_scfs/ui/homework/homework_page.dart';
+import 'package:tomato_scfs/ui/notice/notice_page.dart';
 
 //应用页面使用有状态Widget
 class App extends StatefulWidget {
@@ -20,15 +21,10 @@ class AppState extends State<App> {
   double elevation = 4.0;
 
   var pages = <Widget>[
-//    HomePage(),
     Scaffold(),
-//    KnowledgePage(),
     Scaffold(),
-//    PubliccPage(),
-    Scaffold(),
-//    NavigationPage(),
+    NoticePage(),
     HomeworkPage(),
-//    ProjectPage()
     Scaffold(),
   ];
 
