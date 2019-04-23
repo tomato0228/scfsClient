@@ -51,7 +51,7 @@ class SigninPageTwoState extends State<SigninPageTwo> {
         child: Column(
           children: <Widget>[
             Container(
-              padding: const EdgeInsets.only(top: 150.0, bottom: 50.0),
+              padding: const EdgeInsets.only(top: 120.0, bottom: 50.0),
               child: Center(
                 child: new Column(
                   children: <Widget>[
