@@ -87,10 +87,12 @@ class Api {
   // 仅更新todo完成状态
   static const String DONE_TODO = "https://www.wanandroid.com/lg/todo/done/";
 
-  static const String ROOT = "http://localhost:8080/scfs_war_exploded"; //注册
-
   static const String USER_REGISTER = "user/register"; //注册
   static const String USER_LOGOUT = "user/logout"; //退出
+
+  /// 根路径
+  static const String ROOT = "http://localhost:8080/scfs_war_exploded";
+
   /// 用户学校信息
   static const String USER_GET_SCHOOL = "School/getSchool";
 
@@ -118,14 +120,32 @@ class Api {
   /// 获取作业列表
   static const String USER_GET_NOTICE = "Notice/getNotice";
 
-  /// 增加作业
+  /// 增加通知
   static const String USER_ADD_NOTICE = "Notice/addNotice";
 
-  /// 删除作业
+  /// 删除通知
   static const String USER_DELETE_NOTICE = "Notice/deleteNotice";
 
-  /// 删除作业
+  /// 删除通知
   static const String USER_EDIT_NOTICE = "Notice/editNotice";
+
+  /// 获消息列表
+  static const String USER_GET_CHAT_LIST = "Chat/getChatList";
+
+  /// 获取正在聊天联系人列表
+  static const String USER_GET_CHAT_CONTACTS = "Chat/getChatContacts";
+
+  /// 获取联系人列表
+  static const String USER_GET_CONTACTS = "Chat/getContacts";
+
+  /// 发送消息
+  static const String USER_ADD_CHAT = "Chat/addChat";
+
+  /// 删除和某一个人的消息
+  static const String USER_DELETE_CHAT_LIST = "Chat/deleteChatList";
+
+  /// 删除一条消息
+  static const String USER_DELETE_CHAT = "Chat/deleteChat";
 
   static String getPath({String root: ROOT, String path}) {
     StringBuffer sb = new StringBuffer(root);
