@@ -1,6 +1,6 @@
 class BaseEntity {
 	int total;
-	String data;
+	int data;
 	String message;
 	int status;
 
