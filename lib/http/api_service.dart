@@ -304,7 +304,7 @@ class ApiService {
   }
 
   /// 获取正在聊天联系人列表
-  void getChatContactsByUser(
+  void getChatContacts(
     Function callback,
     Function errorback,
     int _userId,
