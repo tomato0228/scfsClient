@@ -27,6 +27,38 @@ class UserEntity {
   }
 }
 
+class ContactsEntity {
+  int total;
+  List<UserData> data;
+  String message;
+  int status;
+
+  ContactsEntity({this.total, this.data, this.message, this.status});
+
+  ContactsEntity.fromJson(Map<String, dynamic> json) {
+    total = json['total'];
+    if (json['data'] != null) {
+      data = new List<UserData>();
+      (json['data'] as List).forEach((v) {
+        data.add(new UserData.fromJson(v));
+      });
+    }
+    message = json['message'];
+    status = json['status'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['total'] = this.total;
+    if (this.data != null) {
+      data['data'] = this.data.map((v) => v.toJson()).toList();
+    }
+    data['message'] = this.message;
+    data['status'] = this.status;
+    return data;
+  }
+}
+
 class UserData {
   String userSignature;
   String userSex;

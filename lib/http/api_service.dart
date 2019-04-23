@@ -314,7 +314,7 @@ class ApiService {
         .post(Api.getPath(path: Api.USER_GET_CHAT_CONTACTS),
             data: formData, options: _getOptions())
         .then((response) {
-      callback(UserEntity.fromJson(response.data));
+      callback(ContactsEntity.fromJson(response.data));
     }).catchError((e) {
       errorback(e);
     });
@@ -337,7 +337,7 @@ class ApiService {
         .post(Api.getPath(path: Api.USER_GET_CONTACTS),
             data: formData, options: _getOptions())
         .then((response) {
-      callback(UserEntity.fromJson(response.data));
+      callback(ContactsEntity.fromJson(response.data));
     }).catchError((e) {
       errorback(e);
     });
@@ -356,7 +356,7 @@ class ApiService {
         .post(Api.getPath(path: Api.USER_GET_CONTACTS),
             data: formData, options: _getOptions())
         .then((response) {
-      callback(UserEntity.fromJson(response.data));
+      callback(ContactsEntity.fromJson(response.data));
     }).catchError((e) {
       errorback(e);
     });
