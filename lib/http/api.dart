@@ -132,6 +132,9 @@ class Api {
   /// 获消息列表
   static const String USER_GET_CHAT_LIST = "Chat/getChatList";
 
+  /// 获消息
+  static const String USER_GET_CHAT = "Chat/getChat";
+
   /// 获取正在聊天联系人列表
   static const String USER_GET_CHAT_CONTACTS = "Chat/getChatContacts";
 
@@ -146,6 +149,9 @@ class Api {
 
   /// 删除一条消息
   static const String USER_DELETE_CHAT = "Chat/deleteChat";
+
+  /// 标记消息为已读
+  static const String USER_UPDATE_CHAT_USER = "Chat/updateChatByUser";
 
   static String getPath({String root: ROOT, String path}) {
     StringBuffer sb = new StringBuffer(root);

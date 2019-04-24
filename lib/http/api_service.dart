@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:tomato_scfs/common/user.dart';
 import 'package:tomato_scfs/http/dio_manager.dart';
 import 'package:tomato_scfs/model/base_entity.dart';
+import 'package:tomato_scfs/model/chat_contacts_entity.dart';
 import 'package:tomato_scfs/model/chat_entity.dart';
 import 'package:tomato_scfs/model/class_entity.dart';
 import 'package:tomato_scfs/model/course_entity.dart';
@@ -303,6 +304,19 @@ class ApiService {
     });
   }
 
+  /// 获消息列表
+  void getChat(Function callback, Function errorback, int _chatId) async {
+    FormData formData = new FormData.from({"chatId": _chatId});
+    DioManager.singleton.dio
+        .post(Api.getPath(path: Api.USER_GET_CHAT),
+            data: formData, options: _getOptions())
+        .then((response) {
+      callback(ChatOneEntity.fromJson(response.data));
+    }).catchError((e) {
+      errorback(e);
+    });
+  }
+
   /// 获取正在聊天联系人列表
   void getChatContacts(
     Function callback,
@@ -314,7 +328,7 @@ class ApiService {
         .post(Api.getPath(path: Api.USER_GET_CHAT_CONTACTS),
             data: formData, options: _getOptions())
         .then((response) {
-      callback(ContactsEntity.fromJson(response.data));
+      callback(ChatContactsEntity.fromJson(response.data));
     }).catchError((e) {
       errorback(e);
     });
@@ -412,6 +426,25 @@ class ApiService {
     DioManager.singleton.dio
         .post(Api.getPath(path: Api.USER_DELETE_CHAT),
             data: formData, options: _getOptions())
+        .then((response) {
+      callback(BaseEntity.fromJson(response.data));
+    }).catchError((e) {
+      errorback(e);
+    });
+  }
+
+  /// 标记和某一个人的消息为已读
+  void updateChatByUser(
+      Function callback,
+      Function errorback,
+      int _sendId,
+      int _receiveId,
+      ) async {
+    FormData formData =
+    new FormData.from({"sendId": _sendId, "receiveId": _receiveId});
+    DioManager.singleton.dio
+        .post(Api.getPath(path: Api.USER_UPDATE_CHAT_USER),
+        data: formData, options: _getOptions())
         .then((response) {
       callback(BaseEntity.fromJson(response.data));
     }).catchError((e) {
