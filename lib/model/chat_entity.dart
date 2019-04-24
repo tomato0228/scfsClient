@@ -28,6 +28,33 @@ class ChatEntity {
 	}
 }
 
+class ChatOneEntity {
+	int total;
+	ChatData data;
+	String message;
+	int status;
+
+	ChatOneEntity({this.total, this.data, this.message, this.status});
+
+	ChatOneEntity.fromJson(Map<String, dynamic> json) {
+		total = json['total'];
+		data = json['data'] != null ? new ChatData.fromJson(json['data']) : null;
+		message = json['message'];
+		status = json['status'];
+	}
+
+	Map<String, dynamic> toJson() {
+		final Map<String, dynamic> data = new Map<String, dynamic>();
+		data['total'] = this.total;
+		if (this.data != null) {
+			data['data'] = this.data.toJson();
+		}
+		data['message'] = this.message;
+		data['status'] = this.status;
+		return data;
+	}
+}
+
 class ChatData {
 	String chatDate;
 	int sendId;
