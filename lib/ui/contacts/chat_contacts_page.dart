@@ -156,7 +156,7 @@ class ChatContactsPageState extends BaseWidgetState<ChatContactsPage> {
         } else {
           Fluttertoast.showToast(msg: "获取联系人列表失败！");
         }
-      }, (DioError error) {
+      }, (Error error) {
         setState(() {
           showError();
         });

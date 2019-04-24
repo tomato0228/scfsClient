@@ -90,7 +90,7 @@ class HomeworkAddPageState extends State<HomeworkAddPage> {
           } else {
             Fluttertoast.showToast(msg: "布置作业失败！");
           }
-        }, (TypeError error) {
+        }, (Error error) {
           print(error.toString());
           Fluttertoast.showToast(
             msg: "布置作业失败！",

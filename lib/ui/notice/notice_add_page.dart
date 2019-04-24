@@ -67,7 +67,7 @@ class NoticeAddPageState extends State<NoticeAddPage> {
           } else {
             Fluttertoast.showToast(msg: "发布通知失败！");
           }
-        }, (TypeError error) {
+        }, (Error error) {
           print(error.toString());
           Fluttertoast.showToast(msg: "发布通知失败！");
         }, userData.userId, _classItem, noticeTitle, noticeContent,

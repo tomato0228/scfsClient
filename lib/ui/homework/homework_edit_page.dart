@@ -42,7 +42,7 @@ class HomeworkEditPageState extends State<HomeworkEditPage> {
             Fluttertoast.showToast(msg: "编辑作业失败！");
           }
         }
-      }, (TypeError error) {
+      }, (Error error) {
         print(error.toString());
         Fluttertoast.showToast(
           msg: "编辑作业失败！",

@@ -165,7 +165,7 @@ class NoticePageState extends BaseWidgetState<NoticePage> {
       } else {
         Fluttertoast.showToast(msg: "获取班级列表失败！");
       }
-    }, (TypeError error) {
+    }, (Error error) {
       setState(() {
         showError();
       });
@@ -182,7 +182,7 @@ class NoticePageState extends BaseWidgetState<NoticePage> {
       } else {
         Fluttertoast.showToast(msg: "删除通知失败！");
       }
-    }, (TypeError error) {
+    }, (Error error) {
       setState(() {
         showError();
       });
@@ -200,7 +200,7 @@ class NoticePageState extends BaseWidgetState<NoticePage> {
           } else {
             Fluttertoast.showToast(msg: "获取通知列表失败！");
           }
-        }, (TypeError error) {
+        }, (Error error) {
           setState(() {
             showError();
           });
@@ -217,7 +217,7 @@ class NoticePageState extends BaseWidgetState<NoticePage> {
         } else {
           Fluttertoast.showToast(msg: "获取通知列表失败！");
         }
-      }, (TypeError error) {
+      }, (Error error) {
         setState(() {
           showError();
         });

@@ -180,7 +180,7 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
       } else {
         Fluttertoast.showToast(msg: "获取科目列表失败！");
       }
-    }, (TypeError error) {
+    }, (Error error) {
       setState(() {
         showError();
       });
@@ -196,7 +196,7 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
       } else {
         Fluttertoast.showToast(msg: "获取班级列表失败！");
       }
-    }, (TypeError error) {
+    }, (Error error) {
       setState(() {
         showError();
       });
@@ -213,7 +213,7 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
       } else {
         Fluttertoast.showToast(msg: "删除作业失败！");
       }
-    }, (TypeError error) {
+    }, (Error error) {
       setState(() {
         showError();
       });
@@ -231,7 +231,7 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
           } else {
             Fluttertoast.showToast(msg: "获取作业列表失败！");
           }
-        }, (TypeError error) {
+        }, (Error error) {
           setState(() {
             showError();
           });
@@ -249,7 +249,7 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
           } else {
             Fluttertoast.showToast(msg: "获取作业列表失败！");
           }
-        }, (TypeError error) {
+        }, (Error error) {
           setState(() {
             showError();
           });

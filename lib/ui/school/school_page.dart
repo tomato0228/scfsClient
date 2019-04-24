@@ -30,8 +30,7 @@ class SchoolPageState extends BaseWidgetState<SchoolPage> {
         showEmpty();
         Fluttertoast.showToast(msg: "获取学校信息失败！");
       }
-    }, (DioError error) {
-      print(error.response);
+    }, (Error error) {
       setState(() {
         showError();
       });

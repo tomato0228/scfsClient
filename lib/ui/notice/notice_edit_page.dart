@@ -43,7 +43,7 @@ class NoticeEditPageState extends State<NoticeEditPage> {
         } else {
           Fluttertoast.showToast(msg: "编辑通知失败！");
         }
-      }, (TypeError error) {
+      }, (Error error) {
         print(error.toString());
         Fluttertoast.showToast(msg: "编辑通知失败！");
       }, noticeDate.noticeId, noticeTitle, noticeContent, noticeAttachment);
