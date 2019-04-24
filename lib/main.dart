@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:tomato_scfs/base/chinese_cupertino_localizations.dart';
 import 'package:tomato_scfs/common/application.dart';
 import 'package:tomato_scfs/common/user.dart';
 import 'package:tomato_scfs/event/change_language_event.dart';
@@ -94,6 +95,7 @@ class MyAppState extends State<MyApp> {
       //   new
       localizationsDelegates: const [
         S.delegate,
+        ChineseCupertinoLocalizations.delegate, // 这里加上这个,是自定义的delegate
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
       ],
