@@ -54,7 +54,7 @@ class ChatPageState extends BaseWidgetState<ChatPage> {
     isShowSticker = false;
     userData = User.singleton.userData;
     _getChat(1);
-    var timerObservable = Observable.periodic(Duration(seconds: 3), (value) {
+    var timerObservable = Observable.periodic(Duration(seconds: 2), (value) {
       if (mounted) {
         _getChat(0);
       }
