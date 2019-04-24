@@ -16,9 +16,6 @@ class SchoolPage extends BaseWidget {
 }
 
 class SchoolPageState extends BaseWidgetState<SchoolPage> {
-  ScrollController _scrollController = ScrollController();
-  bool showToTopBtn = false; //是否显示“返回到顶部”按钮
-
   SchoolData _schoolData = new SchoolData();
 
   Future<Null> _getSchool() async {
@@ -48,27 +45,12 @@ class SchoolPageState extends BaseWidgetState<SchoolPage> {
     setAppBarVisible(true);
     showloading();
     _getSchool();
-    _scrollController.addListener(() {
-      _scrollController.addListener(() {
-        //当前位置是否超过屏幕高度
-        if (_scrollController.offset < 200 && showToTopBtn) {
-          setState(() {
-            showToTopBtn = false;
-          });
-        } else if (_scrollController.offset >= 200 && showToTopBtn == false) {
-          setState(() {
-            showToTopBtn = true;
-          });
-        }
-      });
-    });
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    _scrollController.dispose();
   }
 
   @override
@@ -103,9 +85,12 @@ class SchoolPageState extends BaseWidgetState<SchoolPage> {
                       child: Image.network(
                         _schoolData.schoolLogo,
                         fit: BoxFit.cover,
+                        width: 200.0,
+                        height: 200.0,
                       ),
                     ),
                   ),
+                  padding: EdgeInsets.all(70.0),
                 ),
                 ListTile(
                   leading: CircleAvatar(
@@ -118,8 +103,6 @@ class SchoolPageState extends BaseWidgetState<SchoolPage> {
                   padding: EdgeInsets.all(16.0),
                   child: Text(
                     _schoolData.schoolProfile,
-                    //maxLines: 2,
-                    //overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],
@@ -134,19 +117,6 @@ class SchoolPageState extends BaseWidgetState<SchoolPage> {
         },
         backgroundColor: ThemeUtils.currentColorTheme,
       ),
-//      floatingActionButton: !showToTopBtn
-//          ? null
-//          : FloatingActionButton(
-//              child: Icon(Icons.arrow_upward),
-//              backgroundColor: ThemeUtils.currentColorTheme,
-//              onPressed: () {
-//                //返回到顶部时执行动画
-//                _scrollController.animateTo(
-//                  .0,
-//                  duration: Duration(milliseconds: 200),
-//                  curve: Curves.ease,
-//                );
-//              }),
     );
   }
 
