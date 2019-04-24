@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:tomato_scfs/generated/i18n.dart';
-import 'package:tomato_scfs/ui/contacts/supporter_list.dart';
+import 'package:tomato_scfs/ui/contacts/chat_contacts_page.dart';
 import 'package:tomato_scfs/ui/drawer/drawer.dart';
 import 'package:tomato_scfs/ui/homework/homework_page.dart';
 import 'package:tomato_scfs/ui/notice/notice_page.dart';
@@ -22,7 +22,7 @@ class AppState extends State<App> {
   double elevation = 4.0;
 
   var pages = <Widget>[
-    ListPage(),
+    ChatContactsPage(),
     Scaffold(),
     NoticePage(),
     HomeworkPage(),
