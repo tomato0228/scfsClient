@@ -42,41 +42,43 @@ class ChatContactsPageState extends BaseWidgetState<ChatContactsPage> {
 
   @override
   Widget getContentWidget(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        Container(
-          child:
-          (_chatContactsDatas == null || _chatContactsDatas.length == 0)
-              ? Center(
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(themeColor),
-            ),
-          )
-              : RefreshIndicator(
-            color: Colors.deepOrangeAccent,
-            backgroundColor: Colors.white,
-            child: ListView.builder(
-              padding: EdgeInsets.all(10.0),
-              itemBuilder: (context, index) =>
-                  buildItem(context, _chatContactsDatas[index]),
-              itemCount: _chatContactsDatas.length,
-            ),
-            onRefresh: _onRefresh,
+    return Scaffold(
+      body: Stack(
+        children: <Widget>[
+          Container(
+            child:
+                (_chatContactsDatas == null || _chatContactsDatas.length == 0)
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(themeColor),
+                        ),
+                      )
+                    : RefreshIndicator(
+                        color: Colors.deepOrangeAccent,
+                        backgroundColor: Colors.white,
+                        child: ListView.builder(
+                          padding: EdgeInsets.all(10.0),
+                          itemBuilder: (context, index) =>
+                              buildItem(context, _chatContactsDatas[index]),
+                          itemCount: _chatContactsDatas.length,
+                        ),
+                        onRefresh: _onRefresh,
+                      ),
           ),
-        ),
-        Positioned(
-          child: isLoading
-              ? Container(
-            child: Center(
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(themeColor),
-              ),
-            ),
-            color: Colors.transparent,
-          )
-              : Container(),
-        ),
-      ],
+          Positioned(
+            child: isLoading
+                ? Container(
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(themeColor),
+                      ),
+                    ),
+                    color: Colors.transparent,
+                  )
+                : Container(),
+          ),
+        ],
+      ),
     );
   }
 
