@@ -5,6 +5,7 @@ import 'package:tomato_scfs/model/notice_entity.dart';
 import 'package:tomato_scfs/model/school_entity.dart';
 import 'package:tomato_scfs/model/homework_entity.dart';
 import 'package:tomato_scfs/model/course_entity.dart';
+import 'package:tomato_scfs/model/chat_contacts_entity.dart';
 
 class EntityFactory {
   static T generateOBJ<T>(json) {
@@ -24,6 +25,8 @@ class EntityFactory {
       return HomeworkEntity.fromJson(json) as T;
     } else if (T.toString() == "CourseEntity") {
       return CourseEntity.fromJson(json) as T;
+    } else if (T.toString() == "ChatContactsEntity") {
+      return ChatContactsEntity.fromJson(json) as T;
     } else {
       return null;
     }
