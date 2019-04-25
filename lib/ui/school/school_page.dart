@@ -5,6 +5,7 @@ import 'package:tomato_scfs/base/_base_widget.dart';
 import 'package:tomato_scfs/common/user.dart';
 import 'package:tomato_scfs/http/api_service.dart';
 import 'package:tomato_scfs/model/school_entity.dart';
+import 'package:tomato_scfs/ui/app.dart';
 import 'package:tomato_scfs/util/theme_util.dart';
 
 class SchoolPage extends BaseWidget {
@@ -122,7 +123,8 @@ class SchoolPageState extends BaseWidgetState<SchoolPage> {
   @override
   void onClickErrorWidget() {
     // TODO: implement onClickErrorWidget
-    showloading();
-    _getSchool();
+    Navigator.of(context).pushAndRemoveUntil(
+        new MaterialPageRoute(builder: (context) => App()),
+            (route) => route == null);
   }
 }

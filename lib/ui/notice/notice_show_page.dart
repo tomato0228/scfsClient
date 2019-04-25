@@ -14,7 +14,7 @@ class NoticeShowPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       appBar: new AppBar(
         title: new Text('通知详情'),
         actions: <Widget>[

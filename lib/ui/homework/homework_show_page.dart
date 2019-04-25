@@ -13,7 +13,7 @@ class HomeworkShowPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       appBar: new AppBar(
         title: new Text('作业详情'),
         actions: <Widget>[

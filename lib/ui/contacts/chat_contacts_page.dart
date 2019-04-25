@@ -2,10 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:tomato_scfs/base/_base_widget.dart';
+import 'package:tomato_scfs/common/application.dart';
 import 'package:tomato_scfs/common/user.dart';
+import 'package:tomato_scfs/event/change_badgeno_event.dart';
 import 'package:tomato_scfs/http/api_service.dart';
 import 'package:tomato_scfs/model/chat_contacts_entity.dart';
 import 'package:tomato_scfs/model/user_entity.dart';
+import 'package:tomato_scfs/ui/app.dart';
 import 'package:tomato_scfs/ui/chat/chat_page.dart';
 import 'package:tomato_scfs/util/const.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -24,6 +27,7 @@ class ChatContactsPageState extends BaseWidgetState<ChatContactsPage> {
   List<ChatContactsData> _chatContactsDatas;
   ScrollController _scrollController = new ScrollController();
   bool isLoading = false;
+  int badgeNo = 0;
 
   @override
   void initState() {
@@ -85,7 +89,9 @@ class ChatContactsPageState extends BaseWidgetState<ChatContactsPage> {
   @override
   void onClickErrorWidget() {
     // TODO: implement onClickErrorWidget
-    showloading();
+    Navigator.of(context).pushAndRemoveUntil(
+        new MaterialPageRoute(builder: (context) => App()),
+        (route) => route == null);
   }
 
   @override
@@ -124,10 +130,21 @@ class ChatContactsPageState extends BaseWidgetState<ChatContactsPage> {
             ),
           ),
           chatContactsData.chatMesgnum != 0
-              ? Chip(
-                  label: Text(chatContactsData.chatMesgnum.toString()),
-                  labelStyle: TextStyle(color: Colors.white),
-                  backgroundColor: Colors.lightBlue,
+              ?
+              Container(
+                  width: chatContactsData.chatMesgnum > 100 ? 32 : 24,
+                  padding: EdgeInsets.fromLTRB(0, 2, 0, 2),
+                  margin: EdgeInsets.only(top: 5.0),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Colors.lightBlue,
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                  child: Text(
+                    chatContactsData.chatMesgnum > 100 ? '99+' : chatContactsData.chatMesgnum.toString(),
+                    style: TextStyle(fontSize: 14, color: Colors.white),
+                  ),
                 )
               : Text(''),
         ],
@@ -153,6 +170,12 @@ class ChatContactsPageState extends BaseWidgetState<ChatContactsPage> {
           setState(() {
             _chatContactsDatas = _chatContactsEntity.data;
           });
+          int t = 0;
+          _chatContactsDatas.forEach((c) => t += c.chatMesgnum);
+          if (t != badgeNo) {
+            badgeNo = t;
+            Application.eventBus.fire(new ChangeBadeNoEvent(badgeNo));
+          }
         } else {
           Fluttertoast.showToast(msg: "获取联系人列表失败！");
         }

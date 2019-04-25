@@ -12,6 +12,8 @@ import 'package:tomato_scfs/model/base_entity.dart';
 import 'package:tomato_scfs/model/chat_contacts_entity.dart';
 import 'package:tomato_scfs/model/chat_entity.dart';
 import 'package:tomato_scfs/model/user_entity.dart';
+import 'package:tomato_scfs/ui/app.dart';
+import 'package:tomato_scfs/ui/drawer/personal_page.dart';
 import 'package:tomato_scfs/util/const.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tomato_scfs/util/utils.dart';
@@ -709,7 +711,9 @@ class ChatPageState extends BaseWidgetState<ChatPage> {
   @override
   void onClickErrorWidget() {
     // TODO: implement onClickErrorWidget
-    showloading();
+    Navigator.of(context).pushAndRemoveUntil(
+        new MaterialPageRoute(builder: (context) => App()),
+        (route) => route == null);
   }
 
   @override
@@ -719,6 +723,19 @@ class ChatPageState extends BaseWidgetState<ChatPage> {
       title: Text(chatContactsData.userName,
           style: TextStyle(fontWeight: FontWeight.bold)),
       elevation: 0.0,
+      actions: <Widget>[
+        IconButton(
+            icon: Icon(Icons.person_outline),
+            onPressed: () {
+              Navigator.of(context)
+                  .push(new MaterialPageRoute(builder: (context) {
+                return PersonalPage(
+                  userData: UserData.fromJson(chatContactsData.toJson()),
+                  isShowFB: false,
+                );
+              }));
+            })
+      ],
     );
   }
 

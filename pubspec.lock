@@ -15,6 +15,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.0.8"
+  azlistview:
+    dependency: "direct main"
+    description:
+      name: azlistview
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.1.1"
   bloc:
     dependency: "direct main"
     description:
@@ -29,6 +36,15 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.4"
+  bottom_tab_bar:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "2c5b1204c2606b67acbc0063d5f79acc1fe7d3a6"
+      url: "https://github.com/LiuC520/flutter_bottom_tab_bar.git"
+    source: git
+    version: "0.0.1"
   cached_network_image:
     dependency: "direct main"
     description:

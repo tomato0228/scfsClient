@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tomato_scfs/common/user.dart';
 import 'package:tomato_scfs/ui/app.dart';
+import 'package:tomato_scfs/ui/login/login_page.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -67,16 +69,30 @@ class SplashScreenState extends State<SplashScreen> {
 
   void onDonePress() {
     _setHasSkip();
-    Navigator.of(context).pushAndRemoveUntil(
-        new MaterialPageRoute(builder: (context) => App()),
-        (route) => route == null);
+    if(User.singleton.userData != null) {
+      Navigator.of(context).pushAndRemoveUntil(
+          new MaterialPageRoute(builder: (context) => App()),
+              (route) => route == null);
+    }
+    else {
+      Navigator.of(context).pushAndRemoveUntil(
+          new MaterialPageRoute(builder: (context) => LoginPage()),
+              (route) => route == null);
+    }
   }
 
   void onSkipPress() {
     _setHasSkip();
-    Navigator.of(context).pushAndRemoveUntil(
-        new MaterialPageRoute(builder: (context) => App()),
-        (route) => route == null);
+    if(User.singleton.userData != null) {
+      Navigator.of(context).pushAndRemoveUntil(
+          new MaterialPageRoute(builder: (context) => App()),
+              (route) => route == null);
+    }
+    else {
+      Navigator.of(context).pushAndRemoveUntil(
+          new MaterialPageRoute(builder: (context) => LoginPage()),
+              (route) => route == null);
+    }
   }
 
   void _setHasSkip() async {

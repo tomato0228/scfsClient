@@ -7,6 +7,7 @@ import 'package:tomato_scfs/event/change_theme_event.dart';
 import 'package:tomato_scfs/event/login_event.dart';
 import 'package:tomato_scfs/generated/i18n.dart';
 import 'package:tomato_scfs/model/user_entity.dart';
+import 'package:tomato_scfs/ui/drawer/about_page.dart';
 import 'package:tomato_scfs/ui/login/login_page.dart';
 import 'package:tomato_scfs/ui/school/school_page.dart';
 import 'package:tomato_scfs/util/theme_util.dart';
@@ -188,7 +189,6 @@ class DrawerPageState extends State<DrawerPage> {
           User.singleton.clearUserInfo();
           setState(() {
             isLogin = false;
-            //userData = null;
           });
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => LoginPage()));
@@ -203,7 +203,7 @@ class DrawerPageState extends State<DrawerPage> {
 
   void onCollectionClick() async {
     await Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
-      return Scaffold();
+      return AboutPage();
     }));
   }
 

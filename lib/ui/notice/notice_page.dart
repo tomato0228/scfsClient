@@ -8,6 +8,7 @@ import 'package:tomato_scfs/model/class_entity.dart';
 import 'package:tomato_scfs/model/notice_entity.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tomato_scfs/model/user_entity.dart';
+import 'package:tomato_scfs/ui/app.dart';
 import 'package:tomato_scfs/ui/notice/notice_add_page.dart';
 import 'package:tomato_scfs/ui/notice/notice_show_page.dart';
 import 'package:tomato_scfs/util/theme_util.dart';
@@ -326,7 +327,9 @@ class NoticePageState extends BaseWidgetState<NoticePage> {
   @override
   void onClickErrorWidget() {
     // TODO: implement onClickErrorWidget
-    showloading();
+    Navigator.of(context).pushAndRemoveUntil(
+        new MaterialPageRoute(builder: (context) => App()),
+            (route) => route == null);
   }
 
   @override

@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:tomato_scfs/common/application.dart';
+import 'package:tomato_scfs/event/change_badgeno_event.dart';
 import 'dart:async';
 
 import 'package:tomato_scfs/generated/i18n.dart';
 import 'package:tomato_scfs/ui/contacts/chat_contacts_page.dart';
+import 'package:tomato_scfs/ui/contacts/contacts_page.dart';
+import 'package:tomato_scfs/ui/drawer/about_page.dart';
 import 'package:tomato_scfs/ui/drawer/drawer.dart';
 import 'package:tomato_scfs/ui/homework/homework_page.dart';
 import 'package:tomato_scfs/ui/notice/notice_page.dart';
+import 'package:bottom_tab_bar/bottom_tab_bar.dart';
+import 'package:tomato_scfs/util/theme_util.dart';
 
 //应用页面使用有状态Widget
 class App extends StatefulWidget {
@@ -21,12 +27,35 @@ class AppState extends State<App> {
 
   double elevation = 4.0;
 
+  String badgeNoS;
+
+  void setBadgeNo({badgeNo: 0}) {
+    setState(() {
+      if (badgeNo == 0) {
+        badgeNoS = '';
+      } else if (badgeNo > 99) {
+        badgeNoS = '99+';
+      } else {
+        badgeNoS = badgeNo.toString();
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    badgeNoS = '';
+    Application.eventBus.on<ChangeBadeNoEvent>().listen((event) {
+      setBadgeNo(badgeNo: event.badgeNo);
+    });
+  }
+
   var pages = <Widget>[
     ChatContactsPage(),
-    Scaffold(),
+    ContactsPage(),
     NoticePage(),
     HomeworkPage(),
-    Scaffold(),
   ];
 
   @override
@@ -35,8 +64,7 @@ class AppState extends State<App> {
       S.of(context).appHomePage,
       S.of(context).appAddressBook,
       S.of(context).appMessage,
-      S.of(context).appHomework,
-      S.of(context).appPersonal
+      S.of(context).appHomework
     ];
     return WillPopScope(
       onWillPop: _onWillPop,
@@ -63,32 +91,34 @@ class AppState extends State<App> {
         ),
 
         //底部导航按钮 包含图标及文本
-        bottomNavigationBar: BottomNavigationBar(
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
+        bottomNavigationBar: BottomTabBar(
+          items: <BottomTabBarItem>[
+            BottomTabBarItem(
               icon: Icon(Icons.home),
               title: Text(S.of(context).appHomePage),
+              badgeNo: badgeNoS,
             ),
-            BottomNavigationBarItem(
+            BottomTabBarItem(
               icon: Icon(Icons.contacts),
               title: Text(S.of(context).appAddressBook),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.chat),
+            BottomTabBarItem(
+              icon: Icon(Icons.volume_up),
               title: Text(S.of(context).appMessage),
             ),
-            BottomNavigationBarItem(
+            BottomTabBarItem(
               icon: Icon(Icons.library_books),
               title: Text(S.of(context).appHomework),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              title: Text(S.of(context).appPersonal),
-            ),
           ],
-          type: BottomNavigationBarType.fixed, //设置显示的模式
-          currentIndex: _selectedIndex, //当前选中项的索引
+          badgeColor: Colors.blue,
+          type: BottomTabBarType.fixed,
+          //设置显示的模式
+          currentIndex: _selectedIndex,
+          //当前选中项的索引
           onTap: _onItemTapped, //选择按下处理
+//          isAnimation: false,
+//          isInkResponse: false,
         ),
       ),
     );

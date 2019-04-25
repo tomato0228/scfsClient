@@ -52,6 +52,9 @@ dependencies:
   image_picker:  ^0.5.4
 #  firebase_storage: ^2.1.0+1
   cached_network_image: ^0.7.0
+  azlistview: ^0.1.0
+  bottom_tab_bar:
+    git: https://github.com/LiuC520/flutter_bottom_tab_bar.git
   # 国际化
   flutter_localizations:
     sdk: flutter

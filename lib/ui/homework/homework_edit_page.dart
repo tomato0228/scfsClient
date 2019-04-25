@@ -57,73 +57,76 @@ class HomeworkEditPageState extends State<HomeworkEditPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('编辑作业'),
-      ),
-      body: Container(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            TextField(
-              controller: textHomeworkContentController,
-              maxLength: 255,
-              maxLines: 8,
-              //最大行数
-              decoration: InputDecoration(
-                icon: Icon(Icons.event_note, size: 32.0),
-                labelText: '内容',
-                hintText: '请输入作业的内容',
-                border: OutlineInputBorder(),
-                //filled: true, //背景颜色
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        appBar: new AppBar(
+          title: new Text('编辑作业'),
+        ),
+        body: Container(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              TextField(
+                controller: textHomeworkContentController,
+                maxLength: 255,
+                maxLines: 8,
+                //最大行数
+                decoration: InputDecoration(
+                  icon: Icon(Icons.event_note, size: 32.0),
+                  labelText: '内容',
+                  hintText: '请输入作业的内容',
+                  border: OutlineInputBorder(),
+                  //filled: true, //背景颜色
+                ),
               ),
-            ),
-            TextField(
-              controller: textHomeworkAttachmentController,
-              maxLength: 255,
-              decoration: InputDecoration(
-                icon: Icon(Icons.insert_link, size: 32.0),
-                labelText: '附件',
-                hintText: '请输入作业附件的地址',
-                border: OutlineInputBorder(),
-                //filled: true, //背景颜色
+              TextField(
+                controller: textHomeworkAttachmentController,
+                maxLength: 255,
+                decoration: InputDecoration(
+                  icon: Icon(Icons.insert_link, size: 32.0),
+                  labelText: '附件',
+                  hintText: '请输入作业附件的地址',
+                  border: OutlineInputBorder(),
+                  //filled: true, //背景颜色
+                ),
               ),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              margin: const EdgeInsets.only(left: 48.0),
-              alignment: Alignment.center,
-              child: new Row(
-                children: <Widget>[
-                  new Expanded(
-                    child: new FlatButton(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 10.0),
-                      color: ThemeUtils.currentColorTheme,
-                      onPressed: () {
-                        _editHomework();
-                      },
-                      child: Text(
-                        "提    交",
-                        style: TextStyle(color: Colors.white),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                margin: const EdgeInsets.only(left: 48.0),
+                alignment: Alignment.center,
+                child: new Row(
+                  children: <Widget>[
+                    new Expanded(
+                      child: new FlatButton(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 10.0),
+                        color: ThemeUtils.currentColorTheme,
+                        onPressed: () {
+                          _editHomework();
+                        },
+                        child: Text(
+                          "提    交",
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          backgroundColor: ThemeUtils.currentColorTheme,
+        ),
+        resizeToAvoidBottomPadding: false, //输入框抵住键盘
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.arrow_back),
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        backgroundColor: ThemeUtils.currentColorTheme,
-      ),
-      resizeToAvoidBottomPadding: false, //输入框抵住键盘
     );
   }
 
@@ -141,5 +144,10 @@ class HomeworkEditPageState extends State<HomeworkEditPage> {
     super.dispose();
     textHomeworkContentController.dispose();
     textHomeworkAttachmentController.dispose();
+  }
+
+  Future<bool> _onWillPop() {
+    Navigator.pop(context);
+    return Future.value(false);
   }
 }

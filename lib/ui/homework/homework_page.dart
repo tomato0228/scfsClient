@@ -9,6 +9,7 @@ import 'package:tomato_scfs/model/homework_entity.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tomato_scfs/model/course_entity.dart';
 import 'package:tomato_scfs/model/user_entity.dart';
+import 'package:tomato_scfs/ui/app.dart';
 import 'package:tomato_scfs/ui/homework/homework_add_page.dart';
 import 'package:tomato_scfs/ui/homework/homework_show_page.dart';
 import 'package:tomato_scfs/util/theme_util.dart';
@@ -375,7 +376,9 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
   @override
   void onClickErrorWidget() {
     // TODO: implement onClickErrorWidget
-    showloading();
+    Navigator.of(context).pushAndRemoveUntil(
+        new MaterialPageRoute(builder: (context) => App()),
+            (route) => route == null);
   }
 
   @override
