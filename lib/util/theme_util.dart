@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ThemeUtils {
   // 默认主题色
-  static const Color defaultColor = Colors.redAccent;
+  static const Color defaultColor = Colors.lime;
 
   // 可选的主题色
   static const List<Color> supportColors = [

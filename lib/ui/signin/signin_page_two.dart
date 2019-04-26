@@ -1,7 +1,19 @@
-import 'dart:async';
-
+import 'package:common_utils/common_utils.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tomato_scfs/common/application.dart';
+import 'package:tomato_scfs/common/user.dart';
+import 'package:tomato_scfs/event/login_event.dart';
+import 'package:tomato_scfs/generated/i18n.dart';
+import 'package:tomato_scfs/http/api_service.dart';
+import 'package:tomato_scfs/model/base_entity.dart';
+import 'package:tomato_scfs/model/user_entity.dart';
+import 'package:tomato_scfs/ui/app.dart';
 import 'package:tomato_scfs/ui/signin/signin_code.dart';
+import 'package:crypto/crypto.dart';
+import 'dart:convert';
 
 /// 墨水瓶（`InkWell`）可用时使用的字体样式。
 final TextStyle _availableStyle = TextStyle(
@@ -16,21 +28,49 @@ final TextStyle _unavailableStyle = TextStyle(
 );
 
 class SigninPageTwo extends StatefulWidget {
+  final int userId;
+
+  SigninPageTwo({@required this.userId});
+
   @override
+//  SigninPageTwoState createState() => new SigninPageTwoState(userId: userId);
   SigninPageTwoState createState() => new SigninPageTwoState();
 }
 
 class SigninPageTwoState extends State<SigninPageTwo> {
+//  final int userId;
+
+//  SigninPageTwoState({@required this.userId});
+
   final Color backgroundColor1 = Color(0xFF444152);
   final Color backgroundColor2 = Color(0xFF6f6c7d);
   final Color highlightColor = Color(0xfff65aa3);
   final Color foregroundColor = Colors.white;
   final AssetImage logo = new AssetImage("assets/images/full-bloom.png");
 
+  TextEditingController userTelController = new TextEditingController();
+  TextEditingController validationCodeController = new TextEditingController();
+
+  bool _available = false;
+  String userTel;
+  int validationCode;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    userTel = '';
+    validationCode = 0;
+    userTelController.addListener(() {
+      userTel = userTelController.text.trim();
+      if (_available && !RegexUtil.isMobileExact(userTel)) {
+        setState(() {
+          _available = false;
+        });
+      } else if (!_available && RegexUtil.isMobileExact(userTel)) {
+        _verifyUserAcc();
+      }
+    });
   }
 
   @override
@@ -44,11 +84,11 @@ class SigninPageTwoState extends State<SigninPageTwo> {
             // 10% of the width, so there are ten blinds.
             colors: [this.backgroundColor1, this.backgroundColor2],
             // whitish to gray
-            tileMode: TileMode.repeated, // repeats the gradient over the canvas
+            tileMode: TileMode.repeated, // 在画布上重复渐变
           ),
         ),
-        height: MediaQuery.of(context).size.height,
-        child: Column(
+//        height: MediaQuery.of(context).size.height,
+        child: ListView(
           children: <Widget>[
             Container(
               padding: const EdgeInsets.only(top: 120.0, bottom: 50.0),
@@ -90,7 +130,7 @@ class SigninPageTwoState extends State<SigninPageTwo> {
                 ),
               ),
             ),
-            new Container(
+            Container(
               width: MediaQuery.of(context).size.width,
               margin: const EdgeInsets.only(left: 40.0, right: 40.0),
               alignment: Alignment.center,
@@ -118,6 +158,7 @@ class SigninPageTwoState extends State<SigninPageTwo> {
                   SizedBox(width: 16.0),
                   new Expanded(
                     child: TextField(
+                      controller: userTelController,
                       textAlign: TextAlign.start,
                       decoration: InputDecoration(
                         border: InputBorder.none,
@@ -130,7 +171,7 @@ class SigninPageTwoState extends State<SigninPageTwo> {
                 ],
               ),
             ),
-            new Container(
+            Container(
               width: MediaQuery.of(context).size.width,
               margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 10.0),
               alignment: Alignment.center,
@@ -158,7 +199,7 @@ class SigninPageTwoState extends State<SigninPageTwo> {
                   SizedBox(width: 16.0),
                   new Expanded(
                     child: TextField(
-                      obscureText: true,
+                      controller: validationCodeController,
                       textAlign: TextAlign.start,
                       decoration: InputDecoration(
                         border: InputBorder.none,
@@ -170,13 +211,15 @@ class SigninPageTwoState extends State<SigninPageTwo> {
                   ),
                   SigninFormCode(
                     countdown: 60,
-                    onTapCallback: () {},
-                    available: true,
+                    onTapCallback: () {
+                      _sendValidationCode();
+                    },
+                    available: _available,
                   ),
                 ],
               ),
             ),
-            new Container(
+            Container(
               width: MediaQuery.of(context).size.width,
               margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 30.0),
               alignment: Alignment.center,
@@ -187,7 +230,9 @@ class SigninPageTwoState extends State<SigninPageTwo> {
                       padding: const EdgeInsets.symmetric(
                           vertical: 20.0, horizontal: 20.0),
                       color: this.highlightColor,
-                      onPressed: () => {},
+                      onPressed: () {
+                        _sfz();
+                      },
                       child: Text(
                         "绑 定 手 机",
                         style: TextStyle(color: this.foregroundColor),
@@ -197,32 +242,29 @@ class SigninPageTwoState extends State<SigninPageTwo> {
                 ],
               ),
             ),
-//            new Container(
-//              width: MediaQuery.of(context).size.width,
-//              margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 10.0),
-//              alignment: Alignment.center,
-//              child: new Row(
-//                children: <Widget>[
-//                  new Expanded(
-//                    child: new FlatButton(
-//                      padding: const EdgeInsets.symmetric(
-//                          vertical: 20.0, horizontal: 20.0),
-//                      color: Colors.transparent,
-//                      onPressed: () => {},
-//                      child: Text(
-//                        "绑 定 邮 箱",
-//                        style: TextStyle(
-//                            color: this.foregroundColor.withOpacity(0.5)),
-//                      ),
-//                    ),
-//                  ),
-//                ],
-//              ),
-//            ),
-            new Expanded(
-              child: Divider(),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 10.0),
+              alignment: Alignment.center,
+              child: new Row(
+                children: <Widget>[
+                  new Expanded(
+                    child: new FlatButton(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 20.0, horizontal: 20.0),
+                      color: Colors.transparent,
+                      onPressed: () {},
+                      child: Text(
+                        "绑 定 邮 箱",
+                        style: TextStyle(
+                            color: this.foregroundColor.withOpacity(0.5)),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-            new Container(
+            Container(
               width: MediaQuery.of(context).size.width,
               margin: const EdgeInsets.only(
                   left: 40.0, right: 40.0, top: 10.0, bottom: 20.0),
@@ -235,7 +277,6 @@ class SigninPageTwoState extends State<SigninPageTwo> {
                           vertical: 20.0, horizontal: 20.0),
                       color: Colors.transparent,
                       onPressed: () {
-                        Navigator.of(context).pop();
                         Navigator.of(context).pop();
                       },
                       child: Text(
@@ -251,6 +292,97 @@ class SigninPageTwoState extends State<SigninPageTwo> {
           ],
         ),
       ),
+    );
+  }
+
+  /// 绑定手机号
+  Future<Null> _sfz() async {
+    String validation = validationCodeController.text.trim();
+    if (!_available) {
+      Fluttertoast.showToast(msg: "请输入正确手机号码！");
+    } else if (validationCode == 0) {
+      Fluttertoast.showToast(msg: "请获取验证码！");
+    } else if (validation.length == 0) {
+      Fluttertoast.showToast(msg: "请输入验证码！");
+    } else if (validation.length != 6 ||
+        validation != validationCode.toString()) {
+      Fluttertoast.showToast(msg: "验证码不正确！");
+    } else {
+      ApiService().userUpdateTel((UserEntity _userEntity, Response response) {
+        if (_userEntity != null) {
+          if (_userEntity.status == 0) {
+//            Fluttertoast.showToast(msg: "绑定手机号码成功，自动登陆！");
+//            User().saveUserInfo(_userEntity, response);
+//            Application.eventBus.fire(new LoginEvent());
+//            Navigator.of(context).pushAndRemoveUntil(
+//                new MaterialPageRoute(builder: (context) => App()),
+//                    (route) => route == null);
+            _overSignin();
+          } else {
+            Fluttertoast.showToast(msg: "绑定失败，请重试！");
+          }
+        }
+      }, (Error error) {
+        Fluttertoast.showToast(msg: "绑定失败，请检查网络！");
+      }, widget.userId, userTel);
+    }
+  }
+
+  /// 发送验证码
+  Future<Null> _sendValidationCode() async {
+    ApiService().sendValidationCode((BaseEntity _baseEntity) {
+      if (_baseEntity != null) {
+        if (_baseEntity.status == 0) {
+          Fluttertoast.showToast(msg: "验证码已发送，请注意查收！");
+          print(_baseEntity.data);
+          validationCode = _baseEntity.data;
+        } else {
+          Fluttertoast.showToast(msg: "验证码发送失败，请重试！");
+        }
+      }
+    }, (Error error) {
+      Fluttertoast.showToast(msg: "验证码发送失败，请检查网络！");
+    }, widget.userId, userTel);
+  }
+
+  /// 检测电话号码是否存在
+  Future<Null> _verifyUserAcc() async {
+    print('111');
+    ApiService().verifyUserAcc((BaseEntity _baseEntity) {
+      if (_baseEntity != null && _baseEntity.status == 0) {
+        print(_baseEntity.data);
+        if (_baseEntity.data == 0) {
+          setState(() {
+            _available = true;
+          });
+        } else {
+          Fluttertoast.showToast(msg: "手机号码已存在，请重新输入！");
+          userTelController.text = userTel.substring(0, 10);
+        }
+      }
+    }, (Error error) {
+      Fluttertoast.showToast(msg: "验证失败，请检查网络！");
+    }, userTel);
+  }
+
+  Future _overSignin() async {
+    final action = await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(S.of(context).tip),
+          content: Text('登陆失败，请先让您的孩子在他的账户中添加您为家人！'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(S.of(context).ok, style: TextStyle(color: Colors.blue)),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 

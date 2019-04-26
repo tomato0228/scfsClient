@@ -5,11 +5,13 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tomato_scfs/common/application.dart';
 import 'package:tomato_scfs/common/user.dart';
 import 'package:tomato_scfs/event/login_event.dart';
+import 'package:tomato_scfs/generated/i18n.dart';
 import 'package:tomato_scfs/http/api_service.dart';
 import 'package:tomato_scfs/model/user_entity.dart';
 import 'package:tomato_scfs/ui/app.dart';
 import 'package:tomato_scfs/ui/signin/signin_page.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tomato_scfs/ui/signin/signin_page_two.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -58,16 +60,23 @@ class LoginPageState extends State<LoginPage> {
         (null != password && password.trim().length > 0)) {
       ApiService().login((UserEntity _userEntity, Response response) {
         if (_userEntity != null) {
-          User().saveUserInfo(_userEntity, response);
-          Application.eventBus.fire(new LoginEvent());
           if (_userEntity.status == 0) {
-            Fluttertoast.showToast(msg: "登录成功！");
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => App()));
+            if (_userEntity.total == 0) {
+              _overSignin();
+            } else {
+              User().saveUserInfo(_userEntity, response);
+              Application.eventBus.fire(new LoginEvent());
+              Fluttertoast.showToast(msg: "登录成功！");
+              Navigator.of(context).pushAndRemoveUntil(
+                  new MaterialPageRoute(builder: (context) => App()),
+                  (route) => route == null);
+            }
           } else {
-            Fluttertoast.showToast(msg: "登陆失败！");
+            Fluttertoast.showToast(msg: "登陆失败，密码错误！");
           }
         }
+      }, (Error error) {
+        Fluttertoast.showToast(msg: "登陆失败，请检查网络！");
       }, username, password);
     } else {
       Fluttertoast.showToast(
@@ -90,8 +99,7 @@ class LoginPageState extends State<LoginPage> {
             tileMode: TileMode.repeated, // repeats the gradient over the canvas
           ),
         ),
-        height: MediaQuery.of(context).size.height,
-        child: Column(
+        child: ListView(
           children: <Widget>[
             Container(
               padding: const EdgeInsets.only(top: 120.0, bottom: 50.0),
@@ -274,9 +282,6 @@ class LoginPageState extends State<LoginPage> {
                 ],
               ),
             ),
-            new Expanded(
-              child: Divider(),
-            ),
             new Container(
               width: MediaQuery.of(context).size.width,
               margin: const EdgeInsets.only(
@@ -306,7 +311,6 @@ class LoginPageState extends State<LoginPage> {
           ],
         ),
       ),
-      resizeToAvoidBottomPadding: false, //输入框抵住键盘
     );
   }
 
@@ -317,11 +321,35 @@ class LoginPageState extends State<LoginPage> {
     });
   }
 
+  Future _overSignin() async {
+    final action = await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(S.of(context).tip),
+          content: Text('登陆失败，请先让您的孩子在他的账户中添加您为家人！'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(S.of(context).ok, style: TextStyle(color: Colors.blue)),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
+    ///
+    /// 强制竖屏
+    ///
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,

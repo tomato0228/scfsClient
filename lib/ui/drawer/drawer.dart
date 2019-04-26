@@ -21,33 +21,12 @@ class DrawerPage extends StatefulWidget {
 }
 
 class DrawerPageState extends State<DrawerPage> {
-  bool isLogin = false;
-  UserData userData = new UserData();
+  UserData userData;
 
   @override
   void initState() {
     super.initState();
-    this.registerLoginEvent();
-    if (null != User.singleton.userData) {
-      isLogin = true;
-      userData = User.singleton.userData;
-    } else {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => LoginPage()));
-    }
-  }
-
-  void registerLoginEvent() {
-    Application.eventBus.on<LoginEvent>().listen((event) {
-      changeUI();
-    });
-  }
-
-  changeUI() async {
-    setState(() {
-      isLogin = true;
-      userData = User.singleton.userData;
-    });
+    userData = User.singleton.userData;
   }
 
   @override
@@ -59,7 +38,7 @@ class DrawerPageState extends State<DrawerPage> {
           UserAccountsDrawerHeader(
             accountName: InkWell(
               child: Text(
-                userData.userName,
+                userData.userName ?? '点击设置名字',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20.0,
@@ -70,17 +49,12 @@ class DrawerPageState extends State<DrawerPage> {
             ),
             accountEmail: InkWell(
               child: Text(
-                userData.userEmail,
+                userData.userEmail ?? '点击设置邮箱',
                 style: TextStyle(
                   color: Colors.black,
                 ),
               ),
-              onTap: () {
-                if (!isLogin) {
-                  Navigator.of(context).push(
-                      new MaterialPageRoute(builder: (context) => Scaffold()));
-                }
-              },
+              onTap: () {},
             ),
             currentAccountPicture: InkWell(
               child: CircleAvatar(
@@ -109,7 +83,7 @@ class DrawerPageState extends State<DrawerPage> {
           ),
           ListTile(
             title: Text(
-              '语言',
+              S.of(context).language,
               textAlign: TextAlign.left,
             ),
             leading: Icon(Icons.language, size: 22.0),
@@ -119,7 +93,7 @@ class DrawerPageState extends State<DrawerPage> {
           ),
           ListTile(
             title: Text(
-              '主题',
+              S.of(context).theme,
               textAlign: TextAlign.left,
             ),
             leading: Icon(Icons.color_lens, size: 22.0),
@@ -128,7 +102,7 @@ class DrawerPageState extends State<DrawerPage> {
                 context: context,
                 builder: (BuildContext context) {
                   return new SimpleDialog(
-                    title: Text("设置主题"),
+                    title: Text(S.of(context).theme),
                     children: ThemeUtils.supportColors.map((Color color) {
                       return new SimpleDialogOption(
                         child: Container(
@@ -152,7 +126,7 @@ class DrawerPageState extends State<DrawerPage> {
           ),
           ListTile(
             title: Text(
-              '学校',
+              S.of(context).school,
               textAlign: TextAlign.left,
             ),
             leading: Icon(Icons.school, size: 22.0),
@@ -163,9 +137,21 @@ class DrawerPageState extends State<DrawerPage> {
               }));
             },
           ),
+          userData.userType == '学生'
+              ? ListTile(
+                  title: Text(
+                    S.of(context).addParents,
+                    textAlign: TextAlign.left,
+                  ),
+                  leading: Icon(Icons.group_add, size: 22.0),
+                  onTap: () {
+                    onCollectionClick();
+                  },
+                )
+              : Container(),
           ListTile(
             title: Text(
-              '关于作者',
+              S.of(context).aboutAuthor,
               textAlign: TextAlign.left,
             ),
             leading: Icon(Icons.info, size: 22.0),
@@ -181,17 +167,15 @@ class DrawerPageState extends State<DrawerPage> {
     if (User.singleton.userData != null) {
       return ListTile(
         title: Text(
-          '退出登录',
+          S.of(context).logOut,
           textAlign: TextAlign.left,
         ),
         leading: Icon(Icons.power_settings_new, size: 22.0),
         onTap: () {
           User.singleton.clearUserInfo();
-          setState(() {
-            isLogin = false;
-          });
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => LoginPage()));
+          Navigator.of(context).pushAndRemoveUntil(
+              new MaterialPageRoute(builder: (context) => LoginPage()),
+              (route) => route == null);
         },
       );
     } else {
@@ -226,7 +210,6 @@ class DrawerPageState extends State<DrawerPage> {
               ListTile(
                 title: Text('中文'),
                 onTap: () {
-//                  localeChange(Locale('zh', ''));
                   Utils.setLanguageType('zh');
                   changeLanguageType('zh');
                   Navigator.pop(context);
@@ -235,7 +218,6 @@ class DrawerPageState extends State<DrawerPage> {
               ListTile(
                 title: Text('English'),
                 onTap: () {
-//                  localeChange(Locale('en', ''));
                   Utils.setLanguageType('en');
                   changeLanguageType('en');
                   Navigator.pop(context);

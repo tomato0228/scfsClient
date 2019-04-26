@@ -35,7 +35,7 @@ dependencies:
   # 汉字转拼音库 https://github.com/flutterchina/lpinyin
   lpinyin: ^1.0.7
   # Dart 常用工具类库 https://github.com/Sky24n/common_utils
-  common_utils: ^1.1.0
+  common_utils: ^1.1.1
   flutter_screenutil: ^0.5.1
   intro_slider: ^1.2.0
   share: ^0.6.1
@@ -55,6 +55,7 @@ dependencies:
   azlistview: ^0.1.0
   bottom_tab_bar:
     git: https://github.com/LiuC520/flutter_bottom_tab_bar.git
+  crypto: ^2.0.6
   # 国际化
   flutter_localizations:
     sdk: flutter

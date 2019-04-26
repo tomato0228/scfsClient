@@ -722,7 +722,7 @@ class ChatPageState extends BaseWidgetState<ChatPage> {
     return AppBar(
       title: Text(chatContactsData.userName,
           style: TextStyle(fontWeight: FontWeight.bold)),
-      elevation: 0.0,
+      elevation: 1.0,
       actions: <Widget>[
         IconButton(
             icon: Icon(Icons.person_outline),

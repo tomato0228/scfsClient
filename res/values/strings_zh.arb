@@ -7,5 +7,12 @@
   "tip": "提示",
   "exit": "退出",
   "cancel": "关闭",
-  "exitAppTip": "确定退出应用吗？"
+  "exitAppTip": "确定退出应用吗？",
+  "ok": "确认",
+  "language": "语言",
+  "theme": "主题",
+  "school": "学校",
+  "addParents": "添加家长",
+  "aboutAuthor": "关于作者",
+  "logOut": "退出登录"
 }

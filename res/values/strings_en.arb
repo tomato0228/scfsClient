@@ -7,5 +7,12 @@
   "tip": "Tip",
   "exit": "Exit",
   "cancel": "Cancel",
-  "exitAppTip": "Are you sure you want to quit？"
+  "exitAppTip": "Are you sure you want to quit？",
+  "ok": "OK",
+  "language": "Language",
+  "theme": "Theme",
+  "school": "School",
+  "addParents": "Add parents",
+  "aboutAuthor": "About author",
+  "logOut": "Log out"
 }

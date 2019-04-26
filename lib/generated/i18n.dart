@@ -19,6 +19,8 @@ class S implements WidgetsLocalizations {
   @override
   TextDirection get textDirection => TextDirection.ltr;
 
+  String get aboutAuthor => "About author";
+  String get addParents => "Add parents";
   String get appAddressBook => "Contacts";
   String get appHomePage => "Home";
   String get appHomework => "Homework";
@@ -27,6 +29,11 @@ class S implements WidgetsLocalizations {
   String get cancel => "Cancel";
   String get exit => "Exit";
   String get exitAppTip => "Are you sure you want to quit？";
+  String get language => "Language";
+  String get logOut => "Log out";
+  String get ok => "OK";
+  String get school => "School";
+  String get theme => "Theme";
   String get tip => "Tip";
 }
 
@@ -43,9 +50,17 @@ class $zh extends S {
   @override
   String get cancel => "关闭";
   @override
+  String get appAddressBook => "通讯录";
+  @override
+  String get aboutAuthor => "关于作者";
+  @override
+  String get language => "语言";
+  @override
+  String get appMessage => "通知";
+  @override
   String get exit => "退出";
   @override
-  String get appAddressBook => "通讯录";
+  String get school => "学校";
   @override
   String get appHomePage => "首页";
   @override
@@ -53,9 +68,15 @@ class $zh extends S {
   @override
   String get tip => "提示";
   @override
-  String get appMessage => "通知";
+  String get theme => "主题";
+  @override
+  String get addParents => "添加家长";
+  @override
+  String get ok => "确认";
   @override
   String get exitAppTip => "确定退出应用吗？";
+  @override
+  String get logOut => "退出登录";
   @override
   String get appPersonal => "个人";
 }

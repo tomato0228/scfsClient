@@ -14,6 +14,122 @@ import 'package:tomato_scfs/model/user_entity.dart';
 import 'api.dart';
 
 class ApiService {
+  /// 登录
+  void login(Function callback, Function errorback, String _username,
+      String _password) async {
+    FormData formData =
+        new FormData.from({"username": _username, "password": _password});
+    DioManager.singleton.dio
+        .post(Api.getPath(path: Api.USER_LOGIN),
+            data: formData, options: _getOptions())
+        .then((response) {
+      callback(UserEntity.fromJson(response.data), response);
+    }).catchError((e) {
+      errorback(e);
+    });
+  }
+
+  /// 注册
+  void signin(
+      Function callback,
+      Function errorback,
+      String _userName,
+      String _userPassword,
+      String _userType,
+      String _userSex,
+      String _userBirth) async {
+    FormData formData = new FormData.from({
+      "userName": _userName,
+      "userPassword": _userPassword,
+      "userType": _userType,
+      "userSex": _userSex,
+      "userBirth": _userBirth,
+    });
+    DioManager.singleton.dio
+        .post(Api.getPath(path: Api.USER_SIGNIN),
+            data: formData, options: _getOptions())
+        .then((response) {
+      callback(BaseEntity.fromJson(response.data));
+    }).catchError((e) {
+      errorback(e);
+    });
+  }
+
+  /// 用户修改手机号码
+  void userUpdateTel(
+    Function callback,
+    Function errorback,
+    int _userId,
+    String _userTel,
+  ) async {
+    FormData formData = new FormData.from({
+      "userId": _userId,
+      "userTel": _userTel,
+    });
+    DioManager.singleton.dio
+        .post(Api.getPath(path: Api.USER_UPDATE),
+            data: formData, options: _getOptions())
+        .then((response) {
+      callback(UserEntity.fromJson(response.data), response);
+    }).catchError((e) {
+      errorback(e);
+    });
+  }
+
+  /// 用户修改邮箱
+  void userUpdateEmail(
+    Function callback,
+    Function errorback,
+    int _userId,
+    String _userEmail,
+  ) async {
+    FormData formData = new FormData.from({
+      "userId": _userId,
+      "userEmail": _userEmail,
+    });
+    DioManager.singleton.dio
+        .post(Api.getPath(path: Api.USER_UPDATE),
+            data: formData, options: _getOptions())
+        .then((response) {
+      callback(UserEntity.fromJson(response.data), response);
+    }).catchError((e) {
+      errorback(e);
+    });
+  }
+
+  /// 验证手机号码或邮箱是否存在
+  void verifyUserAcc(
+      Function callback, Function errorback, String _userAcc) async {
+    FormData formData = new FormData.from({"userAcc": _userAcc});
+    DioManager.singleton.dio
+        .post(Api.getPath(path: Api.USER_VERIFY_USER_ACC),
+            data: formData, options: _getOptions())
+        .then((response) {
+      callback(BaseEntity.fromJson(response.data));
+    }).catchError((e) {
+      errorback(e);
+    });
+  }
+
+  /// 发送验证码
+  void sendValidationCode(
+    Function callback,
+    Function errorback,
+    int _userId,
+    String _validationAcc,
+  ) async {
+    FormData formData =
+        new FormData.from({"userId": _userId, "validationAcc": _validationAcc});
+    DioManager.singleton.dio
+        .post(Api.getPath(path: Api.USER_SEND_CODE),
+            data: formData, options: _getOptions())
+        .then((response) {
+      callback(BaseEntity.fromJson(response.data));
+    }).catchError((e) {
+      errorback(e);
+    });
+  }
+
   /// 获取学校信息
   void getSchool(Function callback, Function errorback, int _userId) async {
     FormData formData = new FormData.from({"userId": _userId});
@@ -25,18 +141,6 @@ class ApiService {
       callback(SchoolEntity.fromJson(response.data));
     }).catchError((e) {
       errorback(e);
-    });
-  }
-
-  /// 登录
-  void login(Function callback, String _username, String _password) async {
-    FormData formData =
-        new FormData.from({"username": _username, "password": _password});
-    DioManager.singleton.dio
-        .post(Api.getPath(path: Api.USER_LOGIN),
-            data: formData, options: _getOptions())
-        .then((response) {
-      callback(UserEntity.fromJson(response.data), response);
     });
   }
 
@@ -435,16 +539,16 @@ class ApiService {
 
   /// 标记和某一个人的消息为已读
   void updateChatByUser(
-      Function callback,
-      Function errorback,
-      int _sendId,
-      int _receiveId,
-      ) async {
+    Function callback,
+    Function errorback,
+    int _sendId,
+    int _receiveId,
+  ) async {
     FormData formData =
-    new FormData.from({"sendId": _sendId, "receiveId": _receiveId});
+        new FormData.from({"sendId": _sendId, "receiveId": _receiveId});
     DioManager.singleton.dio
         .post(Api.getPath(path: Api.USER_UPDATE_CHAT_USER),
-        data: formData, options: _getOptions())
+            data: formData, options: _getOptions())
         .then((response) {
       callback(BaseEntity.fromJson(response.data));
     }).catchError((e) {
