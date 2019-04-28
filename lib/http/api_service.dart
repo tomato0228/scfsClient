@@ -207,7 +207,7 @@ class ApiService {
     });
   }
 
-  /// 获取科目列表
+  /// 获取科目列表--学生
   void getCourseByUserId(
     Function callback,
     Function errorback,
@@ -224,7 +224,7 @@ class ApiService {
     });
   }
 
-  /// 获取科目列表
+  /// 获取科目列表--家长
   void getCourseByParents(
     Function callback,
     Function errorback,
@@ -234,6 +234,27 @@ class ApiService {
     FormData formData = new FormData.from({
       "userId": _userId,
       "studentId": _studentId,
+    });
+    DioManager.singleton.dio
+        .post(Api.getPath(path: Api.USER_GET_COURSE),
+            data: formData, options: _getOptions())
+        .then((response) {
+      callback(CourseEntity.fromJson(response.data));
+    }).catchError((e) {
+      errorback(e);
+    });
+  }
+
+  /// 获取科目列表--教师
+  void getCoursesByTeacher(
+    Function callback,
+    Function errorback,
+    int _userId,
+    int _classId,
+  ) async {
+    FormData formData = new FormData.from({
+      "userId": _userId,
+      "studentId": _classId,
     });
     DioManager.singleton.dio
         .post(Api.getPath(path: Api.USER_GET_COURSE),

@@ -205,6 +205,22 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
     }, userData.userId);
   }
 
+  Future<Null> _getCoursesByTeacher() async {
+    ApiService().getCoursesByTeacher((CourseEntity _courseEntity) {
+      if (_courseEntity != null && _courseEntity.status == 0) {
+        setState(() {
+          _courseDatas = _courseEntity.data;
+        });
+      } else {
+        Fluttertoast.showToast(msg: "获取科目列表失败！");
+      }
+    }, (Error error) {
+      setState(() {
+        showError();
+      });
+    }, userData.userId, _studentItem);
+  }
+
   Future<Null> _getCoursesByParents() async {
     ApiService().getCourseByParents((CourseEntity _courseEntity) {
       if (_courseEntity != null && _courseEntity.status == 0) {
@@ -218,7 +234,7 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
       setState(() {
         showError();
       });
-    }, userData.userId, _studentItem);
+    }, userData.userId, _classItem);
   }
 
   Future<Null> _getClasses() async {
@@ -335,7 +351,7 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
     super.initState();
     setAppBarVisible(false);
     userData = User.singleton.userData;
-    if (userData.userType != '家长') _getCourses();
+    if (userData.userType == '学生') _getCourses();
     if (userData.userType == '教师') _getClasses();
     if (userData.userType == '家长') _getStudentList();
     showContent();
@@ -359,6 +375,7 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
                           setState(() {
                             _classItem = value;
                           });
+                          _getCoursesByTeacher();
                         },
                         elevation: 24,
                         items: getClassListData(),
