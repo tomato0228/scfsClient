@@ -14,5 +14,12 @@
   "school": "学校",
   "addParents": "添加家长",
   "aboutAuthor": "关于作者",
-  "logOut": "退出登录"
+  "logOut": "退出登录",
+  "addParentsTip": "确认添加 ${parentsName} 为自己家长吗？",
+  "selectParentsRelation": "选择和 ${parentsName} 的关系",
+  "otherRelations": "其他",
+  "grandmaRelations": "奶奶",
+  "grandpaRelations": "爷爷",
+  "motherRelations": "母亲",
+  "fatherRelations": "父亲"
 }

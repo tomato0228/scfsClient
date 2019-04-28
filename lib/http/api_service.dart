@@ -130,6 +130,52 @@ class ApiService {
     });
   }
 
+  /// 搜索联系人
+  void searchUser(
+    Function callback,
+    Function errorback,
+    int _userId,
+    String _keywords,
+    bool _addParents,
+  ) async {
+    FormData formData = new FormData.from({
+      "userId": _userId,
+      "keywords": _keywords,
+      'addParents': _addParents,
+    });
+    DioManager.singleton.dio
+        .post(Api.getPath(path: Api.USER_SEARCH_USER),
+            data: formData, options: _getOptions())
+        .then((response) {
+      callback(ContactsEntity.fromJson(response.data));
+    }).catchError((e) {
+      errorback(e);
+    });
+  }
+
+  /// 添加家长
+  void addParents(
+    Function callback,
+    Function errorback,
+    int _userId,
+    int _parentsId,
+    String _parentsRelation,
+  ) async {
+    FormData formData = new FormData.from({
+      "userId": _userId,
+      "parentsId": _parentsId,
+      'parentsRelation': _parentsRelation,
+    });
+    DioManager.singleton.dio
+        .post(Api.getPath(path: Api.USER_ADD_PARENTS),
+            data: formData, options: _getOptions())
+        .then((response) {
+      callback(BaseEntity.fromJson(response.data));
+    }).catchError((e) {
+      errorback(e);
+    });
+  }
+
   /// 获取学校信息
   void getSchool(Function callback, Function errorback, int _userId) async {
     FormData formData = new FormData.from({"userId": _userId});

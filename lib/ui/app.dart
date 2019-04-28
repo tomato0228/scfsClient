@@ -140,7 +140,7 @@ class AppState extends State<App> {
   Future<bool> _onWillPop() {
     return showDialog(
           context: context,
-          builder: (context) => new AlertDialog(
+          builder: (context) => AlertDialog(
                 title: new Text(S.of(context).tip),
                 content: new Text(S.of(context).exitAppTip),
                 actions: <Widget>[

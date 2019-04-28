@@ -21,6 +21,12 @@ class Api {
   /// 验证验证码
   static const String USER_VERIFY_CODE = "User/verifyValidationCode";
 
+  /// 搜索联系人
+  static const String USER_SEARCH_USER = "User/searchUser";
+
+  /// 添加家长
+  static const String USER_ADD_PARENTS = "User/addParents";
+
   /// 用户学校信息
   static const String USER_GET_SCHOOL = "School/getSchool";
 

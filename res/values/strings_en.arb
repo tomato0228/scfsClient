@@ -14,5 +14,12 @@
   "school": "School",
   "addParents": "Add parents",
   "aboutAuthor": "About author",
-  "logOut": "Log out"
+  "logOut": "Log out",
+  "addParentsTip": "Confirm adding ${parentsName} as your parent?",
+  "selectParentsRelation": "Select the relationship with ${parentsName}",
+  "otherRelations": "Other",
+  "grandmaRelations": "Grandma",
+  "grandpaRelations": "Grandpa",
+  "motherRelations": "Mother",
+  "fatherRelations": "Father"
 }

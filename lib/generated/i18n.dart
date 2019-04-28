@@ -29,12 +29,19 @@ class S implements WidgetsLocalizations {
   String get cancel => "Cancel";
   String get exit => "Exit";
   String get exitAppTip => "Are you sure you want to quit？";
+  String get fatherRelations => "Father";
+  String get grandmaRelations => "Grandma";
+  String get grandpaRelations => "Grandpa";
   String get language => "Language";
   String get logOut => "Log out";
+  String get motherRelations => "Mother";
   String get ok => "OK";
+  String get otherRelations => "Other";
   String get school => "School";
   String get theme => "Theme";
   String get tip => "Tip";
+  String addParentsTip(String parentsName) => "Confirm adding ${parentsName} as your parent?";
+  String selectParentsRelation(String parentsName) => "Select the relationship with ${parentsName}";
 }
 
 class $en extends S {
@@ -52,7 +59,13 @@ class $zh extends S {
   @override
   String get appAddressBook => "通讯录";
   @override
+  String get grandpaRelations => "爷爷";
+  @override
+  String get grandmaRelations => "奶奶";
+  @override
   String get aboutAuthor => "关于作者";
+  @override
+  String get otherRelations => "其他";
   @override
   String get language => "语言";
   @override
@@ -62,9 +75,13 @@ class $zh extends S {
   @override
   String get school => "学校";
   @override
+  String get fatherRelations => "父亲";
+  @override
   String get appHomePage => "首页";
   @override
   String get appHomework => "作业";
+  @override
+  String get motherRelations => "母亲";
   @override
   String get tip => "提示";
   @override
@@ -79,6 +96,10 @@ class $zh extends S {
   String get logOut => "退出登录";
   @override
   String get appPersonal => "个人";
+  @override
+  String selectParentsRelation(String parentsName) => "选择和 ${parentsName} 的关系";
+  @override
+  String addParentsTip(String parentsName) => "确认添加 ${parentsName} 为自己家长吗？";
 }
 
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {
