@@ -10,7 +10,6 @@ import 'package:tomato_scfs/util/theme_util.dart';
 class SchoolPage extends BaseWidget {
   @override
   BaseWidgetState<BaseWidget> getState() {
-    // TODO: implement getState
     return SchoolPageState();
   }
 }
@@ -39,7 +38,6 @@ class SchoolPageState extends BaseWidgetState<SchoolPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setAppBarVisible(true);
     showloading();
@@ -48,13 +46,11 @@ class SchoolPageState extends BaseWidgetState<SchoolPage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 
   @override
   AppBar getAppBar() {
-    // TODO: implement getAppBar
     return AppBar(
       title: Text(_schoolData.schoolName),
       elevation: 0.0,
@@ -63,11 +59,10 @@ class SchoolPageState extends BaseWidgetState<SchoolPage> {
 
   @override
   Widget getContentWidget(BuildContext context) {
-    // TODO: implement getContentWidget
     return Scaffold(
-      body: new SingleChildScrollView(
-        child: new ConstrainedBox(
-          constraints: new BoxConstraints(
+      body: SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
             minHeight: 120.0,
           ),
           child: Card(
@@ -121,9 +116,8 @@ class SchoolPageState extends BaseWidgetState<SchoolPage> {
 
   @override
   void onClickErrorWidget() {
-    // TODO: implement onClickErrorWidget
     Navigator.of(context).pushAndRemoveUntil(
         new MaterialPageRoute(builder: (context) => App()),
-            (route) => route == null);
+        (route) => route == null);
   }
 }

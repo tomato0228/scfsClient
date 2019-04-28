@@ -1,10 +1,9 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tomato_scfs/http/api_service.dart';
 import 'package:tomato_scfs/model/base_entity.dart';
 import 'package:tomato_scfs/model/notice_entity.dart';
 import 'package:tomato_scfs/util/theme_util.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class NoticeEditPage extends StatefulWidget {
   final NoticeData noticeDate;
@@ -59,8 +58,8 @@ class NoticeEditPageState extends State<NoticeEditPage> {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-        appBar: new AppBar(
-          title: new Text('编辑通知'),
+        appBar: AppBar(
+          title: Text('编辑通知'),
         ),
         body: Container(
           padding: EdgeInsets.all(16.0),
@@ -103,10 +102,10 @@ class NoticeEditPageState extends State<NoticeEditPage> {
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.only(left: 48.0),
                 alignment: Alignment.center,
-                child: new Row(
+                child: Row(
                   children: <Widget>[
                     new Expanded(
-                      child: new FlatButton(
+                      child: FlatButton(
                         padding: const EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 10.0),
                         color: ThemeUtils.currentColorTheme,

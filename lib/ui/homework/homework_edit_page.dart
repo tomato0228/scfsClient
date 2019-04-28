@@ -1,10 +1,9 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tomato_scfs/http/api_service.dart';
 import 'package:tomato_scfs/model/base_entity.dart';
 import 'package:tomato_scfs/model/homework_entity.dart';
 import 'package:tomato_scfs/util/theme_util.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class HomeworkEditPage extends StatefulWidget {
   final HomeworkData homeworkDate;
@@ -60,8 +59,8 @@ class HomeworkEditPageState extends State<HomeworkEditPage> {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-        appBar: new AppBar(
-          title: new Text('编辑作业'),
+        appBar: AppBar(
+          title: Text('编辑作业'),
         ),
         body: Container(
           padding: EdgeInsets.all(16.0),
@@ -96,10 +95,10 @@ class HomeworkEditPageState extends State<HomeworkEditPage> {
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.only(left: 48.0),
                 alignment: Alignment.center,
-                child: new Row(
+                child: Row(
                   children: <Widget>[
                     new Expanded(
-                      child: new FlatButton(
+                      child: FlatButton(
                         padding: const EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 10.0),
                         color: ThemeUtils.currentColorTheme,
@@ -132,7 +131,6 @@ class HomeworkEditPageState extends State<HomeworkEditPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     textHomeworkContentController.text = homeworkDate.homeworkContent;
     textHomeworkAttachmentController.text = homeworkDate.homeworkAttachment;
@@ -140,7 +138,6 @@ class HomeworkEditPageState extends State<HomeworkEditPage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     textHomeworkContentController.dispose();
     textHomeworkAttachmentController.dispose();

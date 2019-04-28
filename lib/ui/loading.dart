@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tomato_scfs/common/user.dart';
 import 'package:tomato_scfs/ui/app.dart';
@@ -28,15 +28,14 @@ class _LoadingState extends State<LoadingPage> {
     if (hasSkip == null || !hasSkip) {
       Navigator.of(context).pushReplacementNamed("splash");
     } else {
-      if(User.singleton.userData != null) {
+      if (User.singleton.userData != null) {
         Navigator.of(context).pushAndRemoveUntil(
             new MaterialPageRoute(builder: (context) => App()),
-                (route) => route == null);
-      }
-      else {
+            (route) => route == null);
+      } else {
         Navigator.of(context).pushAndRemoveUntil(
             new MaterialPageRoute(builder: (context) => LoginPage()),
-                (route) => route == null);
+            (route) => route == null);
       }
     }
   }

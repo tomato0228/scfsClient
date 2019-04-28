@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:tomato_scfs/common/user.dart';
 import 'package:tomato_scfs/generated/i18n.dart';
 import 'package:tomato_scfs/model/user_entity.dart';
-import 'package:tomato_scfs/ui/pub/webview_page.dart';
-import 'package:tomato_scfs/util/utils.dart';
 
 class AboutPage extends StatefulWidget {
   @override
@@ -21,7 +19,6 @@ class AboutPageState extends State<AboutPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     userData = User.singleton.userData;
   }

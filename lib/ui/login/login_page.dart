@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tomato_scfs/common/application.dart';
 import 'package:tomato_scfs/common/user.dart';
 import 'package:tomato_scfs/event/login_event.dart';
@@ -10,8 +11,6 @@ import 'package:tomato_scfs/http/api_service.dart';
 import 'package:tomato_scfs/model/user_entity.dart';
 import 'package:tomato_scfs/ui/app.dart';
 import 'package:tomato_scfs/ui/signin/signin_page.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:tomato_scfs/ui/signin/signin_page_two.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -39,7 +38,7 @@ class LoginPageState extends State<LoginPage> {
     FocusScope.of(context).requestFocus(new FocusNode());
     _scaffoldKey.currentState?.removeCurrentSnackBar();
     _scaffoldKey.currentState.showSnackBar(new SnackBar(
-      content: new Text(
+      content: Text(
         value,
         textAlign: TextAlign.center,
         style: TextStyle(
@@ -89,10 +88,10 @@ class LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       body: Container(
-        decoration: new BoxDecoration(
-          gradient: new LinearGradient(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
             begin: Alignment.centerLeft,
-            end: new Alignment(1.0, 0.0),
+            end: Alignment(1.0, 0.0),
             // 10% of the width, so there are ten blinds.
             colors: [this.backgroundColor1, this.backgroundColor2],
             // whitish to gray
@@ -104,16 +103,16 @@ class LoginPageState extends State<LoginPage> {
             Container(
               padding: const EdgeInsets.only(top: 120.0, bottom: 50.0),
               child: Center(
-                child: new Column(
+                child: Column(
                   children: <Widget>[
                     Container(
                       height: 128.0,
                       width: 128.0,
-                      child: new CircleAvatar(
+                      child: CircleAvatar(
                         backgroundColor: Colors.transparent,
                         foregroundColor: this.foregroundColor,
                         radius: 100.0,
-                        child: new Text(
+                        child: Text(
                           "S",
                           style: TextStyle(
                             fontSize: 50.0,
@@ -132,7 +131,7 @@ class LoginPageState extends State<LoginPage> {
                     ),
                     new Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: new Text(
+                      child: Text(
                         "Samarth Agarwal",
                         style: TextStyle(color: this.foregroundColor),
                       ),
@@ -154,7 +153,7 @@ class LoginPageState extends State<LoginPage> {
                 ),
               ),
               padding: const EdgeInsets.only(left: 0.0, right: 10.0),
-              child: new Row(
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -197,7 +196,7 @@ class LoginPageState extends State<LoginPage> {
                 ),
               ),
               padding: const EdgeInsets.only(left: 0.0, right: 10.0),
-              child: new Row(
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -241,10 +240,10 @@ class LoginPageState extends State<LoginPage> {
               width: MediaQuery.of(context).size.width,
               margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 30.0),
               alignment: Alignment.center,
-              child: new Row(
+              child: Row(
                 children: <Widget>[
                   new Expanded(
-                    child: new FlatButton(
+                    child: FlatButton(
                       padding: const EdgeInsets.symmetric(
                           vertical: 20.0, horizontal: 20.0),
                       color: this.highlightColor,
@@ -264,10 +263,10 @@ class LoginPageState extends State<LoginPage> {
               width: MediaQuery.of(context).size.width,
               margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 10.0),
               alignment: Alignment.center,
-              child: new Row(
+              child: Row(
                 children: <Widget>[
                   new Expanded(
-                    child: new FlatButton(
+                    child: FlatButton(
                       padding: const EdgeInsets.symmetric(
                           vertical: 20.0, horizontal: 20.0),
                       color: Colors.transparent,
@@ -287,10 +286,10 @@ class LoginPageState extends State<LoginPage> {
               margin: const EdgeInsets.only(
                   left: 40.0, right: 40.0, top: 0.0, bottom: 0.0),
               alignment: Alignment.center,
-              child: new Row(
+              child: Row(
                 children: <Widget>[
                   new Expanded(
-                    child: new FlatButton(
+                    child: FlatButton(
                       padding: const EdgeInsets.symmetric(
                           vertical: 20.0, horizontal: 20.0),
                       color: Colors.transparent,
@@ -322,7 +321,7 @@ class LoginPageState extends State<LoginPage> {
   }
 
   Future _overSignin() async {
-    final action = await showDialog(
+    await showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
@@ -331,7 +330,8 @@ class LoginPageState extends State<LoginPage> {
           content: Text('登陆失败，请先让您的孩子在他的账户中添加您为家人！'),
           actions: <Widget>[
             FlatButton(
-              child: Text(S.of(context).ok, style: TextStyle(color: Colors.blue)),
+              child:
+                  Text(S.of(context).ok, style: TextStyle(color: Colors.blue)),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -344,7 +344,6 @@ class LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     ///
@@ -358,7 +357,6 @@ class LoginPageState extends State<LoginPage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     myFocusNodePasswordLogin.dispose();
     myFocusNodeNameLogin.dispose();

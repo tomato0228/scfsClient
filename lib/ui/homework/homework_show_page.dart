@@ -14,8 +14,8 @@ class HomeworkShowPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: new AppBar(
-        title: new Text('作业详情'),
+      appBar: AppBar(
+        title: Text('作业详情'),
         actions: <Widget>[
           userData.userType == '教师'
               ? IconButton(

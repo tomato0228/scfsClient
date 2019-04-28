@@ -1,23 +1,20 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tomato_scfs/base/_base_widget.dart';
 import 'package:tomato_scfs/common/user.dart';
 import 'package:tomato_scfs/http/api_service.dart';
 import 'package:tomato_scfs/model/base_entity.dart';
 import 'package:tomato_scfs/model/class_entity.dart';
-import 'package:tomato_scfs/model/homework_entity.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tomato_scfs/model/course_entity.dart';
+import 'package:tomato_scfs/model/homework_entity.dart';
 import 'package:tomato_scfs/model/user_entity.dart';
 import 'package:tomato_scfs/ui/app.dart';
 import 'package:tomato_scfs/ui/homework/homework_add_page.dart';
 import 'package:tomato_scfs/ui/homework/homework_show_page.dart';
-import 'package:tomato_scfs/util/theme_util.dart';
 
 class HomeworkPage extends BaseWidget {
   @override
   BaseWidgetState<BaseWidget> getState() {
-    // TODO: implement getState
     return HomeworkPageState();
   }
 }
@@ -37,7 +34,7 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
     if (_courseDatas != null) {
       for (CourseData sourseData in _courseDatas) {
         DropdownMenuItem dropdownMenuItem = new DropdownMenuItem(
-          child: new Text(sourseData.courseName),
+          child: Text(sourseData.courseName),
           value: sourseData.courseId,
         );
         items.add(dropdownMenuItem);
@@ -51,7 +48,7 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
     if (_classDatas != null) {
       for (ClassData classData in _classDatas) {
         DropdownMenuItem dropdownMenuItem = new DropdownMenuItem(
-          child: new Text(classData.className),
+          child: Text(classData.className),
           value: classData.classId,
         );
         items.add(dropdownMenuItem);
@@ -66,7 +63,7 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
     if (_studentDatas != null) {
       for (UserData userData in _studentDatas) {
         DropdownMenuItem dropdownMenuItem = new DropdownMenuItem(
-          child: new Text(userData.userName),
+          child: Text(userData.userName),
           value: userData.userId,
         );
         items.add(dropdownMenuItem);
@@ -76,7 +73,7 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
   }
 
   Future _openAlertDialog(HomeworkData homeworkData) async {
-    final action = await showDialog(
+    await showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
@@ -347,7 +344,6 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setAppBarVisible(false);
     userData = User.singleton.userData;
@@ -359,7 +355,6 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
 
   @override
   Widget getContentWidget(BuildContext context) {
-    // TODO: implement getContentWidget
     return Scaffold(
       body: Container(
         padding: EdgeInsets.all(16.0),
@@ -380,7 +375,7 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
                         elevation: 24,
                         items: getClassListData(),
                         value: _classItem,
-                        hint: new Text('选择班级'),
+                        hint: Text('选择班级'),
                       )
                     : Container(),
                 userData.userType == '家长'
@@ -394,7 +389,7 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
                         elevation: 24,
                         items: getStudentListData(),
                         value: _studentItem,
-                        hint: new Text('选择孩子'),
+                        hint: Text('选择孩子'),
                       )
                     : Container(),
                 SizedBox(width: 16.0),
@@ -407,7 +402,7 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
                   elevation: 24,
                   items: getCourseListData(),
                   value: _courseItem,
-                  hint: new Text('选择科目'),
+                  hint: Text('选择科目'),
                 ),
                 SizedBox(width: 16.0),
                 Theme(
@@ -476,7 +471,6 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
 
   @override
   void onClickErrorWidget() {
-    // TODO: implement onClickErrorWidget
     Navigator.of(context).pushAndRemoveUntil(
         new MaterialPageRoute(builder: (context) => App()),
         (route) => route == null);
@@ -484,7 +478,6 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
 
   @override
   AppBar getAppBar() {
-    // TODO: implement getAppBar
     return AppBar(
       title: Text("homework"),
       elevation: 0.0,
@@ -493,7 +486,6 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 }

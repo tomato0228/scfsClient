@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tomato_scfs/base/_base_widget.dart';
 import 'package:tomato_scfs/common/user.dart';
 import 'package:tomato_scfs/http/api_service.dart';
@@ -6,7 +7,6 @@ import 'package:tomato_scfs/model/class_entity.dart';
 import 'package:tomato_scfs/model/user_entity.dart';
 import 'package:tomato_scfs/ui/app.dart';
 import 'package:tomato_scfs/ui/drawer/personal_page.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class ContactsPage extends BaseWidget {
   @override
@@ -58,7 +58,7 @@ class ContactsPageState extends BaseWidgetState<ContactsPage> {
                       elevation: 24,
                       items: getTypeListData(),
                       value: _typeItem,
-                      hint: new Text('选择类别'),
+                      hint: Text('选择类别'),
                     ),
                     SizedBox(width: 16.0),
                     userData.userType == '教师'
@@ -71,7 +71,7 @@ class ContactsPageState extends BaseWidgetState<ContactsPage> {
                             elevation: 24,
                             items: getClassListData(),
                             value: _classItem,
-                            hint: new Text('选择班级'),
+                            hint: Text('选择班级'),
                           )
                         : Container(),
                     userData.userType == '家长'
@@ -84,7 +84,7 @@ class ContactsPageState extends BaseWidgetState<ContactsPage> {
                             elevation: 24,
                             items: getStudentListData(),
                             value: _studentItem,
-                            hint: new Text('选择孩子'),
+                            hint: Text('选择孩子'),
                           )
                         : Container(),
                     SizedBox(width: 16.0),
@@ -188,7 +188,7 @@ class ContactsPageState extends BaseWidgetState<ContactsPage> {
     if (_classDatas != null) {
       for (ClassData classData in _classDatas) {
         DropdownMenuItem dropdownMenuItem = new DropdownMenuItem(
-          child: new Text(classData.className),
+          child: Text(classData.className),
           value: classData.classId,
         );
         items.add(dropdownMenuItem);
@@ -203,7 +203,7 @@ class ContactsPageState extends BaseWidgetState<ContactsPage> {
     if (_userTypes != null) {
       for (String s in _userTypes) {
         DropdownMenuItem dropdownMenuItem = new DropdownMenuItem(
-          child: new Text(s),
+          child: Text(s),
           value: s,
         );
         items.add(dropdownMenuItem);
@@ -218,7 +218,7 @@ class ContactsPageState extends BaseWidgetState<ContactsPage> {
     if (_studentDatas != null) {
       for (UserData userData in _studentDatas) {
         DropdownMenuItem dropdownMenuItem = new DropdownMenuItem(
-          child: new Text(userData.userName),
+          child: Text(userData.userName),
           value: userData.userId,
         );
         items.add(dropdownMenuItem);

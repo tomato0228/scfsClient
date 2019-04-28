@@ -2,18 +2,11 @@ import 'package:common_utils/common_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:tomato_scfs/common/application.dart';
-import 'package:tomato_scfs/common/user.dart';
-import 'package:tomato_scfs/event/login_event.dart';
 import 'package:tomato_scfs/generated/i18n.dart';
 import 'package:tomato_scfs/http/api_service.dart';
 import 'package:tomato_scfs/model/base_entity.dart';
 import 'package:tomato_scfs/model/user_entity.dart';
-import 'package:tomato_scfs/ui/app.dart';
 import 'package:tomato_scfs/ui/signin/signin_code.dart';
-import 'package:crypto/crypto.dart';
-import 'dart:convert';
 
 /// 墨水瓶（`InkWell`）可用时使用的字体样式。
 final TextStyle _availableStyle = TextStyle(
@@ -57,7 +50,6 @@ class SigninPageTwoState extends State<SigninPageTwo> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     userTel = '';
     validationCode = 0;
@@ -77,10 +69,10 @@ class SigninPageTwoState extends State<SigninPageTwo> {
   Widget build(BuildContext context) {
     return new Scaffold(
       body: Container(
-        decoration: new BoxDecoration(
-          gradient: new LinearGradient(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
             begin: Alignment.centerLeft,
-            end: new Alignment(1.0, 0.0),
+            end: Alignment(1.0, 0.0),
             // 10% of the width, so there are ten blinds.
             colors: [this.backgroundColor1, this.backgroundColor2],
             // whitish to gray
@@ -93,16 +85,16 @@ class SigninPageTwoState extends State<SigninPageTwo> {
             Container(
               padding: const EdgeInsets.only(top: 120.0, bottom: 50.0),
               child: Center(
-                child: new Column(
+                child: Column(
                   children: <Widget>[
                     Container(
                       height: 128.0,
                       width: 128.0,
-                      child: new CircleAvatar(
+                      child: CircleAvatar(
                         backgroundColor: Colors.transparent,
                         foregroundColor: this.foregroundColor,
                         radius: 100.0,
-                        child: new Text(
+                        child: Text(
                           "S",
                           style: TextStyle(
                             fontSize: 50.0,
@@ -121,7 +113,7 @@ class SigninPageTwoState extends State<SigninPageTwo> {
                     ),
                     new Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: new Text(
+                      child: Text(
                         "Samarth Agarwal",
                         style: TextStyle(color: this.foregroundColor),
                       ),
@@ -143,7 +135,7 @@ class SigninPageTwoState extends State<SigninPageTwo> {
                 ),
               ),
               padding: const EdgeInsets.only(left: 0.0, right: 10.0),
-              child: new Row(
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -184,7 +176,7 @@ class SigninPageTwoState extends State<SigninPageTwo> {
                 ),
               ),
               padding: const EdgeInsets.only(left: 0.0, right: 10.0),
-              child: new Row(
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -223,10 +215,10 @@ class SigninPageTwoState extends State<SigninPageTwo> {
               width: MediaQuery.of(context).size.width,
               margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 30.0),
               alignment: Alignment.center,
-              child: new Row(
+              child: Row(
                 children: <Widget>[
                   new Expanded(
-                    child: new FlatButton(
+                    child: FlatButton(
                       padding: const EdgeInsets.symmetric(
                           vertical: 20.0, horizontal: 20.0),
                       color: this.highlightColor,
@@ -246,10 +238,10 @@ class SigninPageTwoState extends State<SigninPageTwo> {
               width: MediaQuery.of(context).size.width,
               margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 10.0),
               alignment: Alignment.center,
-              child: new Row(
+              child: Row(
                 children: <Widget>[
                   new Expanded(
-                    child: new FlatButton(
+                    child: FlatButton(
                       padding: const EdgeInsets.symmetric(
                           vertical: 20.0, horizontal: 20.0),
                       color: Colors.transparent,
@@ -269,10 +261,10 @@ class SigninPageTwoState extends State<SigninPageTwo> {
               margin: const EdgeInsets.only(
                   left: 40.0, right: 40.0, top: 10.0, bottom: 20.0),
               alignment: Alignment.center,
-              child: new Row(
+              child: Row(
                 children: <Widget>[
                   new Expanded(
-                    child: new FlatButton(
+                    child: FlatButton(
                       padding: const EdgeInsets.symmetric(
                           vertical: 20.0, horizontal: 20.0),
                       color: Colors.transparent,
@@ -366,7 +358,7 @@ class SigninPageTwoState extends State<SigninPageTwo> {
   }
 
   Future _overSignin() async {
-    final action = await showDialog(
+    await showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
@@ -375,7 +367,8 @@ class SigninPageTwoState extends State<SigninPageTwo> {
           content: Text('登陆失败，请先让您的孩子在他的账户中添加您为家人！'),
           actions: <Widget>[
             FlatButton(
-              child: Text(S.of(context).ok, style: TextStyle(color: Colors.blue)),
+              child:
+                  Text(S.of(context).ok, style: TextStyle(color: Colors.blue)),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -388,7 +381,6 @@ class SigninPageTwoState extends State<SigninPageTwo> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 }

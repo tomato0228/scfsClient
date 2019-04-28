@@ -1,12 +1,11 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tomato_scfs/common/user.dart';
 import 'package:tomato_scfs/http/api_service.dart';
 import 'package:tomato_scfs/model/base_entity.dart';
 import 'package:tomato_scfs/model/class_entity.dart';
 import 'package:tomato_scfs/model/user_entity.dart';
 import 'package:tomato_scfs/util/theme_util.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class NoticeAddPage extends StatefulWidget {
   final List<ClassData> classDatas;
@@ -40,7 +39,7 @@ class NoticeAddPageState extends State<NoticeAddPage> {
     if (classDatas != null) {
       for (ClassData classData in classDatas) {
         DropdownMenuItem dropdownMenuItem = new DropdownMenuItem(
-          child: new Text(classData.className),
+          child: Text(classData.className),
           value: classData.classId,
         );
         items.add(dropdownMenuItem);
@@ -85,8 +84,8 @@ class NoticeAddPageState extends State<NoticeAddPage> {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-        appBar: new AppBar(
-          title: new Text('发布通知'),
+        appBar: AppBar(
+          title: Text('发布通知'),
         ),
         body: Container(
           padding: EdgeInsets.all(16.0),
@@ -107,7 +106,7 @@ class NoticeAddPageState extends State<NoticeAddPage> {
                     elevation: 24,
                     items: getClassListData(),
                     value: _classItem,
-                    hint: new Text('选择班级'),
+                    hint: Text('选择班级'),
                   ),
                 ],
               ),
@@ -152,10 +151,10 @@ class NoticeAddPageState extends State<NoticeAddPage> {
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.only(left: 48.0),
                 alignment: Alignment.center,
-                child: new Row(
+                child: Row(
                   children: <Widget>[
                     new Expanded(
-                      child: new FlatButton(
+                      child: FlatButton(
                         padding: const EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 10.0),
                         color: ThemeUtils.currentColorTheme,

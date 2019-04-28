@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:tomato_scfs/base/_base_widget.dart';
@@ -15,7 +15,6 @@ import 'package:tomato_scfs/model/user_entity.dart';
 import 'package:tomato_scfs/ui/app.dart';
 import 'package:tomato_scfs/ui/drawer/personal_page.dart';
 import 'package:tomato_scfs/util/const.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tomato_scfs/util/utils.dart';
 
 class ChatPage extends BaseWidget {
@@ -25,7 +24,6 @@ class ChatPage extends BaseWidget {
 
   @override
   BaseWidgetState<BaseWidget> getState() {
-    // TODO: implement getState
     return ChatPageState(chatContactsData: chatContactsData);
   }
 }
@@ -49,7 +47,6 @@ class ChatPageState extends BaseWidgetState<ChatPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setAppBarVisible(true);
     isLoading = false;
@@ -599,7 +596,7 @@ class ChatPageState extends BaseWidgetState<ChatPage> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       ),
       decoration: BoxDecoration(
-          border: new Border(top: BorderSide(color: greyColor2, width: 0.5)),
+          border: Border(top: BorderSide(color: greyColor2, width: 0.5)),
           color: Colors.white),
       padding: EdgeInsets.all(5.0),
       height: 180.0,
@@ -710,7 +707,6 @@ class ChatPageState extends BaseWidgetState<ChatPage> {
 
   @override
   void onClickErrorWidget() {
-    // TODO: implement onClickErrorWidget
     Navigator.of(context).pushAndRemoveUntil(
         new MaterialPageRoute(builder: (context) => App()),
         (route) => route == null);
@@ -718,7 +714,6 @@ class ChatPageState extends BaseWidgetState<ChatPage> {
 
   @override
   AppBar getAppBar() {
-    // TODO: implement getAppBar
     return AppBar(
       title: Text(chatContactsData.userName,
           style: TextStyle(fontWeight: FontWeight.bold)),

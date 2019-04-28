@@ -29,7 +29,6 @@ class PersonalPageState extends State<PersonalPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -50,7 +49,10 @@ class PersonalPageState extends State<PersonalPage> {
                     ? CircleAvatar(
                         minRadius: 60,
                         maxRadius: 60,
-                        child: Text(userData.userName[0],style: TextStyle(fontSize: 52),),
+                        child: Text(
+                          userData.userName[0],
+                          style: TextStyle(fontSize: 52),
+                        ),
                       )
                     : CircleAvatar(
                         minRadius: 60,

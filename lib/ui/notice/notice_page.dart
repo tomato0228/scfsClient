@@ -1,17 +1,15 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tomato_scfs/base/_base_widget.dart';
 import 'package:tomato_scfs/common/user.dart';
 import 'package:tomato_scfs/http/api_service.dart';
 import 'package:tomato_scfs/model/base_entity.dart';
 import 'package:tomato_scfs/model/class_entity.dart';
 import 'package:tomato_scfs/model/notice_entity.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tomato_scfs/model/user_entity.dart';
 import 'package:tomato_scfs/ui/app.dart';
 import 'package:tomato_scfs/ui/notice/notice_add_page.dart';
 import 'package:tomato_scfs/ui/notice/notice_show_page.dart';
-import 'package:tomato_scfs/util/theme_util.dart';
 
 class NoticePage extends BaseWidget {
   @override
@@ -34,7 +32,7 @@ class NoticePageState extends BaseWidgetState<NoticePage> {
     if (_classDatas != null) {
       for (ClassData classData in _classDatas) {
         DropdownMenuItem dropdownMenuItem = new DropdownMenuItem(
-          child: new Text(classData.className),
+          child: Text(classData.className),
           value: classData.classId,
         );
         items.add(dropdownMenuItem);
@@ -49,7 +47,7 @@ class NoticePageState extends BaseWidgetState<NoticePage> {
     if (_studentDatas != null) {
       for (UserData userData in _studentDatas) {
         DropdownMenuItem dropdownMenuItem = new DropdownMenuItem(
-          child: new Text(userData.userName),
+          child: Text(userData.userName),
           value: userData.userId,
         );
         items.add(dropdownMenuItem);
@@ -314,7 +312,7 @@ class NoticePageState extends BaseWidgetState<NoticePage> {
                             elevation: 24,
                             items: getClassListData(),
                             value: _classItem,
-                            hint: new Text('选择班级'),
+                            hint: Text('选择班级'),
                           ),
                           SizedBox(width: 16.0),
                           Theme(
@@ -383,7 +381,7 @@ class NoticePageState extends BaseWidgetState<NoticePage> {
                             elevation: 24,
                             items: getStudentListData(),
                             value: _studentItem,
-                            hint: new Text('选择孩子'),
+                            hint: Text('选择孩子'),
                           ),
                           SizedBox(width: 16.0),
                           Theme(

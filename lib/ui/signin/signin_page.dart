@@ -1,11 +1,9 @@
 import 'package:common_utils/common_utils.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tomato_scfs/http/api_service.dart';
 import 'package:tomato_scfs/model/base_entity.dart';
-import 'package:tomato_scfs/model/user_entity.dart';
 import 'package:tomato_scfs/ui/signin/signin_page_two.dart';
 
 class SigninPage extends StatefulWidget {
@@ -24,7 +22,10 @@ class SigninPageState extends State<SigninPage> {
   bool _obscureTextPass = true;
   bool _obscureTextPassAgain = true;
 
-  List<String> _userTypes = ['家长']/*['学生', '家长', '教师']*/;
+  List<String> _userTypes = ['家长']
+
+      /*['学生', '家长', '教师']*/;
+
   String _typeItem = '家长';
   TextEditingController userNameController = new TextEditingController();
   TextEditingController userPasswordController = new TextEditingController();
@@ -37,10 +38,10 @@ class SigninPageState extends State<SigninPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-//        decoration: new BoxDecoration(
-//          gradient: new LinearGradient(
+//        decoration: BoxDecoration(
+//          gradient: LinearGradient(
 //            begin: Alignment.centerLeft,
-//            end: new Alignment(1.0, 0.0),
+//            end: Alignment(1.0, 0.0),
 //            // 10% of the width, so there are ten blinds.
 //            colors: [this.backgroundColor1, this.backgroundColor2],
 //            // whitish to gray
@@ -52,16 +53,16 @@ class SigninPageState extends State<SigninPage> {
             Container(
               padding: const EdgeInsets.only(top: 80.0, bottom: 30.0),
               child: Center(
-                child: new Column(
+                child: Column(
                   children: <Widget>[
                     Container(
                       height: 64.0,
                       width: 64.0,
-                      child: new CircleAvatar(
+                      child: CircleAvatar(
                         backgroundColor: Colors.transparent,
                         foregroundColor: this.foregroundColor,
                         radius: 100.0,
-                        child: new Text(
+                        child: Text(
                           "S",
                           style: TextStyle(
                             fontSize: 50.0,
@@ -80,7 +81,7 @@ class SigninPageState extends State<SigninPage> {
                     ),
                     new Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: new Text(
+                      child: Text(
                         "Samarth Agarwal",
                         style: TextStyle(color: this.foregroundColor),
                       ),
@@ -104,7 +105,7 @@ class SigninPageState extends State<SigninPage> {
                 ),
               ),
               padding: const EdgeInsets.only(left: 0.0, right: 10.0),
-              child: new Row(
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -147,7 +148,7 @@ class SigninPageState extends State<SigninPage> {
                 ),
               ),
               padding: const EdgeInsets.only(left: 0.0, right: 10.0),
-              child: new Row(
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -201,7 +202,7 @@ class SigninPageState extends State<SigninPage> {
                 ),
               ),
               padding: const EdgeInsets.only(left: 0.0, right: 10.0),
-              child: new Row(
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -248,7 +249,7 @@ class SigninPageState extends State<SigninPage> {
               margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 10.0),
               alignment: Alignment.center,
               padding: const EdgeInsets.only(left: 0.0, right: 10.0),
-              child: new Row(
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -298,7 +299,7 @@ class SigninPageState extends State<SigninPage> {
               margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 10.0),
               alignment: Alignment.center,
               padding: const EdgeInsets.only(left: 0.0, right: 10.0),
-              child: new Row(
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -336,7 +337,7 @@ class SigninPageState extends State<SigninPage> {
               margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 10.0),
               alignment: Alignment.center,
               padding: const EdgeInsets.only(left: 0.0, right: 10.0),
-              child: new Row(
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -361,7 +362,7 @@ class SigninPageState extends State<SigninPage> {
                           elevation: 24,
                           items: getTypeListData(),
                           value: _typeItem,
-                          hint: new Text('选择类别'),
+                          hint: Text('选择类别'),
                         ),
                       ],
                     ),
@@ -375,10 +376,10 @@ class SigninPageState extends State<SigninPage> {
               width: MediaQuery.of(context).size.width,
               margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 30.0),
               alignment: Alignment.center,
-              child: new Row(
+              child: Row(
                 children: <Widget>[
                   new Expanded(
-                    child: new OutlineButton(
+                    child: OutlineButton(
                       padding: const EdgeInsets.symmetric(
                           vertical: 20.0, horizontal: 20.0),
                       color: this.highlightColor,
@@ -403,10 +404,10 @@ class SigninPageState extends State<SigninPage> {
               margin: const EdgeInsets.only(
                   left: 40.0, right: 40.0, top: 0.0, bottom: 0.0),
               alignment: Alignment.center,
-              child: new Row(
+              child: Row(
                 children: <Widget>[
                   new Expanded(
-                    child: new FlatButton(
+                    child: FlatButton(
                       padding: const EdgeInsets.symmetric(
                           vertical: 20.0, horizontal: 20.0),
                       color: Colors.transparent,
@@ -482,7 +483,7 @@ class SigninPageState extends State<SigninPage> {
     if (_userTypes != null) {
       for (String s in _userTypes) {
         DropdownMenuItem dropdownMenuItem = new DropdownMenuItem(
-          child: new Text(s),
+          child: Text(s),
           value: s,
         );
         items.add(dropdownMenuItem);
@@ -507,13 +508,11 @@ class SigninPageState extends State<SigninPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 }

@@ -1,5 +1,5 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:tomato_scfs/base/_base_widget.dart';
 import 'package:tomato_scfs/common/application.dart';
@@ -11,13 +11,11 @@ import 'package:tomato_scfs/model/user_entity.dart';
 import 'package:tomato_scfs/ui/app.dart';
 import 'package:tomato_scfs/ui/chat/chat_page.dart';
 import 'package:tomato_scfs/util/const.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tomato_scfs/util/utils.dart';
 
 class ChatContactsPage extends BaseWidget {
   @override
   BaseWidgetState<BaseWidget> getState() {
-    // TODO: implement getState
     return ChatContactsPageState();
   }
 }
@@ -31,7 +29,6 @@ class ChatContactsPageState extends BaseWidgetState<ChatContactsPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setAppBarVisible(false);
     userData = User.singleton.userData;
@@ -88,7 +85,6 @@ class ChatContactsPageState extends BaseWidgetState<ChatContactsPage> {
 
   @override
   void onClickErrorWidget() {
-    // TODO: implement onClickErrorWidget
     Navigator.of(context).pushAndRemoveUntil(
         new MaterialPageRoute(builder: (context) => App()),
         (route) => route == null);
@@ -96,7 +92,6 @@ class ChatContactsPageState extends BaseWidgetState<ChatContactsPage> {
 
   @override
   AppBar getAppBar() {
-    // TODO: implement getAppBar
     return AppBar(
       title: Text("ChatContacts"),
       elevation: 0.0,
@@ -130,8 +125,7 @@ class ChatContactsPageState extends BaseWidgetState<ChatContactsPage> {
             ),
           ),
           chatContactsData.chatMesgnum != 0
-              ?
-              Container(
+              ? Container(
                   width: chatContactsData.chatMesgnum > 100 ? 32 : 24,
                   padding: EdgeInsets.fromLTRB(0, 2, 0, 2),
                   margin: EdgeInsets.only(top: 5.0),
@@ -142,7 +136,9 @@ class ChatContactsPageState extends BaseWidgetState<ChatContactsPage> {
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
                   child: Text(
-                    chatContactsData.chatMesgnum > 100 ? '99+' : chatContactsData.chatMesgnum.toString(),
+                    chatContactsData.chatMesgnum > 100
+                        ? '99+'
+                        : chatContactsData.chatMesgnum.toString(),
                     style: TextStyle(fontSize: 14, color: Colors.white),
                   ),
                 )

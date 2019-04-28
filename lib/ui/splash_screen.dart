@@ -69,29 +69,27 @@ class SplashScreenState extends State<SplashScreen> {
 
   void onDonePress() {
     _setHasSkip();
-    if(User.singleton.userData != null) {
+    if (User.singleton.userData != null) {
       Navigator.of(context).pushAndRemoveUntil(
           new MaterialPageRoute(builder: (context) => App()),
-              (route) => route == null);
-    }
-    else {
+          (route) => route == null);
+    } else {
       Navigator.of(context).pushAndRemoveUntil(
           new MaterialPageRoute(builder: (context) => LoginPage()),
-              (route) => route == null);
+          (route) => route == null);
     }
   }
 
   void onSkipPress() {
     _setHasSkip();
-    if(User.singleton.userData != null) {
+    if (User.singleton.userData != null) {
       Navigator.of(context).pushAndRemoveUntil(
           new MaterialPageRoute(builder: (context) => App()),
-              (route) => route == null);
-    }
-    else {
+          (route) => route == null);
+    } else {
       Navigator.of(context).pushAndRemoveUntil(
           new MaterialPageRoute(builder: (context) => LoginPage()),
-              (route) => route == null);
+          (route) => route == null);
     }
   }
 

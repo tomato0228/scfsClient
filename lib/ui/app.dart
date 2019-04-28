@@ -1,17 +1,15 @@
+import 'dart:async';
+
+import 'package:bottom_tab_bar/bottom_tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:tomato_scfs/common/application.dart';
 import 'package:tomato_scfs/event/change_badgeno_event.dart';
-import 'dart:async';
-
 import 'package:tomato_scfs/generated/i18n.dart';
 import 'package:tomato_scfs/ui/contacts/chat_contacts_page.dart';
 import 'package:tomato_scfs/ui/contacts/contacts_page.dart';
-import 'package:tomato_scfs/ui/drawer/about_page.dart';
 import 'package:tomato_scfs/ui/drawer/drawer.dart';
 import 'package:tomato_scfs/ui/homework/homework_page.dart';
 import 'package:tomato_scfs/ui/notice/notice_page.dart';
-import 'package:bottom_tab_bar/bottom_tab_bar.dart';
-import 'package:tomato_scfs/util/theme_util.dart';
 
 //应用页面使用有状态Widget
 class App extends StatefulWidget {
@@ -43,7 +41,6 @@ class AppState extends State<App> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     badgeNoS = '';
     Application.eventBus.on<ChangeBadeNoEvent>().listen((event) {
@@ -71,7 +68,7 @@ class AppState extends State<App> {
       child: Scaffold(
         drawer: DrawerPage(),
         appBar: AppBar(
-          title: new Text(appBarTitles[_selectedIndex]),
+          title: Text(appBarTitles[_selectedIndex]),
           bottom: null,
           elevation: elevation,
           actions: <Widget>[
@@ -85,7 +82,7 @@ class AppState extends State<App> {
                 })
           ],
         ),
-        body: new IndexedStack(
+        body: IndexedStack(
           children: pages,
           index: _selectedIndex,
         ),
@@ -141,16 +138,16 @@ class AppState extends State<App> {
     return showDialog(
           context: context,
           builder: (context) => AlertDialog(
-                title: new Text(S.of(context).tip),
-                content: new Text(S.of(context).exitAppTip),
+                title: Text(S.of(context).tip),
+                content: Text(S.of(context).exitAppTip),
                 actions: <Widget>[
                   new FlatButton(
                     onPressed: () => Navigator.of(context).pop(false),
-                    child: new Text(S.of(context).cancel),
+                    child: Text(S.of(context).cancel),
                   ),
                   new FlatButton(
                     onPressed: () => Navigator.of(context).pop(true),
-                    child: new Text(S.of(context).exit),
+                    child: Text(S.of(context).exit),
                   ),
                 ],
               ),

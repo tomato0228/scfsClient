@@ -1,10 +1,8 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:tomato_scfs/common/application.dart';
 import 'package:tomato_scfs/common/user.dart';
 import 'package:tomato_scfs/event/change_language_event.dart';
 import 'package:tomato_scfs/event/change_theme_event.dart';
-import 'package:tomato_scfs/event/login_event.dart';
 import 'package:tomato_scfs/generated/i18n.dart';
 import 'package:tomato_scfs/model/user_entity.dart';
 import 'package:tomato_scfs/ui/drawer/about_page.dart';

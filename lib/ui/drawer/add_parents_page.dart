@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:azlistview/azlistview.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lpinyin/lpinyin.dart';
 import 'package:tomato_scfs/common/user.dart';
@@ -195,7 +195,7 @@ class AddParentsPageState extends State<AddParentsPage> {
     TextField searchField = new TextField(
       autofocus: true,
       style: TextStyle(color: Colors.white),
-      decoration: new InputDecoration(
+      decoration: InputDecoration(
           hintStyle: TextStyle(color: Colors.white),
           border: InputBorder.none,
           hintText: "搜索更多干货"),
@@ -262,14 +262,14 @@ class AddParentsPageState extends State<AddParentsPage> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: new Text(S.of(context).tip),
+          title: Text(S.of(context).tip),
           content: Text(S.of(context).addParentsTip(parentsName)),
           actions: <Widget>[
             new FlatButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: new Text(S.of(context).cancel,
+              child: Text(S.of(context).cancel,
                   style: TextStyle(color: Colors.orange)),
             ),
             new FlatButton(
@@ -277,8 +277,8 @@ class AddParentsPageState extends State<AddParentsPage> {
                 Navigator.of(context).pop();
                 _openSimpleDialog(parentsId, parentsName);
               },
-              child: new Text(S.of(context).ok,
-                  style: TextStyle(color: Colors.blue)),
+              child:
+                  Text(S.of(context).ok, style: TextStyle(color: Colors.blue)),
             ),
           ],
         );

@@ -4,7 +4,6 @@ import 'package:tomato_scfs/model/notice_entity.dart';
 import 'package:tomato_scfs/model/user_entity.dart';
 import 'package:tomato_scfs/ui/notice/notice_edit_page.dart';
 
-// ignore: must_be_immutable
 class NoticeShowPage extends StatelessWidget {
   NoticeData noticeData;
 
@@ -15,8 +14,8 @@ class NoticeShowPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: new AppBar(
-        title: new Text('通知详情'),
+      appBar: AppBar(
+        title: Text('通知详情'),
         actions: <Widget>[
           userData.userType == '教师' && userData.userId == noticeData.userId
               ? IconButton(
