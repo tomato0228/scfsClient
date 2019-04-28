@@ -26,6 +26,8 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
   List<HomeworkData> _homeworkDatas;
   List<CourseData> _courseDatas;
   List<ClassData> _classDatas;
+  List<UserData> _studentDatas;
+  int _studentItem;
   UserData userData;
   int _courseItem;
   int _classItem;
@@ -51,6 +53,21 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
         DropdownMenuItem dropdownMenuItem = new DropdownMenuItem(
           child: new Text(classData.className),
           value: classData.classId,
+        );
+        items.add(dropdownMenuItem);
+      }
+    }
+    return items;
+  }
+
+  /// 学生列表
+  List<DropdownMenuItem> getStudentListData() {
+    List<DropdownMenuItem> items = new List();
+    if (_studentDatas != null) {
+      for (UserData userData in _studentDatas) {
+        DropdownMenuItem dropdownMenuItem = new DropdownMenuItem(
+          child: new Text(userData.userName),
+          value: userData.userId,
         );
         items.add(dropdownMenuItem);
       }
@@ -240,6 +257,24 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
       } else {
         Fluttertoast.showToast(msg: "请选择班级和科目！");
       }
+    } else if (userData.userType == '家长') {
+      if (_courseItem != null && _studentItem != null) {
+        ApiService().getHomeworkByParents((HomeworkEntity _homeworkEntity) {
+          if (_homeworkEntity != null && _homeworkEntity.status == 0) {
+            setState(() {
+              _homeworkDatas = _homeworkEntity.data;
+            });
+          } else {
+            Fluttertoast.showToast(msg: "获取作业列表失败！");
+          }
+        }, (Error error) {
+          setState(() {
+            showError();
+          });
+        }, userData.userId, _studentItem, _courseItem);
+      } else {
+        Fluttertoast.showToast(msg: "请选择孩子和科目！");
+      }
     } else {
       if (_courseItem != null) {
         ApiService().getHomework((HomeworkEntity _homeworkEntity) {
@@ -261,6 +296,23 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
     }
   }
 
+  /// 家长获取学生
+  Future<Null> _getStudentList() async {
+    ApiService().getStudentList((ContactsEntity _contactsEntity) {
+      if (_contactsEntity != null && _contactsEntity.status == 0) {
+        setState(() {
+          _studentDatas = _contactsEntity.data;
+        });
+      } else {
+        Fluttertoast.showToast(msg: "获取学生列表失败！");
+      }
+    }, (Error error) {
+      setState(() {
+        showError();
+      });
+    }, userData.userId);
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -269,6 +321,7 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
     userData = User.singleton.userData;
     _getCourses();
     if (userData.userType == '教师') _getClasses();
+    if (userData.userType == '家长') _getStudentList();
     showContent();
   }
 
@@ -289,7 +342,6 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
                         onChanged: (value) {
                           setState(() {
                             _classItem = value;
-                            print(_classItem);
                           });
                         },
                         elevation: 24,
@@ -298,12 +350,24 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
                         hint: new Text('选择班级'),
                       )
                     : Container(),
+                userData.userType == '家长'
+                    ? DropdownButton(
+                        onChanged: (value) {
+                          setState(() {
+                            _studentItem = value;
+                          });
+                        },
+                        elevation: 24,
+                        items: getStudentListData(),
+                        value: _studentItem,
+                        hint: new Text('选择孩子'),
+                      )
+                    : Container(),
                 SizedBox(width: 16.0),
                 DropdownButton(
                   onChanged: (value) {
                     setState(() {
                       _courseItem = value;
-                      print(_courseItem);
                     });
                   },
                   elevation: 24,
@@ -332,35 +396,38 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
                 ),
               ],
             ),
-            userData.userType == '教师' ? Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(height: 16.0),
-                Theme(
-                  data: Theme.of(context).copyWith(
-                    backgroundColor: Theme.of(context).accentColor,
-                    buttonTheme: ButtonThemeData(
-                      textTheme: ButtonTextTheme.primary,
-                      shape: StadiumBorder(),
-                    ),
-                  ),
-                  child: RaisedButton(
-                    child: Text('布 置 作 业'),
-                    onPressed: () {
-                      Navigator.push<String>(context,
-                          MaterialPageRoute(builder: (context) {
-                            return HomeworkAddPage(
-                                classDatas: _classDatas, courseDatas: _courseDatas);
-                          })).then((String s) {
-                        _getHomeworks();
-                      });
-                    },
-                    splashColor: Colors.grey,
-                    elevation: 0.0,
-                  ),
-                ),
-              ],
-            ) : Container(),
+            userData.userType == '教师'
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(height: 16.0),
+                      Theme(
+                        data: Theme.of(context).copyWith(
+                          backgroundColor: Theme.of(context).accentColor,
+                          buttonTheme: ButtonThemeData(
+                            textTheme: ButtonTextTheme.primary,
+                            shape: StadiumBorder(),
+                          ),
+                        ),
+                        child: RaisedButton(
+                          child: Text('布 置 作 业'),
+                          onPressed: () {
+                            Navigator.push<String>(context,
+                                MaterialPageRoute(builder: (context) {
+                              return HomeworkAddPage(
+                                  classDatas: _classDatas,
+                                  courseDatas: _courseDatas);
+                            })).then((String s) {
+                              _getHomeworks();
+                            });
+                          },
+                          splashColor: Colors.grey,
+                          elevation: 0.0,
+                        ),
+                      ),
+                    ],
+                  )
+                : Container(),
             Divider(
               color: Colors.grey,
               height: 32.0,
@@ -378,7 +445,7 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
     // TODO: implement onClickErrorWidget
     Navigator.of(context).pushAndRemoveUntil(
         new MaterialPageRoute(builder: (context) => App()),
-            (route) => route == null);
+        (route) => route == null);
   }
 
   @override

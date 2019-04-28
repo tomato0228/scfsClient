@@ -1,23 +1,16 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:tomato_scfs/base/_base_widget.dart';
 import 'package:tomato_scfs/common/user.dart';
 import 'package:tomato_scfs/http/api_service.dart';
-import 'package:tomato_scfs/model/chat_contacts_entity.dart';
 import 'package:tomato_scfs/model/class_entity.dart';
 import 'package:tomato_scfs/model/user_entity.dart';
 import 'package:tomato_scfs/ui/app.dart';
-import 'package:tomato_scfs/ui/chat/chat_page.dart';
 import 'package:tomato_scfs/ui/drawer/personal_page.dart';
-import 'package:tomato_scfs/util/const.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:tomato_scfs/util/utils.dart';
 
 class ContactsPage extends BaseWidget {
   @override
   BaseWidgetState<BaseWidget> getState() {
-    // TODO: implement getState
     return ContactsPageState();
   }
 }
@@ -28,16 +21,18 @@ class ContactsPageState extends BaseWidgetState<ContactsPage> {
   ScrollController _scrollController = new ScrollController();
   List<ClassData> _classDatas;
   List<String> _userTypes = ['学生', '家长', '教师'];
+  List<UserData> _studentDatas;
+  int _studentItem;
   int _classItem;
   String _typeItem;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setAppBarVisible(false);
     userData = User.singleton.userData;
     if (userData.userType == '教师') _getClasses();
+    if (userData.userType == '家长') _getStudentList();
   }
 
   @override
@@ -77,6 +72,19 @@ class ContactsPageState extends BaseWidgetState<ContactsPage> {
                             items: getClassListData(),
                             value: _classItem,
                             hint: new Text('选择班级'),
+                          )
+                        : Container(),
+                    userData.userType == '家长'
+                        ? DropdownButton(
+                            onChanged: (value) {
+                              setState(() {
+                                _studentItem = value;
+                              });
+                            },
+                            elevation: 24,
+                            items: getStudentListData(),
+                            value: _studentItem,
+                            hint: new Text('选择孩子'),
                           )
                         : Container(),
                     SizedBox(width: 16.0),
@@ -134,15 +142,13 @@ class ContactsPageState extends BaseWidgetState<ContactsPage> {
 
   @override
   void onClickErrorWidget() {
-    // TODO: implement onClickErrorWidget
     Navigator.of(context).pushAndRemoveUntil(
         new MaterialPageRoute(builder: (context) => App()),
-            (route) => route == null);
+        (route) => route == null);
   }
 
   @override
   AppBar getAppBar() {
-    // TODO: implement getAppBar
     return AppBar(
       title: Text("ChatContacts"),
       elevation: 0.0,
@@ -206,11 +212,28 @@ class ContactsPageState extends BaseWidgetState<ContactsPage> {
     return items;
   }
 
+  /// 学生列表
+  List<DropdownMenuItem> getStudentListData() {
+    List<DropdownMenuItem> items = new List();
+    if (_studentDatas != null) {
+      for (UserData userData in _studentDatas) {
+        DropdownMenuItem dropdownMenuItem = new DropdownMenuItem(
+          child: new Text(userData.userName),
+          value: userData.userId,
+        );
+        items.add(dropdownMenuItem);
+      }
+    }
+    return items;
+  }
+
   Future<void> _onRefresh() async {
     Fluttertoast.showToast(msg: "正在查询...");
     await Future.delayed(Duration(seconds: 2), () {
       if (userData.userType == '教师') {
         getContactsByTeacher();
+      } else if (userData.userType == '家长') {
+        getContactsByParents();
       } else {
         getContactsByUser();
       }
@@ -265,6 +288,43 @@ class ContactsPageState extends BaseWidgetState<ContactsPage> {
         });
       } else {
         Fluttertoast.showToast(msg: "获取班级列表失败！");
+      }
+    }, (Error error) {
+      setState(() {
+        showError();
+      });
+    }, userData.userId);
+  }
+
+  Future<Null> getContactsByParents() async {
+    if (_typeItem != null) {
+      ApiService().getContactsByParents((ContactsEntity _contactsEntity) {
+        if (_contactsEntity != null && _contactsEntity.status == 0) {
+          setState(() {
+            _contactsDatas = _contactsEntity.data;
+          });
+        } else {
+          Fluttertoast.showToast(msg: "获取联系人列表失败！");
+        }
+      }, (Error error) {
+        setState(() {
+          showError();
+        });
+      }, userData.userId, _studentItem, _typeItem);
+    } else {
+      Fluttertoast.showToast(msg: "请选择孩子和类别！");
+    }
+  }
+
+  /// 家长获取学生
+  Future<Null> _getStudentList() async {
+    ApiService().getStudentList((ContactsEntity _contactsEntity) {
+      if (_contactsEntity != null && _contactsEntity.status == 0) {
+        setState(() {
+          _studentDatas = _contactsEntity.data;
+        });
+      } else {
+        Fluttertoast.showToast(msg: "获取学生列表失败！");
       }
     }, (Error error) {
       setState(() {

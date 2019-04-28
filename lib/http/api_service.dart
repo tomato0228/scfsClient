@@ -176,6 +176,23 @@ class ApiService {
     });
   }
 
+  /// 家长获取学生列表
+  void getStudentList(
+    Function callback,
+    Function errorback,
+    int _userId,
+  ) async {
+    FormData formData = new FormData.from({"userId": _userId});
+    DioManager.singleton.dio
+        .post(Api.getPath(path: Api.USER_GET_STUDENT_LIST),
+            data: formData, options: _getOptions())
+        .then((response) {
+      callback(ContactsEntity.fromJson(response.data));
+    }).catchError((e) {
+      errorback(e);
+    });
+  }
+
   /// 获取学校信息
   void getSchool(Function callback, Function errorback, int _userId) async {
     FormData formData = new FormData.from({"userId": _userId});
@@ -244,7 +261,7 @@ class ApiService {
     });
   }
 
-  /// 获取作业列表-学生/家长
+  /// 获取作业列表-学生
   void getHomework(
     Function callback,
     Function errorback,
@@ -253,6 +270,29 @@ class ApiService {
   ) async {
     FormData formData =
         new FormData.from({"userId": _userId, "courseId": _courseId});
+    DioManager.singleton.dio
+        .post(Api.getPath(path: Api.USER_GET_HOMEWORK),
+            data: formData, options: _getOptions())
+        .then((response) {
+      callback(HomeworkEntity.fromJson(response.data));
+    }).catchError((e) {
+      errorback(e);
+    });
+  }
+
+  /// 获取作业列表-家长
+  void getHomeworkByParents(
+    Function callback,
+    Function errorback,
+    int _userId,
+    int _studentId,
+    int _courseId,
+  ) async {
+    FormData formData = new FormData.from({
+      "userId": _userId,
+      "studentId": _studentId,
+      "courseId": _courseId,
+    });
     DioManager.singleton.dio
         .post(Api.getPath(path: Api.USER_GET_HOMEWORK),
             data: formData, options: _getOptions())
@@ -347,13 +387,34 @@ class ApiService {
     });
   }
 
-  /// 获取通知列表-学生/家长
+  /// 获取通知列表-学生
   void getNotice(
     Function callback,
     Function errorback,
     int _userId,
   ) async {
     FormData formData = new FormData.from({"userId": _userId});
+    DioManager.singleton.dio
+        .post(Api.getPath(path: Api.USER_GET_NOTICE),
+            data: formData, options: _getOptions())
+        .then((response) {
+      callback(NoticeEntity.fromJson(response.data));
+    }).catchError((e) {
+      errorback(e);
+    });
+  }
+
+  /// 获取通知列表-家长
+  void getNoticeByParents(
+    Function callback,
+    Function errorback,
+    int _userId,
+    int _studentId,
+  ) async {
+    FormData formData = new FormData.from({
+      "userId": _userId,
+      "studentId": _studentId,
+    });
     DioManager.singleton.dio
         .post(Api.getPath(path: Api.USER_GET_NOTICE),
             data: formData, options: _getOptions())
@@ -507,7 +568,7 @@ class ApiService {
     });
   }
 
-  /// 获取联系人列表
+  /// 获取联系人列表--学生
   void getContactsByUser(
     Function callback,
     Function errorback,
@@ -516,6 +577,29 @@ class ApiService {
   ) async {
     FormData formData =
         new FormData.from({"userId": _userId, "contactsType": _contactsType});
+    DioManager.singleton.dio
+        .post(Api.getPath(path: Api.USER_GET_CONTACTS),
+            data: formData, options: _getOptions())
+        .then((response) {
+      callback(ContactsEntity.fromJson(response.data));
+    }).catchError((e) {
+      errorback(e);
+    });
+  }
+
+  /// 获取联系人列表--家长
+  void getContactsByParents(
+    Function callback,
+    Function errorback,
+    int _userId,
+    int _studentId,
+    String _contactsType,
+  ) async {
+    FormData formData = new FormData.from({
+      "userId": _userId,
+      "studentId": _studentId,
+      "contactsType": _contactsType,
+    });
     DioManager.singleton.dio
         .post(Api.getPath(path: Api.USER_GET_CONTACTS),
             data: formData, options: _getOptions())

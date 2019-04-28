@@ -16,7 +16,6 @@ import 'package:tomato_scfs/util/theme_util.dart';
 class NoticePage extends BaseWidget {
   @override
   BaseWidgetState<BaseWidget> getState() {
-    // TODO: implement getState
     return NoticePageState();
   }
 }
@@ -24,6 +23,8 @@ class NoticePage extends BaseWidget {
 class NoticePageState extends BaseWidgetState<NoticePage> {
   List<NoticeData> _noticeDatas;
   List<ClassData> _classDatas;
+  List<UserData> _studentDatas;
+  int _studentItem;
   UserData userData;
   int _classItem;
 
@@ -42,9 +43,24 @@ class NoticePageState extends BaseWidgetState<NoticePage> {
     return items;
   }
 
+  /// 学生列表
+  List<DropdownMenuItem> getStudentListData() {
+    List<DropdownMenuItem> items = new List();
+    if (_studentDatas != null) {
+      for (UserData userData in _studentDatas) {
+        DropdownMenuItem dropdownMenuItem = new DropdownMenuItem(
+          child: new Text(userData.userName),
+          value: userData.userId,
+        );
+        items.add(dropdownMenuItem);
+      }
+    }
+    return items;
+  }
+
   /// 删除时弹出框
   Future _openAlertDialog(NoticeData noticeData) async {
-    final action = await showDialog(
+    await showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
@@ -209,6 +225,24 @@ class NoticePageState extends BaseWidgetState<NoticePage> {
       } else {
         Fluttertoast.showToast(msg: "请选择班级！");
       }
+    } else if (userData.userType == '家长') {
+      if (_studentItem != null) {
+        ApiService().getNoticeByParents((NoticeEntity _noticeEntity) {
+          if (_noticeEntity != null && _noticeEntity.status == 0) {
+            setState(() {
+              _noticeDatas = _noticeEntity.data;
+            });
+          } else {
+            Fluttertoast.showToast(msg: "获取通知列表失败！");
+          }
+        }, (Error error) {
+          setState(() {
+            showError();
+          });
+        }, userData.userId, _studentItem);
+      } else {
+        Fluttertoast.showToast(msg: "请选择孩子！");
+      }
     } else {
       ApiService().getNotice((NoticeEntity _noticeEntity) {
         if (_noticeEntity != null && _noticeEntity.status == 0) {
@@ -226,14 +260,32 @@ class NoticePageState extends BaseWidgetState<NoticePage> {
     }
   }
 
+  /// 家长获取学生
+  Future<Null> _getStudentList() async {
+    ApiService().getStudentList((ContactsEntity _contactsEntity) {
+      if (_contactsEntity != null && _contactsEntity.status == 0) {
+        setState(() {
+          _studentDatas = _contactsEntity.data;
+        });
+      } else {
+        Fluttertoast.showToast(msg: "获取学生列表失败！");
+      }
+    }, (Error error) {
+      setState(() {
+        showError();
+      });
+    }, userData.userId);
+  }
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setAppBarVisible(false);
     userData = User.singleton.userData;
     if (userData.userType == '教师')
       _getClasses();
+    else if (userData.userType == '家长')
+      _getStudentList();
     else
       _getNotices();
     showContent();
@@ -241,7 +293,6 @@ class NoticePageState extends BaseWidgetState<NoticePage> {
 
   @override
   Widget getContentWidget(BuildContext context) {
-    // TODO: implement getContentWidget
     return Scaffold(
       body: Container(
         padding: EdgeInsets.all(16.0),
@@ -258,7 +309,6 @@ class NoticePageState extends BaseWidgetState<NoticePage> {
                             onChanged: (value) {
                               setState(() {
                                 _classItem = value;
-                                print(_classItem);
                               });
                             },
                             elevation: 24,
@@ -317,6 +367,52 @@ class NoticePageState extends BaseWidgetState<NoticePage> {
                     ],
                   )
                 : Container(),
+            userData.userType == '家长'
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          DropdownButton(
+                            onChanged: (value) {
+                              setState(() {
+                                _studentItem = value;
+                              });
+                            },
+                            elevation: 24,
+                            items: getStudentListData(),
+                            value: _studentItem,
+                            hint: new Text('选择孩子'),
+                          ),
+                          SizedBox(width: 16.0),
+                          Theme(
+                            data: Theme.of(context).copyWith(
+                              backgroundColor: Theme.of(context).accentColor,
+                              buttonTheme: ButtonThemeData(
+                                textTheme: ButtonTextTheme.primary,
+                                shape: StadiumBorder(),
+                              ),
+                            ),
+                            child: RaisedButton(
+                              child: Text('查 询'),
+                              onPressed: () {
+                                _getNotices();
+                              },
+                              splashColor: Colors.grey,
+                              elevation: 0.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Divider(
+                        color: Colors.grey,
+                        height: 32.0,
+                        // indent: 32.0,
+                      ),
+                    ],
+                  )
+                : Container(),
             getNoticeListData(),
           ],
         ),
@@ -326,15 +422,13 @@ class NoticePageState extends BaseWidgetState<NoticePage> {
 
   @override
   void onClickErrorWidget() {
-    // TODO: implement onClickErrorWidget
     Navigator.of(context).pushAndRemoveUntil(
         new MaterialPageRoute(builder: (context) => App()),
-            (route) => route == null);
+        (route) => route == null);
   }
 
   @override
   AppBar getAppBar() {
-    // TODO: implement getAppBar
     return AppBar(
       title: Text("notice"),
       elevation: 0.0,
@@ -343,7 +437,6 @@ class NoticePageState extends BaseWidgetState<NoticePage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 }

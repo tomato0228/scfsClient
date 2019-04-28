@@ -27,6 +27,9 @@ class Api {
   /// 添加家长
   static const String USER_ADD_PARENTS = "User/addParents";
 
+  /// 家长获取学生列表
+  static const String USER_GET_STUDENT_LIST = "User/getStudentList";
+
   /// 用户学校信息
   static const String USER_GET_SCHOOL = "School/getSchool";
 
