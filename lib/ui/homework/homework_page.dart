@@ -215,7 +215,7 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
       setState(() {
         showError();
       });
-    }, userData.userId, _studentItem);
+    }, userData.userId, _classItem);
   }
 
   Future<Null> _getCoursesByParents() async {
@@ -231,7 +231,7 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
       setState(() {
         showError();
       });
-    }, userData.userId, _classItem);
+    }, userData.userId, _studentItem);
   }
 
   Future<Null> _getClasses() async {
@@ -447,7 +447,8 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
                                   classDatas: _classDatas,
                                   courseDatas: _courseDatas);
                             })).then((String s) {
-                              _getHomeworks();
+                              if (_classItem != null && _courseItem != null)
+                                _getHomeworks();
                             });
                           },
                           splashColor: Colors.grey,

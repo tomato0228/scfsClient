@@ -81,106 +81,101 @@ class NoticeAddPageState extends State<NoticeAddPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: _onWillPop,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('发布通知'),
-        ),
-        body: Container(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('发布通知'),
+      ),
+      body: Container(
+        padding: EdgeInsets.all(16.0),
+        child: ListView(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                DropdownButton(
+                  onChanged: (value) {
+                    setState(() {
+                      _classItem = value;
+                      print(_classItem);
+                    });
+                  },
+                  elevation: 24,
+                  items: getClassListData(),
+                  value: _classItem,
+                  hint: Text('选择班级'),
+                ),
+              ],
+            ),
+            Divider(
+              color: Colors.grey,
+              height: 32.0,
+              // indent: 32.0,
+            ),
+            TextField(
+              controller: textNoticeTitleController,
+              maxLength: 20,
+              decoration: InputDecoration(
+                icon: Icon(Icons.title, size: 32.0),
+                labelText: '标题',
+                hintText: '请输入通知的标题',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            TextField(
+              controller: textNoticeContentController,
+              maxLength: 255,
+              maxLines: 8,
+              //最大行数
+              decoration: InputDecoration(
+                icon: Icon(Icons.event_note, size: 32.0),
+                labelText: '内容',
+                hintText: '请输入通知的内容',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            TextField(
+              controller: textNoticeAttachmentController,
+              maxLength: 255,
+              decoration: InputDecoration(
+                icon: Icon(Icons.insert_link, size: 32.0),
+                labelText: '附件',
+                hintText: '请输入通知附件的地址',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              margin: const EdgeInsets.only(left: 48.0),
+              alignment: Alignment.center,
+              child: Row(
                 children: <Widget>[
-                  DropdownButton(
-                    onChanged: (value) {
-                      setState(() {
-                        _classItem = value;
-                        print(_classItem);
-                      });
-                    },
-                    elevation: 24,
-                    items: getClassListData(),
-                    value: _classItem,
-                    hint: Text('选择班级'),
+                  new Expanded(
+                    child: FlatButton(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 10.0),
+                      color: ThemeUtils.currentColorTheme,
+                      onPressed: () {
+                        _addNotice();
+                      },
+                      child: Text(
+                        "发    布",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
                   ),
                 ],
               ),
-              Divider(
-                color: Colors.grey,
-                height: 32.0,
-                // indent: 32.0,
-              ),
-              TextField(
-                controller: textNoticeTitleController,
-                maxLength: 20,
-                decoration: InputDecoration(
-                  icon: Icon(Icons.title, size: 32.0),
-                  labelText: '标题',
-                  hintText: '请输入通知的标题',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              TextField(
-                controller: textNoticeContentController,
-                maxLength: 255,
-                maxLines: 8,
-                //最大行数
-                decoration: InputDecoration(
-                  icon: Icon(Icons.event_note, size: 32.0),
-                  labelText: '内容',
-                  hintText: '请输入通知的内容',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              TextField(
-                controller: textNoticeAttachmentController,
-                maxLength: 255,
-                decoration: InputDecoration(
-                  icon: Icon(Icons.insert_link, size: 32.0),
-                  labelText: '附件',
-                  hintText: '请输入通知附件的地址',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                margin: const EdgeInsets.only(left: 48.0),
-                alignment: Alignment.center,
-                child: Row(
-                  children: <Widget>[
-                    new Expanded(
-                      child: FlatButton(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 10.0),
-                        color: ThemeUtils.currentColorTheme,
-                        onPressed: () {
-                          _addNotice();
-                        },
-                        child: Text(
-                          "发    布",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          backgroundColor: ThemeUtils.currentColorTheme,
-        ),
-        resizeToAvoidBottomPadding: false, //输入框抵住键盘
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.arrow_back),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        backgroundColor: ThemeUtils.currentColorTheme,
       ),
     );
   }
@@ -199,10 +194,5 @@ class NoticeAddPageState extends State<NoticeAddPage> {
     textNoticeTitleController.dispose();
     textNoticeContentController.dispose();
     textNoticeAttachmentController.dispose();
-  }
-
-  Future<bool> _onWillPop() {
-    Navigator.pop(context);
-    return Future.value(false);
   }
 }

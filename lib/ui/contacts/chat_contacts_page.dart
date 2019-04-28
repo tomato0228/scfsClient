@@ -47,24 +47,23 @@ class ChatContactsPageState extends BaseWidgetState<ChatContactsPage> {
       body: Stack(
         children: <Widget>[
           Container(
-            child:
-                (_chatContactsDatas == null || _chatContactsDatas.length == 0)
-                    ? Center(
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(themeColor),
-                        ),
-                      )
-                    : RefreshIndicator(
-                        color: Colors.deepOrangeAccent,
-                        backgroundColor: Colors.white,
-                        child: ListView.builder(
-                          padding: EdgeInsets.all(10.0),
-                          itemBuilder: (context, index) =>
-                              buildItem(context, _chatContactsDatas[index]),
-                          itemCount: _chatContactsDatas.length,
-                        ),
-                        onRefresh: _onRefresh,
-                      ),
+            child: (_chatContactsDatas == null)
+                ? Center(
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(themeColor),
+                    ),
+                  )
+                : RefreshIndicator(
+                    color: Colors.deepOrangeAccent,
+                    backgroundColor: Colors.white,
+                    child: ListView.builder(
+                      padding: EdgeInsets.all(10.0),
+                      itemBuilder: (context, index) =>
+                          buildItem(context, _chatContactsDatas[index]),
+                      itemCount: _chatContactsDatas.length,
+                    ),
+                    onRefresh: _onRefresh,
+                  ),
           ),
           Positioned(
             child: isLoading
@@ -166,6 +165,7 @@ class ChatContactsPageState extends BaseWidgetState<ChatContactsPage> {
           setState(() {
             _chatContactsDatas = _chatContactsEntity.data;
           });
+          if (_chatContactsDatas == null) _chatContactsDatas = [];
           int t = 0;
           _chatContactsDatas.forEach((c) => t += c.chatMesgnum);
           if (t != badgeNo) {

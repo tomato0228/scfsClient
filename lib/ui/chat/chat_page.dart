@@ -63,24 +63,21 @@ class ChatPageState extends BaseWidgetState<ChatPage> {
 
   @override
   Widget getContentWidget(BuildContext context) {
-    return WillPopScope(
-      child: Stack(
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              // List of messages
-              buildListMessage(),
-              // Sticker
-              (isShowSticker ? buildSticker() : Container()),
-              // Input content
-              buildInput(),
-            ],
-          ),
-          // Loading
-          buildLoading()
-        ],
-      ),
-      onWillPop: onBackPress,
+    return Stack(
+      children: <Widget>[
+        Column(
+          children: <Widget>[
+            // List of messages
+            buildListMessage(),
+            // Sticker
+            (isShowSticker ? buildSticker() : Container()),
+            // Input content
+            buildInput(),
+          ],
+        ),
+        // Loading
+        buildLoading()
+      ],
     );
   }
 
@@ -90,6 +87,9 @@ class ChatPageState extends BaseWidgetState<ChatPage> {
         if (_chatEntity != null && _chatEntity.status == 0) {
           if (_chatMesg == 1) {
             chatDatas = _chatEntity.data;
+            if (chatDatas == null) {
+              chatDatas = [];
+            }
           } else {
             if (_chatEntity.total > 0) {
               chatDatas.insertAll(0, _chatEntity.data);
@@ -479,19 +479,6 @@ class ChatPageState extends BaseWidgetState<ChatPage> {
     }
   }
 
-  Future<bool> onBackPress() {
-    if (focusNode.hasFocus) {
-      focusNode.unfocus();
-    } else if (isShowSticker) {
-      setState(() {
-        isShowSticker = false;
-      });
-    } else {
-      Navigator.pop(context);
-    }
-    return Future.value(false);
-  }
-
   Widget buildSticker() {
     return Container(
       child: Column(
@@ -688,7 +675,7 @@ class ChatPageState extends BaseWidgetState<ChatPage> {
 
   Widget buildListMessage() {
     return Flexible(
-      child: chatDatas == null || chatDatas.length == 0
+      child: chatDatas == null // || chatDatas.length == 0
           ? Center(
               child: CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(themeColor),

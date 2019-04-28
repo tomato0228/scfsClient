@@ -254,7 +254,7 @@ class ApiService {
   ) async {
     FormData formData = new FormData.from({
       "userId": _userId,
-      "studentId": _classId,
+      "classId": _classId,
     });
     DioManager.singleton.dio
         .post(Api.getPath(path: Api.USER_GET_COURSE),

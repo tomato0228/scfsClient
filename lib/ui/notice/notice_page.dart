@@ -350,7 +350,7 @@ class NoticePageState extends BaseWidgetState<NoticePage> {
                                 MaterialPageRoute(builder: (context) {
                               return NoticeAddPage(classDatas: _classDatas);
                             })).then((String s) {
-                              _getNotices();
+                              if (_classItem != null) _getNotices();
                             });
                           },
                           splashColor: Colors.grey,
