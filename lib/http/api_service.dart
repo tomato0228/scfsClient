@@ -224,6 +224,27 @@ class ApiService {
     });
   }
 
+  /// 获取科目列表
+  void getCourseByParents(
+    Function callback,
+    Function errorback,
+    int _userId,
+    int _studentId,
+  ) async {
+    FormData formData = new FormData.from({
+      "userId": _userId,
+      "studentId": _studentId,
+    });
+    DioManager.singleton.dio
+        .post(Api.getPath(path: Api.USER_GET_COURSE),
+            data: formData, options: _getOptions())
+        .then((response) {
+      callback(CourseEntity.fromJson(response.data));
+    }).catchError((e) {
+      errorback(e);
+    });
+  }
+
   /// 获取班级列表
   void getClassByUserId(
     Function callback,
