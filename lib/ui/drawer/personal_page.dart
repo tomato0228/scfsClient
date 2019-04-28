@@ -46,11 +46,19 @@ class PersonalPageState extends State<PersonalPage> {
           child: Column(
             children: <Widget>[
               GestureDetector(
-                child: CircleAvatar(
-                  minRadius: 60,
-                  maxRadius: 60,
-                  backgroundImage: NetworkImage(userData.userSignature),
-                ),
+                child: userData.userSignature == ''
+                    ? CircleAvatar(
+                        minRadius: 60,
+                        maxRadius: 60,
+                        child: Text(userData.userName[0],style: TextStyle(fontSize: 52),),
+                      )
+                    : CircleAvatar(
+                        minRadius: 60,
+                        maxRadius: 60,
+                        backgroundImage: NetworkImage(userData.userSignature),
+                        backgroundColor: Color(0xffff0000),
+                        radius: 24.0,
+                      ),
                 onTap: () {},
               ),
               Padding(padding: EdgeInsets.only(top: 30)),
