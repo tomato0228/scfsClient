@@ -21,5 +21,8 @@
   "grandmaRelations": "Grandma",
   "grandpaRelations": "Grandpa",
   "motherRelations": "Mother",
-  "fatherRelations": "Father"
+  "fatherRelations": "Father",
+  "inputMessage": "Input message...",
+  "nothingSend": "Nothing to send...",
+  "failedAgain": "Failed, please try again!"
 }

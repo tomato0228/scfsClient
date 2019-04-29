@@ -5,6 +5,7 @@ import 'package:tomato_scfs/base/_base_widget.dart';
 import 'package:tomato_scfs/common/application.dart';
 import 'package:tomato_scfs/common/user.dart';
 import 'package:tomato_scfs/event/change_badgeno_event.dart';
+import 'package:tomato_scfs/generated/i18n.dart';
 import 'package:tomato_scfs/http/api_service.dart';
 import 'package:tomato_scfs/model/chat_contacts_entity.dart';
 import 'package:tomato_scfs/model/user_entity.dart';
@@ -156,7 +157,8 @@ class ChatContactsPageState extends BaseWidgetState<ChatContactsPage> {
             Application.eventBus.fire(new ChangeBadeNoEvent(badgeNo));
           }
         } else {
-          Fluttertoast.showToast(msg: "获取联系人列表失败！");
+          Fluttertoast.showToast(msg: S.of(context).failedAgain);
+//          Fluttertoast.showToast(msg: "获取联系人列表失败！");
         }
       }, (Error error) {
         setState(() {

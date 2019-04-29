@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:tomato_scfs/base/_base_widget.dart';
 import 'package:tomato_scfs/common/user.dart';
+import 'package:tomato_scfs/generated/i18n.dart';
 import 'package:tomato_scfs/http/api_service.dart';
 import 'package:tomato_scfs/model/base_entity.dart';
 import 'package:tomato_scfs/model/chat_contacts_entity.dart';
@@ -102,7 +103,8 @@ class ChatPageState extends BaseWidgetState<ChatPage> {
           _updateChatByUser();
           setState(() {});
         } else {
-          Fluttertoast.showToast(msg: "获取消息列表失败！");
+          Fluttertoast.showToast(msg: S.of(context).failedAgain);
+//          Fluttertoast.showToast(msg: "获取消息列表失败！");
         }
       }, (Error error) {
         showError();
@@ -132,7 +134,8 @@ class ChatPageState extends BaseWidgetState<ChatPage> {
         if (_baseEntity != null && _baseEntity.status == 0) {
           _getChatOne(_baseEntity.data);
         } else {
-          Fluttertoast.showToast(msg: "发送消息失败！");
+          Fluttertoast.showToast(msg: S.of(context).failedAgain);
+//          Fluttertoast.showToast(msg: "发送消息失败！");
         }
       }, (Error error) {
         setState(() {
@@ -147,7 +150,7 @@ class ChatPageState extends BaseWidgetState<ChatPage> {
       if (_baseEntity != null && _baseEntity.status == 0) {
         /// Nothing
       } else {
-        Fluttertoast.showToast(msg: "已读消息失败！");
+        Fluttertoast.showToast(msg: S.of(context).failedAgain);
       }
     }, (Error error) {
       setState(() {
@@ -164,7 +167,7 @@ class ChatPageState extends BaseWidgetState<ChatPage> {
       listScrollController.animateTo(0.0,
           duration: Duration(milliseconds: 2000), curve: Curves.easeOut);
     } else {
-      Fluttertoast.showToast(msg: '没有什么要发送的...');
+      Fluttertoast.showToast(msg: S.of(context).nothingSend);
     }
   }
 
@@ -660,7 +663,7 @@ class ChatPageState extends BaseWidgetState<ChatPage> {
                 style: TextStyle(color: primaryColor, fontSize: 15.0),
                 controller: textEditingController,
                 decoration: InputDecoration.collapsed(
-                  hintText: '输入消息...',
+                  hintText: S.of(context).inputMessage,
                   hintStyle: TextStyle(color: greyColor),
                 ),
                 focusNode: focusNode,

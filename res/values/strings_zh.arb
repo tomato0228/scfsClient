@@ -21,5 +21,8 @@
   "grandmaRelations": "奶奶",
   "grandpaRelations": "爷爷",
   "motherRelations": "母亲",
-  "fatherRelations": "父亲"
+  "fatherRelations": "父亲",
+  "inputMessage": "输入消息...",
+  "nothingSend": "没有什么要发送的...",
+  "failedAgain": "失败,请重试！"
 }

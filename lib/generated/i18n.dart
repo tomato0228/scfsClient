@@ -29,12 +29,15 @@ class S implements WidgetsLocalizations {
   String get cancel => "Cancel";
   String get exit => "Exit";
   String get exitAppTip => "Are you sure you want to quit？";
+  String get failedAgain => "Failed, please try again!";
   String get fatherRelations => "Father";
   String get grandmaRelations => "Grandma";
   String get grandpaRelations => "Grandpa";
+  String get inputMessage => "Input message...";
   String get language => "Language";
   String get logOut => "Log out";
   String get motherRelations => "Mother";
+  String get nothingSend => "Nothing to send...";
   String get ok => "OK";
   String get otherRelations => "Other";
   String get school => "School";
@@ -61,17 +64,11 @@ class $zh extends S {
   @override
   String get grandpaRelations => "爷爷";
   @override
-  String get grandmaRelations => "奶奶";
-  @override
   String get aboutAuthor => "关于作者";
-  @override
-  String get otherRelations => "其他";
   @override
   String get language => "语言";
   @override
   String get appMessage => "通知";
-  @override
-  String get exit => "退出";
   @override
   String get school => "学校";
   @override
@@ -81,8 +78,6 @@ class $zh extends S {
   @override
   String get appHomework => "作业";
   @override
-  String get motherRelations => "母亲";
-  @override
   String get tip => "提示";
   @override
   String get theme => "主题";
@@ -90,6 +85,20 @@ class $zh extends S {
   String get addParents => "添加家长";
   @override
   String get ok => "确认";
+  @override
+  String get failedAgain => "失败,请重试！";
+  @override
+  String get grandmaRelations => "奶奶";
+  @override
+  String get otherRelations => "其他";
+  @override
+  String get inputMessage => "输入消息...";
+  @override
+  String get exit => "退出";
+  @override
+  String get motherRelations => "母亲";
+  @override
+  String get nothingSend => "没有什么要发送的...";
   @override
   String get exitAppTip => "确定退出应用吗？";
   @override

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tomato_scfs/base/_base_widget.dart';
 import 'package:tomato_scfs/common/user.dart';
+import 'package:tomato_scfs/generated/i18n.dart';
 import 'package:tomato_scfs/http/api_service.dart';
 import 'package:tomato_scfs/model/class_entity.dart';
 import 'package:tomato_scfs/model/user_entity.dart';
@@ -252,7 +253,8 @@ class ContactsPageState extends BaseWidgetState<ContactsPage> {
             _contactsDatas = _contactsEntity.data;
           });
         } else {
-          Fluttertoast.showToast(msg: "获取联系人列表失败！");
+          Fluttertoast.showToast(msg: S.of(context).failedAgain);
+//          Fluttertoast.showToast(msg: "获取联系人列表失败！");
         }
       }, (Error error) {
         setState(() {
@@ -272,7 +274,8 @@ class ContactsPageState extends BaseWidgetState<ContactsPage> {
             _contactsDatas = _contactsEntity.data;
           });
         } else {
-          Fluttertoast.showToast(msg: "获取联系人列表失败！");
+          Fluttertoast.showToast(msg: S.of(context).failedAgain);
+//          Fluttertoast.showToast(msg: "获取联系人列表失败！");
         }
       }, (Error error) {
         setState(() {
@@ -291,7 +294,8 @@ class ContactsPageState extends BaseWidgetState<ContactsPage> {
           _classDatas = _classEntity.data;
         });
       } else {
-        Fluttertoast.showToast(msg: "获取班级列表失败！");
+        Fluttertoast.showToast(msg: S.of(context).failedAgain);
+//        Fluttertoast.showToast(msg: "获取班级列表失败！");
       }
     }, (Error error) {
       setState(() {
@@ -308,7 +312,8 @@ class ContactsPageState extends BaseWidgetState<ContactsPage> {
             _contactsDatas = _contactsEntity.data;
           });
         } else {
-          Fluttertoast.showToast(msg: "获取联系人列表失败！");
+          Fluttertoast.showToast(msg: S.of(context).failedAgain);
+//          Fluttertoast.showToast(msg: "获取联系人列表失败！");
         }
       }, (Error error) {
         setState(() {
@@ -328,7 +333,8 @@ class ContactsPageState extends BaseWidgetState<ContactsPage> {
           _studentDatas = _contactsEntity.data;
         });
       } else {
-        Fluttertoast.showToast(msg: "获取学生列表失败！");
+        Fluttertoast.showToast(msg: S.of(context).failedAgain);
+//        Fluttertoast.showToast(msg: "获取学生列表失败！");
       }
     }, (Error error) {
       setState(() {
