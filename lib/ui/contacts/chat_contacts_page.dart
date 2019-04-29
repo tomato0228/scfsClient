@@ -44,40 +44,24 @@ class ChatContactsPageState extends BaseWidgetState<ChatContactsPage> {
   @override
   Widget getContentWidget(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          Container(
-            child: (_chatContactsDatas == null)
-                ? Center(
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(themeColor),
-                    ),
-                  )
-                : RefreshIndicator(
-                    color: Colors.deepOrangeAccent,
-                    backgroundColor: Colors.white,
-                    child: ListView.builder(
-                      padding: EdgeInsets.all(10.0),
-                      itemBuilder: (context, index) =>
-                          buildItem(context, _chatContactsDatas[index]),
-                      itemCount: _chatContactsDatas.length,
-                    ),
-                    onRefresh: _onRefresh,
-                  ),
-          ),
-          Positioned(
-            child: isLoading
-                ? Container(
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(themeColor),
-                      ),
-                    ),
-                    color: Colors.transparent,
-                  )
-                : Container(),
-          ),
-        ],
+      body: Container(
+        child: (_chatContactsDatas == null)
+            ? Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(themeColor),
+                ),
+              )
+            : RefreshIndicator(
+                color: Colors.deepOrangeAccent,
+                backgroundColor: Colors.white,
+                child: ListView.builder(
+                  padding: EdgeInsets.all(10.0),
+                  itemBuilder: (context, index) =>
+                      buildItem(context, _chatContactsDatas[index]),
+                  itemCount: _chatContactsDatas.length,
+                ),
+                onRefresh: _onRefresh,
+              ),
       ),
     );
   }
@@ -85,8 +69,7 @@ class ChatContactsPageState extends BaseWidgetState<ChatContactsPage> {
   @override
   void onClickErrorWidget() {
     Navigator.of(context).pushAndRemoveUntil(
-        new MaterialPageRoute(builder: (context) => App()),
-        (route) => route == null);
+        new MaterialPageRoute(builder: (context) => App()), (_) => false);
   }
 
   @override

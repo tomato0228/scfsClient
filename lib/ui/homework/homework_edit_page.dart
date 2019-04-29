@@ -77,6 +77,7 @@ class HomeworkEditPageState extends State<HomeworkEditPage> {
                 //filled: true, //背景颜色
               ),
             ),
+            SizedBox(height: 32.0),
             TextField(
               controller: textHomeworkAttachmentController,
               maxLength: 255,
@@ -88,6 +89,7 @@ class HomeworkEditPageState extends State<HomeworkEditPage> {
                 //filled: true, //背景颜色
               ),
             ),
+            SizedBox(height: 32.0),
             Container(
               width: MediaQuery.of(context).size.width,
               margin: const EdgeInsets.only(left: 48.0),
@@ -104,7 +106,10 @@ class HomeworkEditPageState extends State<HomeworkEditPage> {
                       },
                       child: Text(
                         "提    交",
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18.0,
+                        ),
                       ),
                     ),
                   ),

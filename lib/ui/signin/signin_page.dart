@@ -331,7 +331,7 @@ class SigninPageState extends State<SigninPage> {
               ),
             ),
 
-            /// 生日
+            /// 类别
             Container(
               width: MediaQuery.of(context).size.width,
               margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 10.0),

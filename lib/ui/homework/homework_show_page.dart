@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tomato_scfs/common/user.dart';
 import 'package:tomato_scfs/model/homework_entity.dart';
 import 'package:tomato_scfs/model/user_entity.dart';
+import 'package:tomato_scfs/ui/drawer/about_page.dart';
+import 'package:tomato_scfs/ui/drawer/personal_page.dart';
 import 'package:tomato_scfs/ui/homework/homework_edit_page.dart';
 
 class HomeworkShowPage extends StatelessWidget {
@@ -87,7 +89,22 @@ class HomeworkShowPage extends StatelessWidget {
                         child: InkWell(
                           splashColor: Colors.white.withOpacity(0.3),
                           highlightColor: Colors.white.withOpacity(0.1),
-                          onTap: () {},
+                          onTap: () {
+                            if (homeworkData.teacherId != userData.userId) {
+                              UserData teacher =
+                                  UserData.fromJson(homeworkData.toJson());
+                              teacher.userId = homeworkData.teacherId;
+                              Navigator.of(context)
+                                  .push(MaterialPageRoute(builder: (context) {
+                                return PersonalPage(userData: teacher);
+                              }));
+                            } else {
+                              Navigator.of(context)
+                                  .push(MaterialPageRoute(builder: (context) {
+                                return AboutPage();
+                              }));
+                            }
+                          },
                         ),
                       ),
                     ),

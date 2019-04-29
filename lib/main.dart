@@ -89,7 +89,7 @@ class MyAppState extends State<MyApp> {
       theme: new ThemeData(
         primaryColor: themeColor,
         brightness: Brightness.light,
-        platform: TargetPlatform.iOS,
+//        platform: TargetPlatform.iOS,
       ),
       routes: <String, WidgetBuilder>{
         "app": (BuildContext context) => new App(),

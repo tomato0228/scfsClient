@@ -308,7 +308,7 @@ class SigninPageTwoState extends State<SigninPageTwo> {
 //            Application.eventBus.fire(new LoginEvent());
 //            Navigator.of(context).pushAndRemoveUntil(
 //                new MaterialPageRoute(builder: (context) => App()),
-//                    (route) => route == null);
+//                    (_) => false);
             _overSignin();
           } else {
             Fluttertoast.showToast(msg: "绑定失败，请重试！");
@@ -364,12 +364,13 @@ class SigninPageTwoState extends State<SigninPageTwo> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(S.of(context).tip),
-          content: Text('登陆失败，请先让您的孩子在他的账户中添加您为家人！'),
+          content: Text('绑定成功，请让您的孩子在他的账户中添加您为家人！'),
           actions: <Widget>[
             FlatButton(
               child:
                   Text(S.of(context).ok, style: TextStyle(color: Colors.blue)),
               onPressed: () {
+                Navigator.of(context).pop();
                 Navigator.of(context).pop();
               },
             ),

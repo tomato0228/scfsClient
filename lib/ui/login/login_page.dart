@@ -210,7 +210,7 @@ class LoginPageState extends State<LoginPage> {
                   ),
                   SizedBox(width: 16.0),
                   new Expanded(
-                    child: TextField(
+                    child: new TextField(
                       focusNode: myFocusNodePasswordLogin,
                       controller: loginPasswordController,
                       obscureText: _obscureTextLogin,

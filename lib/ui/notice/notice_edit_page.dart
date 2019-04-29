@@ -65,7 +65,7 @@ class NoticeEditPageState extends State<NoticeEditPage> {
           children: <Widget>[
             TextField(
               controller: textNoticeTitleController,
-              maxLength: 20,
+              maxLength: 16,
               decoration: InputDecoration(
                 icon: Icon(Icons.title, size: 32.0),
                 labelText: '标题',
@@ -73,6 +73,7 @@ class NoticeEditPageState extends State<NoticeEditPage> {
                 border: OutlineInputBorder(),
               ),
             ),
+            SizedBox(height: 32.0),
             TextField(
               controller: textNoticeContentController,
               maxLength: 255,
@@ -85,6 +86,7 @@ class NoticeEditPageState extends State<NoticeEditPage> {
                 border: OutlineInputBorder(),
               ),
             ),
+            SizedBox(height: 32.0),
             TextField(
               controller: textNoticeAttachmentController,
               maxLength: 255,
@@ -95,6 +97,7 @@ class NoticeEditPageState extends State<NoticeEditPage> {
                 border: OutlineInputBorder(),
               ),
             ),
+            SizedBox(height: 32.0),
             Container(
               width: MediaQuery.of(context).size.width,
               margin: const EdgeInsets.only(left: 48.0),
@@ -111,7 +114,10 @@ class NoticeEditPageState extends State<NoticeEditPage> {
                       },
                       child: Text(
                         "提    交",
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18.0,
+                        ),
                       ),
                     ),
                   ),

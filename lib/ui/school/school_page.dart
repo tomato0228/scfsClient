@@ -53,7 +53,7 @@ class SchoolPageState extends BaseWidgetState<SchoolPage> {
   AppBar getAppBar() {
     return AppBar(
       title: Text(_schoolData.schoolName),
-      elevation: 0.0,
+      elevation: 1.0,
     );
   }
 
@@ -117,7 +117,6 @@ class SchoolPageState extends BaseWidgetState<SchoolPage> {
   @override
   void onClickErrorWidget() {
     Navigator.of(context).pushAndRemoveUntil(
-        new MaterialPageRoute(builder: (context) => App()),
-        (route) => route == null);
+        new MaterialPageRoute(builder: (context) => App()), (_) => false);
   }
 }

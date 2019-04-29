@@ -36,19 +36,19 @@ class AboutPageState extends State<AboutPage> {
             GestureDetector(
               child: userData.userSignature == ''
                   ? CircleAvatar(
-                minRadius: 60,
-                maxRadius: 60,
-                child: Text(
-                  userData.userName[0],
-                  style: TextStyle(fontSize: 52),
-                ),
-              )
+                      minRadius: 60,
+                      maxRadius: 60,
+                      child: Text(
+                        userData.userName[0],
+                        style: TextStyle(fontSize: 52),
+                      ),
+                    )
                   : CircleAvatar(
-                minRadius: 60,
-                maxRadius: 60,
-                backgroundImage: NetworkImage(userData.userSignature),
-                backgroundColor: Color(0xffff0000),
-              ),
+                      minRadius: 60,
+                      maxRadius: 60,
+                      backgroundImage: NetworkImage(userData.userSignature),
+                      backgroundColor: Color(0xffff0000),
+                    ),
               onTap: () {},
             ),
             Padding(padding: EdgeInsets.only(top: 30)),
@@ -114,9 +114,7 @@ class AboutPageState extends State<AboutPage> {
                     LimitedBox(
                       maxWidth: MediaQuery.of(context).size.width * 0.63,
                       child: Text(
-                        userData.userTel == null
-                            ? '点击设置电话'
-                            : userData.userTel,
+                        userData.userTel == null ? '点击设置电话' : userData.userTel,
                         style: textStyle,
                       ),
                     ),

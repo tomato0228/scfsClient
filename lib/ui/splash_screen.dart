@@ -71,12 +71,11 @@ class SplashScreenState extends State<SplashScreen> {
     _setHasSkip();
     if (User.singleton.userData != null) {
       Navigator.of(context).pushAndRemoveUntil(
-          new MaterialPageRoute(builder: (context) => App()),
-          (route) => route == null);
+          new MaterialPageRoute(builder: (context) => App()), (_) => false);
     } else {
       Navigator.of(context).pushAndRemoveUntil(
           new MaterialPageRoute(builder: (context) => LoginPage()),
-          (route) => route == null);
+          (_) => false);
     }
   }
 
@@ -84,12 +83,11 @@ class SplashScreenState extends State<SplashScreen> {
     _setHasSkip();
     if (User.singleton.userData != null) {
       Navigator.of(context).pushAndRemoveUntil(
-          new MaterialPageRoute(builder: (context) => App()),
-          (route) => route == null);
+          new MaterialPageRoute(builder: (context) => App()), (_) => false);
     } else {
       Navigator.of(context).pushAndRemoveUntil(
           new MaterialPageRoute(builder: (context) => LoginPage()),
-          (route) => route == null);
+          (_) => false);
     }
   }
 

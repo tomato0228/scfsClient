@@ -30,12 +30,11 @@ class _LoadingState extends State<LoadingPage> {
     } else {
       if (User.singleton.userData != null) {
         Navigator.of(context).pushAndRemoveUntil(
-            new MaterialPageRoute(builder: (context) => App()),
-            (route) => route == null);
+            new MaterialPageRoute(builder: (context) => App()), (_) => false);
       } else {
         Navigator.of(context).pushAndRemoveUntil(
             new MaterialPageRoute(builder: (context) => LoginPage()),
-            (route) => route == null);
+            (_) => false);
       }
     }
   }
@@ -46,7 +45,7 @@ class _LoadingState extends State<LoadingPage> {
       body: Container(
         child: Image.asset(
           "assets/images/loading.png",
-          fit: BoxFit.cover,
+          fit: BoxFit.fill,
         ),
       ),
     );

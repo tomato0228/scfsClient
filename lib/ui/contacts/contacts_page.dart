@@ -41,7 +41,7 @@ class ContactsPageState extends BaseWidgetState<ContactsPage> {
       body: RefreshIndicator(
         color: Colors.deepOrangeAccent,
         backgroundColor: Colors.white,
-        child: ListView(
+        child: Column(
           children: <Widget>[
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -114,24 +114,26 @@ class ContactsPageState extends BaseWidgetState<ContactsPage> {
                 ),
               ],
             ),
-            Container(
-              child: (_contactsDatas == null || _contactsDatas.length == 0)
-                  ? Container(
-                      alignment: Alignment(0.0, 0.0),
-                      child: Text(
-                        '没有联系人',
-                        style: TextStyle(fontSize: 24.0),
+            Flexible(
+              child: Container(
+                child: (_contactsDatas == null || _contactsDatas.length == 0)
+                    ? Container(
+                        alignment: Alignment(0.0, 0.0),
+                        child: Text(
+                          '没有联系人',
+                          style: TextStyle(
+                            fontSize: 24.0,
+                            color: Colors.black54,
+                          ),
+                        ),
+                      )
+                    : ListView.builder(
+                        padding: EdgeInsets.all(10.0),
+                        itemBuilder: (context, index) =>
+                            buildItem(context, _contactsDatas[index]),
+                        itemCount: _contactsDatas.length,
                       ),
-                    )
-                  : ListView.builder(
-                      padding: EdgeInsets.all(10.0),
-                      itemBuilder: (context, index) =>
-                          buildItem(context, _contactsDatas[index]),
-                      itemCount: _contactsDatas.length,
-                      shrinkWrap: true,
-                      //解决无限高度问题
-                      physics: NeverScrollableScrollPhysics(), //禁用滑动事件
-                    ),
+              ),
             ),
           ],
         ),
@@ -143,8 +145,7 @@ class ContactsPageState extends BaseWidgetState<ContactsPage> {
   @override
   void onClickErrorWidget() {
     Navigator.of(context).pushAndRemoveUntil(
-        new MaterialPageRoute(builder: (context) => App()),
-        (route) => route == null);
+        new MaterialPageRoute(builder: (context) => App()), (_) => false);
   }
 
   @override

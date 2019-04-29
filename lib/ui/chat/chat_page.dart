@@ -13,6 +13,7 @@ import 'package:tomato_scfs/model/chat_contacts_entity.dart';
 import 'package:tomato_scfs/model/chat_entity.dart';
 import 'package:tomato_scfs/model/user_entity.dart';
 import 'package:tomato_scfs/ui/app.dart';
+import 'package:tomato_scfs/ui/drawer/about_page.dart';
 import 'package:tomato_scfs/ui/drawer/personal_page.dart';
 import 'package:tomato_scfs/util/const.dart';
 import 'package:tomato_scfs/util/utils.dart';
@@ -34,6 +35,7 @@ class ChatPageState extends BaseWidgetState<ChatPage> {
   ScrollController _scrollController = new ScrollController();
   bool isLoading;
   List<ChatData> chatDatas;
+  bool isGet;
 
   var listMessage;
   File imageFile;
@@ -49,6 +51,7 @@ class ChatPageState extends BaseWidgetState<ChatPage> {
   void initState() {
     super.initState();
     setAppBarVisible(true);
+    isGet = true;
     isLoading = false;
     isShowSticker = false;
     userData = User.singleton.userData;
@@ -82,6 +85,7 @@ class ChatPageState extends BaseWidgetState<ChatPage> {
   }
 
   Future<Null> _getChat(_chatMesg) async {
+    if (!isGet) return;
     if (userData != null && chatContactsData != null) {
       ApiService().getChatList((ChatEntity _chatEntity) {
         if (_chatEntity != null && _chatEntity.status == 0) {
@@ -101,9 +105,7 @@ class ChatPageState extends BaseWidgetState<ChatPage> {
           Fluttertoast.showToast(msg: "获取消息列表失败！");
         }
       }, (Error error) {
-        setState(() {
-          showError();
-        });
+        showError();
       }, userData.userId, chatContactsData.userId, _chatMesg);
     }
   }
@@ -289,21 +291,29 @@ class ChatPageState extends BaseWidgetState<ChatPage> {
                             ),
                           ),
                 Material(
-                  child: CachedNetworkImage(
-                    placeholder: (context, url) => Container(
-                          child: CircularProgressIndicator(
-                            strokeWidth: 1.0,
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(themeColor),
+                  child: InkWell(
+                    child: CachedNetworkImage(
+                      placeholder: (context, url) => Container(
+                            child: CircularProgressIndicator(
+                              strokeWidth: 1.0,
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(themeColor),
+                            ),
+                            width: 35.0,
+                            height: 35.0,
+                            padding: EdgeInsets.all(10.0),
                           ),
-                          width: 35.0,
-                          height: 35.0,
-                          padding: EdgeInsets.all(10.0),
-                        ),
-                    imageUrl: userData.userSignature,
-                    width: 35.0,
-                    height: 35.0,
-                    fit: BoxFit.cover,
+                      imageUrl: userData.userSignature,
+                      width: 35.0,
+                      height: 35.0,
+                      fit: BoxFit.cover,
+                    ),
+                    onTap: () {
+                      Navigator.of(context)
+                          .push(new MaterialPageRoute(builder: (context) {
+                        return AboutPage();
+                      }));
+                    },
                   ),
                   borderRadius: BorderRadius.all(
                     Radius.circular(18.0),
@@ -338,21 +348,33 @@ class ChatPageState extends BaseWidgetState<ChatPage> {
             Row(
               children: <Widget>[
                 Material(
-                  child: CachedNetworkImage(
-                    placeholder: (context, url) => Container(
-                          child: CircularProgressIndicator(
-                            strokeWidth: 1.0,
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(themeColor),
+                  child: InkWell(
+                    child: CachedNetworkImage(
+                      placeholder: (context, url) => Container(
+                            child: CircularProgressIndicator(
+                              strokeWidth: 1.0,
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(themeColor),
+                            ),
+                            width: 35.0,
+                            height: 35.0,
+                            padding: EdgeInsets.all(10.0),
                           ),
-                          width: 35.0,
-                          height: 35.0,
-                          padding: EdgeInsets.all(10.0),
-                        ),
-                    imageUrl: chatContactsData.userSignature,
-                    width: 35.0,
-                    height: 35.0,
-                    fit: BoxFit.cover,
+                      imageUrl: chatContactsData.userSignature,
+                      width: 35.0,
+                      height: 35.0,
+                      fit: BoxFit.cover,
+                    ),
+                    onTap: () {
+                      Navigator.of(context)
+                          .push(new MaterialPageRoute(builder: (context) {
+                        return PersonalPage(
+                          userData:
+                              UserData.fromJson(chatContactsData.toJson()),
+                          isShowFB: false,
+                        );
+                      }));
+                    },
                   ),
                   borderRadius: BorderRadius.all(
                     Radius.circular(18.0),
@@ -695,8 +717,7 @@ class ChatPageState extends BaseWidgetState<ChatPage> {
   @override
   void onClickErrorWidget() {
     Navigator.of(context).pushAndRemoveUntil(
-        new MaterialPageRoute(builder: (context) => App()),
-        (route) => route == null);
+        new MaterialPageRoute(builder: (context) => App()), (_) => false);
   }
 
   @override
@@ -723,7 +744,8 @@ class ChatPageState extends BaseWidgetState<ChatPage> {
 
   @override
   void dispose() {
-    _scrollController?.dispose();
     super.dispose();
+    _scrollController?.dispose();
+    isGet = false;
   }
 }

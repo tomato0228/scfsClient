@@ -174,7 +174,7 @@ class DrawerPageState extends State<DrawerPage> {
           User.singleton.clearUserInfo();
           Navigator.of(context).pushAndRemoveUntil(
               new MaterialPageRoute(builder: (context) => LoginPage()),
-              (route) => route == null);
+              (_) => false);
         },
       );
     } else {

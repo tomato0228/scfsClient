@@ -200,7 +200,6 @@ class ApiService {
         .post(Api.getPath(path: Api.USER_GET_SCHOOL),
             data: formData, options: _getOptions())
         .then((response) {
-      print(response.data);
       callback(SchoolEntity.fromJson(response.data));
     }).catchError((e) {
       errorback(e);

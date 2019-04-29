@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tomato_scfs/common/user.dart';
 import 'package:tomato_scfs/model/notice_entity.dart';
 import 'package:tomato_scfs/model/user_entity.dart';
+import 'package:tomato_scfs/ui/drawer/about_page.dart';
+import 'package:tomato_scfs/ui/drawer/personal_page.dart';
 import 'package:tomato_scfs/ui/notice/notice_edit_page.dart';
 
 class NoticeShowPage extends StatelessWidget {
@@ -83,7 +85,21 @@ class NoticeShowPage extends StatelessWidget {
                         child: InkWell(
                           splashColor: Colors.white.withOpacity(0.3),
                           highlightColor: Colors.white.withOpacity(0.1),
-                          onTap: () {},
+                          onTap: () {
+                            if (noticeData.userId != userData.userId) {
+                              UserData teacher =
+                                  UserData.fromJson(noticeData.toJson());
+                              Navigator.of(context)
+                                  .push(MaterialPageRoute(builder: (context) {
+                                return PersonalPage(userData: teacher);
+                              }));
+                            } else {
+                              Navigator.of(context)
+                                  .push(MaterialPageRoute(builder: (context) {
+                                return AboutPage();
+                              }));
+                            }
+                          },
                         ),
                       ),
                     ),

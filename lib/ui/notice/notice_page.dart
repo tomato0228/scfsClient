@@ -10,6 +10,7 @@ import 'package:tomato_scfs/model/user_entity.dart';
 import 'package:tomato_scfs/ui/app.dart';
 import 'package:tomato_scfs/ui/notice/notice_add_page.dart';
 import 'package:tomato_scfs/ui/notice/notice_show_page.dart';
+import 'package:tomato_scfs/util/theme_util.dart';
 
 class NoticePage extends BaseWidget {
   @override
@@ -94,80 +95,89 @@ class NoticePageState extends BaseWidgetState<NoticePage> {
 
   Widget getNoticeListData() {
     if (_noticeDatas == null || _noticeDatas.length == 0)
-      return Container(
-        alignment: Alignment(0.0, 0.0),
-        child: Text(
-          '无通知',
-          style: TextStyle(fontSize: 24.0),
+      return Expanded(
+        child: Container(
+          alignment: Alignment(0.0, 0.0),
+          child: Text(
+            '无通知',
+            style: TextStyle(
+              fontSize: 24.0,
+              color: Colors.black54,
+            ),
+          ),
         ),
       );
-    return ListView(
-      shrinkWrap: true, //解决无限高度问题
-      physics: NeverScrollableScrollPhysics(), //禁用滑动事件
-      children: _noticeDatas.map((notice) {
-        return Card(
-          child: Column(
+    return Flexible(
+      child: ListView.builder(
+//      shrinkWrap: true, //解决无限高度问题
+//      physics: NeverScrollableScrollPhysics(), //禁用滑动事件
+        itemCount: _noticeDatas.length,
+        itemBuilder: (context, index) => buildItem(index, _noticeDatas[index]),
+      ),
+    );
+  }
+
+  Widget buildItem(int index, NoticeData notice) {
+    return Card(
+      child: Column(
+        children: <Widget>[
+          ListTile(
+            title: Text(notice.noticeTitle),
+            subtitle: Text(notice.noticeDate.substring(0, 16)),
+          ),
+          Stack(
             children: <Widget>[
-              ListTile(
-                title: Text(notice.noticeTitle),
-                subtitle: Text(notice.noticeDate.substring(0, 16)),
+              Container(
+                padding: EdgeInsets.all(16.0),
+                alignment: Alignment(0.0, 0.0),
+                child: Text(
+                  notice.noticeContent,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-              Stack(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.all(16.0),
-                    alignment: Alignment(0.0, 0.0),
-                    child: Text(
-                      notice.noticeContent,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+              Positioned.fill(
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    splashColor: Colors.white.withOpacity(0.3),
+                    highlightColor: Colors.white.withOpacity(0.1),
+                    onTap: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return NoticeShowPage(noticeData: notice);
+                      }));
+                    },
                   ),
-                  Positioned.fill(
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        splashColor: Colors.white.withOpacity(0.3),
-                        highlightColor: Colors.white.withOpacity(0.1),
-                        onTap: () {
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (context) {
-                            return NoticeShowPage(noticeData: notice);
-                          }));
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              ButtonTheme.bar(
-                child: ButtonBar(
-                  children: <Widget>[
-                    userData.userType == '教师'
-                        ? FlatButton(
-                            child:
-                                Text('删除', style: TextStyle(color: Colors.red)),
-                            onPressed: () {
-                              _openAlertDialog(notice);
-                            },
-                          )
-                        : Container(),
-                    FlatButton(
-                      child: Text('查看'),
-                      onPressed: () {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (context) {
-                          return NoticeShowPage(noticeData: notice);
-                        }));
-                      },
-                    ),
-                  ],
                 ),
               ),
             ],
           ),
-        );
-      }).toList(),
+          ButtonTheme.bar(
+            child: ButtonBar(
+              children: <Widget>[
+                userData.userType == '教师'
+                    ? FlatButton(
+                        child: Text('删除', style: TextStyle(color: Colors.red)),
+                        onPressed: () {
+                          _openAlertDialog(notice);
+                        },
+                      )
+                    : Container(),
+                FlatButton(
+                  child: Text('查看'),
+                  onPressed: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return NoticeShowPage(noticeData: notice);
+                    }));
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -294,7 +304,7 @@ class NoticePageState extends BaseWidgetState<NoticePage> {
     return Scaffold(
       body: Container(
         padding: EdgeInsets.all(16.0),
-        child: ListView(
+        child: Column(
           children: <Widget>[
             userData.userType == '教师'
                 ? Column(
@@ -314,7 +324,7 @@ class NoticePageState extends BaseWidgetState<NoticePage> {
                             value: _classItem,
                             hint: Text('选择班级'),
                           ),
-                          SizedBox(width: 16.0),
+                          SizedBox(width: 8.0),
                           Theme(
                             data: Theme.of(context).copyWith(
                               backgroundColor: Theme.of(context).accentColor,
@@ -332,30 +342,25 @@ class NoticePageState extends BaseWidgetState<NoticePage> {
                               elevation: 0.0,
                             ),
                           ),
+                          SizedBox(width: 8.0),
+                          Flexible(
+                            child: InkWell(
+                              child: CircleAvatar(
+                                child: Icon(Icons.add),
+                                backgroundColor: ThemeUtils.currentColorTheme,
+                                foregroundColor: Colors.white,
+                              ),
+                              onTap: () {
+                                Navigator.push<String>(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return NoticeAddPage(classDatas: _classDatas);
+                                })).then((String s) {
+                                  if (_classItem != null) _getNotices();
+                                });
+                              },
+                            ),
+                          )
                         ],
-                      ),
-                      SizedBox(height: 16.0),
-                      Theme(
-                        data: Theme.of(context).copyWith(
-                          backgroundColor: Theme.of(context).accentColor,
-                          buttonTheme: ButtonThemeData(
-                            textTheme: ButtonTextTheme.primary,
-                            shape: StadiumBorder(),
-                          ),
-                        ),
-                        child: RaisedButton(
-                          child: Text('发 布 新 通 知'),
-                          onPressed: () {
-                            Navigator.push<String>(context,
-                                MaterialPageRoute(builder: (context) {
-                              return NoticeAddPage(classDatas: _classDatas);
-                            })).then((String s) {
-                              if (_classItem != null) _getNotices();
-                            });
-                          },
-                          splashColor: Colors.grey,
-                          elevation: 0.0,
-                        ),
                       ),
                       Divider(
                         color: Colors.grey,
@@ -421,8 +426,7 @@ class NoticePageState extends BaseWidgetState<NoticePage> {
   @override
   void onClickErrorWidget() {
     Navigator.of(context).pushAndRemoveUntil(
-        new MaterialPageRoute(builder: (context) => App()),
-        (route) => route == null);
+        new MaterialPageRoute(builder: (context) => App()), (_) => false);
   }
 
   @override

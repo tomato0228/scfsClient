@@ -11,6 +11,7 @@ import 'package:tomato_scfs/model/user_entity.dart';
 import 'package:tomato_scfs/ui/app.dart';
 import 'package:tomato_scfs/ui/homework/homework_add_page.dart';
 import 'package:tomato_scfs/ui/homework/homework_show_page.dart';
+import 'package:tomato_scfs/util/theme_util.dart';
 
 class HomeworkPage extends BaseWidget {
   @override
@@ -109,80 +110,88 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
 
   Widget getHomeworkListData() {
     if (_homeworkDatas == null || _homeworkDatas.length == 0)
-      return Container(
-        alignment: Alignment(0.0, 0.0),
-        child: Text(
-          '无作业',
-          style: TextStyle(fontSize: 24.0),
+      return Expanded(
+        child: Container(
+          alignment: Alignment(0.0, 0.0),
+          child: Text(
+            '无作业',
+            style: TextStyle(
+              fontSize: 24.0,
+              color: Colors.black54,
+            ),
+          ),
         ),
       );
-    return ListView(
-      shrinkWrap: true, //解决无限高度问题
-      physics: NeverScrollableScrollPhysics(), //禁用滑动事件
-      children: _homeworkDatas.map((homework) {
-        return Card(
-          child: Column(
+    return Flexible(
+      child: ListView.builder(
+        itemCount: _homeworkDatas.length,
+        itemBuilder: (context, index) =>
+            buildItem(index, _homeworkDatas[index]),
+      ),
+    );
+  }
+
+  Widget buildItem(int index, HomeworkData homework) {
+    return Card(
+      child: Column(
+        children: <Widget>[
+          ListTile(
+            title: Text(homework.courseName),
+            subtitle: Text(homework.homeworkDate.substring(0, 10)),
+          ),
+          Stack(
             children: <Widget>[
-              ListTile(
-                title: Text(homework.courseName),
-                subtitle: Text(homework.homeworkDate.substring(0, 10)),
+              Container(
+                padding: EdgeInsets.all(16.0),
+                alignment: Alignment(0.0, 0.0),
+                child: Text(
+                  homework.homeworkContent,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-              Stack(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.all(16.0),
-                    alignment: Alignment(0.0, 0.0),
-                    child: Text(
-                      homework.homeworkContent,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+              Positioned.fill(
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    splashColor: Colors.white.withOpacity(0.3),
+                    highlightColor: Colors.white.withOpacity(0.1),
+                    onTap: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return HomeworkShowPage(homeworkData: homework);
+                      }));
+                    },
                   ),
-                  Positioned.fill(
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        splashColor: Colors.white.withOpacity(0.3),
-                        highlightColor: Colors.white.withOpacity(0.1),
-                        onTap: () {
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (context) {
-                            return HomeworkShowPage(homeworkData: homework);
-                          }));
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              ButtonTheme.bar(
-                child: ButtonBar(
-                  children: <Widget>[
-                    userData.userType == '教师'
-                        ? FlatButton(
-                            child:
-                                Text('删除', style: TextStyle(color: Colors.red)),
-                            onPressed: () {
-                              _openAlertDialog(homework);
-                            },
-                          )
-                        : Container(),
-                    FlatButton(
-                      child: Text('查看'),
-                      onPressed: () {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (context) {
-                          return HomeworkShowPage(homeworkData: homework);
-                        }));
-                      },
-                    ),
-                  ],
                 ),
               ),
             ],
           ),
-        );
-      }).toList(),
+          ButtonTheme.bar(
+            child: ButtonBar(
+              children: <Widget>[
+                userData.userType == '教师'
+                    ? FlatButton(
+                        child: Text('删除', style: TextStyle(color: Colors.red)),
+                        onPressed: () {
+                          _openAlertDialog(homework);
+                        },
+                      )
+                    : Container(),
+                FlatButton(
+                  child: Text('查看'),
+                  onPressed: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return HomeworkShowPage(homeworkData: homework);
+                    }));
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -358,7 +367,7 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
     return Scaffold(
       body: Container(
         padding: EdgeInsets.all(16.0),
-        child: ListView(
+        child: Column(
           children: <Widget>[
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -370,6 +379,7 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
                           setState(() {
                             _classItem = value;
                           });
+                          _courseItem = null;
                           _getCoursesByTeacher();
                         },
                         elevation: 24,
@@ -384,6 +394,7 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
                           setState(() {
                             _studentItem = value;
                           });
+                          _courseItem = null;
                           _getCoursesByParents();
                         },
                         elevation: 24,
@@ -404,7 +415,7 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
                   value: _courseItem,
                   hint: Text('选择科目'),
                 ),
-                SizedBox(width: 16.0),
+                SizedBox(width: 8.0),
                 Theme(
                   data: Theme.of(context).copyWith(
                     backgroundColor: Theme.of(context).accentColor,
@@ -423,41 +434,32 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
 //                  textColor: Theme.of(context).accentColor,
                   ),
                 ),
-              ],
-            ),
-            userData.userType == '教师'
-                ? Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(height: 16.0),
-                      Theme(
-                        data: Theme.of(context).copyWith(
-                          backgroundColor: Theme.of(context).accentColor,
-                          buttonTheme: ButtonThemeData(
-                            textTheme: ButtonTextTheme.primary,
-                            shape: StadiumBorder(),
+                SizedBox(width: 8.0),
+                userData.userType == '教师'
+                    ? Flexible(
+                        child: InkWell(
+                          child: CircleAvatar(
+                            child: Icon(Icons.add),
+                            backgroundColor: ThemeUtils.currentColorTheme,
+                            foregroundColor: Colors.white,
                           ),
-                        ),
-                        child: RaisedButton(
-                          child: Text('布 置 作 业'),
-                          onPressed: () {
+                          onTap: () {
                             Navigator.push<String>(context,
                                 MaterialPageRoute(builder: (context) {
                               return HomeworkAddPage(
-                                  classDatas: _classDatas,
-                                  courseDatas: _courseDatas);
+                                classDatas: _classDatas,
+                                courseDatas: _courseDatas,
+                              );
                             })).then((String s) {
                               if (_classItem != null && _courseItem != null)
                                 _getHomeworks();
                             });
                           },
-                          splashColor: Colors.grey,
-                          elevation: 0.0,
                         ),
-                      ),
-                    ],
-                  )
-                : Container(),
+                      )
+                    : Container(),
+              ],
+            ),
             Divider(
               color: Colors.grey,
               height: 32.0,
@@ -473,8 +475,7 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
   @override
   void onClickErrorWidget() {
     Navigator.of(context).pushAndRemoveUntil(
-        new MaterialPageRoute(builder: (context) => App()),
-        (route) => route == null);
+        new MaterialPageRoute(builder: (context) => App()), (_) => false);
   }
 
   @override
