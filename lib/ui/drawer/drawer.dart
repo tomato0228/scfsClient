@@ -7,6 +7,7 @@ import 'package:tomato_scfs/generated/i18n.dart';
 import 'package:tomato_scfs/model/user_entity.dart';
 import 'package:tomato_scfs/ui/drawer/about_page.dart';
 import 'package:tomato_scfs/ui/drawer/add_parents_page.dart';
+import 'package:tomato_scfs/ui/home/about_me_page.dart';
 import 'package:tomato_scfs/ui/login/login_page.dart';
 import 'package:tomato_scfs/ui/school/school_page.dart';
 import 'package:tomato_scfs/util/theme_util.dart';
@@ -154,7 +155,12 @@ class DrawerPageState extends State<DrawerPage> {
               textAlign: TextAlign.left,
             ),
             leading: Icon(Icons.info, size: 22.0),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context)
+                  .push(new MaterialPageRoute(builder: (context) {
+                return AboutMyPage();
+              }));
+            },
           ),
           logoutWidget()
         ],

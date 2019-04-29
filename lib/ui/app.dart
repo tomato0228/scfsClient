@@ -71,16 +71,16 @@ class AppState extends State<App> {
           title: Text(appBarTitles[_selectedIndex]),
           bottom: null,
           elevation: elevation,
-          actions: <Widget>[
-            IconButton(
-                icon: Icon(Icons.search),
-                onPressed: () {
-                  Navigator.of(context)
-                      .push(new MaterialPageRoute(builder: (context) {
-                    return Scaffold();
-                  }));
-                })
-          ],
+//          actions: <Widget>[
+//            IconButton(
+//                icon: Icon(Icons.search),
+//                onPressed: () {
+//                  Navigator.of(context)
+//                      .push(new MaterialPageRoute(builder: (context) {
+//                    return Scaffold();
+//                  }));
+//                })
+//          ],
         ),
         body: IndexedStack(
           children: pages,

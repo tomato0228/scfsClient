@@ -110,6 +110,7 @@ flutter:
     - assets/images/mimi7.gif
     - assets/images/mimi8.gif
     - assets/images/mimi9.gif
+    - assets/images/myhead.png
 
   fonts:
   - family: icomoon
