@@ -111,6 +111,7 @@ class NoticePageState extends BaseWidgetState<NoticePage> {
       child: ListView.builder(
 //      shrinkWrap: true, //解决无限高度问题
 //      physics: NeverScrollableScrollPhysics(), //禁用滑动事件
+        padding: EdgeInsets.only(left: 8.0, right: 8.0),
         itemCount: _noticeDatas.length,
         itemBuilder: (context, index) => buildItem(index, _noticeDatas[index]),
       ),
@@ -303,7 +304,7 @@ class NoticePageState extends BaseWidgetState<NoticePage> {
   Widget getContentWidget(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.only(top: 16.0),
         child: Column(
           children: <Widget>[
             userData.userType == '教师'

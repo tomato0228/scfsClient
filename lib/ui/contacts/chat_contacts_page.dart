@@ -55,7 +55,7 @@ class ChatContactsPageState extends BaseWidgetState<ChatContactsPage> {
                 color: Colors.deepOrangeAccent,
                 backgroundColor: Colors.white,
                 child: ListView.builder(
-                  padding: EdgeInsets.all(10.0),
+                  padding: EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
                   itemBuilder: (context, index) =>
                       buildItem(context, _chatContactsDatas[index]),
                   itemCount: _chatContactsDatas.length,

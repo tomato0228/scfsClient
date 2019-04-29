@@ -1,3 +1,1 @@
-class LoginEvent{
-
-}
+class LoginEvent {}

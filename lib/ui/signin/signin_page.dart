@@ -16,7 +16,7 @@ class SigninPageState extends State<SigninPage> {
   final Color backgroundColor2 = Colors.white70;
   final Color highlightColor = Colors.black;
   final Color foregroundColor = Colors.black87;
-  final AssetImage logo = new AssetImage("assets/images/full-bloom.png");
+  final AssetImage logo = new AssetImage("assets/images/logo.png");
 
   bool _switchSex = false;
   bool _obscureTextPass = true;
@@ -48,42 +48,45 @@ class SigninPageState extends State<SigninPage> {
 //            tileMode: TileMode.repeated, // repeats the gradient over the canvas
 //          ),
 //        ),
-        child: ListView(
+        child: Column(
           children: <Widget>[
             Container(
-              padding: const EdgeInsets.only(top: 80.0, bottom: 30.0),
+              padding: const EdgeInsets.only(top: 80.0, bottom: 10.0),
               child: Center(
                 child: Column(
                   children: <Widget>[
                     Container(
-                      height: 64.0,
-                      width: 64.0,
-                      child: CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        foregroundColor: this.foregroundColor,
-                        radius: 100.0,
-                        child: Text(
-                          "S",
-                          style: TextStyle(
-                            fontSize: 50.0,
-                            fontWeight: FontWeight.w100,
-                          ),
-                        ),
-                      ),
+                      height: 128.0,
+                      width: 128.0,
+//                      child: CircleAvatar(
+//                        backgroundColor: Colors.transparent,
+//                        foregroundColor: this.foregroundColor,
+//                        radius: 100.0,
+//                        child: Text(
+//                          "S",
+//                          style: TextStyle(
+//                            fontSize: 50.0,
+//                            fontWeight: FontWeight.w100,
+//                          ),
+//                        ),
+//                      ),
                       decoration: BoxDecoration(
-                        border: Border.all(
-                          color: this.foregroundColor,
-                          width: 1.0,
-                        ),
-                        shape: BoxShape.circle,
-                        //image: DecorationImage(image: this.logo)
-                      ),
+                          border: Border.all(
+                            color: this.foregroundColor,
+                            width: 1.0,
+                          ),
+                          shape: BoxShape.circle,
+                          image: DecorationImage(image: this.logo)),
                     ),
                     new Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
-                        "Samarth Agarwal",
-                        style: TextStyle(color: this.foregroundColor),
+                        "家 校 通",
+                        style: TextStyle(
+                          color: this.foregroundColor,
+                          fontSize: 32.0,
+                          fontWeight: FontWeight.w100,
+                        ),
                       ),
                     )
                   ],
@@ -91,307 +94,339 @@ class SigninPageState extends State<SigninPage> {
               ),
             ),
 
-            /// 姓名
-            Container(
-              width: MediaQuery.of(context).size.width,
-              margin: const EdgeInsets.only(left: 40.0, right: 40.0),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                      color: this.foregroundColor,
-                      width: 0.5,
-                      style: BorderStyle.solid),
-                ),
-              ),
-              padding: const EdgeInsets.only(left: 0.0, right: 10.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Flexible(
+              child: ListView(
                 children: <Widget>[
-                  new Padding(
-                    padding:
-                        EdgeInsets.only(top: 10.0, bottom: 10.0, right: 00.0),
-                    child: Icon(
-                      Icons.person_outline,
-                      color: this.foregroundColor,
-                    ),
-                  ),
-                  SizedBox(width: 16.0),
-                  new Expanded(
-                    child: TextField(
-                      controller: userNameController,
-                      textAlign: TextAlign.left,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: '姓    名',
-                        hintStyle: TextStyle(
-                            color: this.foregroundColor.withOpacity(0.3)),
+                  /// 姓名
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    margin: const EdgeInsets.only(left: 40.0, right: 40.0),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                            color: this.foregroundColor,
+                            width: 0.5,
+                            style: BorderStyle.solid),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-
-            /// 密码
-            Container(
-              width: MediaQuery.of(context).size.width,
-              margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 10.0),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                      color: this.foregroundColor,
-                      width: 0.5,
-                      style: BorderStyle.solid),
-                ),
-              ),
-              padding: const EdgeInsets.only(left: 0.0, right: 10.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  new Padding(
-                    padding:
-                        EdgeInsets.only(top: 10.0, bottom: 10.0, right: 00.0),
-                    child: Icon(
-                      Icons.lock_outline,
-                      color: this.foregroundColor,
-                    ),
-                  ),
-                  SizedBox(width: 16.0),
-                  new Expanded(
-                    child: TextField(
-                      controller: userPasswordController,
-                      obscureText: _obscureTextPass,
-                      textAlign: TextAlign.left,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: '密    码',
-                        hintStyle: TextStyle(
-                            color: this.foregroundColor.withOpacity(0.3)),
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: _togglePass,
-                    child: Icon(
-                      _obscureTextPass
-                          ? FontAwesomeIcons.eye
-                          : FontAwesomeIcons.eyeSlash,
-                      size: 16.0,
-                      color: this.foregroundColor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            /// 再次输入密码
-            Container(
-              width: MediaQuery.of(context).size.width,
-              margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 10.0),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                      color: this.foregroundColor,
-                      width: 0.5,
-                      style: BorderStyle.solid),
-                ),
-              ),
-              padding: const EdgeInsets.only(left: 0.0, right: 10.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  new Padding(
-                    padding:
-                        EdgeInsets.only(top: 10.0, bottom: 10.0, right: 00.0),
-                    child: Icon(
-                      Icons.lock,
-                      color: this.foregroundColor,
-                    ),
-                  ),
-                  SizedBox(width: 16.0),
-                  new Expanded(
-                    child: TextField(
-                      controller: userPasswordAgainController,
-                      obscureText: _obscureTextPassAgain,
-                      textAlign: TextAlign.left,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: '再次输入密码',
-                        hintStyle: TextStyle(
-                          color: this.foregroundColor.withOpacity(0.3),
-                        ),
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: _togglePassAgain,
-                    child: Icon(
-                      _obscureTextPassAgain
-                          ? FontAwesomeIcons.eye
-                          : FontAwesomeIcons.eyeSlash,
-                      size: 16.0,
-                      color: this.foregroundColor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            /// 性别
-            Container(
-              width: MediaQuery.of(context).size.width,
-              margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 10.0),
-              alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 0.0, right: 10.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  new Padding(
-                    padding:
-                        EdgeInsets.only(top: 10.0, bottom: 10.0, right: 00.0),
-                    child: Icon(
-                      Icons.supervised_user_circle,
-                      color: this.foregroundColor,
-                    ),
-                  ),
-                  Expanded(
+                    padding: const EdgeInsets.only(left: 0.0, right: 10.0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(
-                          _switchSex ? '女' : '男',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: this.foregroundColor.withOpacity(0.8),
+                        new Padding(
+                          padding: EdgeInsets.only(
+                              top: 10.0, bottom: 10.0, right: 00.0),
+                          child: Icon(
+                            Icons.person_outline,
+                            color: this.foregroundColor,
                           ),
                         ),
-                        Icon(
-                          _switchSex
-                              ? Icons.pregnant_woman
-                              : Icons.accessibility_new,
-                          color: this.foregroundColor.withOpacity(0.8),
-                        ),
-                        Switch(
-                          value: _switchSex,
-                          onChanged: (value) {
-                            setState(() {
-                              _switchSex = value;
-                            });
-                          },
+                        SizedBox(width: 16.0),
+                        new Expanded(
+                          child: TextField(
+                            controller: userNameController,
+                            textAlign: TextAlign.left,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: '姓    名',
+                              hintStyle: TextStyle(
+                                  color: this.foregroundColor.withOpacity(0.3)),
+                            ),
+                          ),
                         ),
                       ],
                     ),
                   ),
-                ],
-              ),
-            ),
 
-            /// 生日
-            Container(
-              width: MediaQuery.of(context).size.width,
-              margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 10.0),
-              alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 0.0, right: 10.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  new Padding(
-                    padding:
-                        EdgeInsets.only(top: 10.0, bottom: 10.0, right: 00.0),
-                    child: Icon(
-                      Icons.cake,
-                      color: this.foregroundColor,
+                  /// 密码
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    margin: const EdgeInsets.only(
+                        left: 40.0, right: 40.0, top: 10.0),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                            color: this.foregroundColor,
+                            width: 0.5,
+                            style: BorderStyle.solid),
+                      ),
+                    ),
+                    padding: const EdgeInsets.only(left: 0.0, right: 10.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        new Padding(
+                          padding: EdgeInsets.only(
+                              top: 10.0, bottom: 10.0, right: 00.0),
+                          child: Icon(
+                            Icons.lock_outline,
+                            color: this.foregroundColor,
+                          ),
+                        ),
+                        SizedBox(width: 16.0),
+                        new Expanded(
+                          child: TextField(
+                            controller: userPasswordController,
+                            obscureText: _obscureTextPass,
+                            textAlign: TextAlign.left,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: '密    码',
+                              hintStyle: TextStyle(
+                                  color: this.foregroundColor.withOpacity(0.3)),
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            _obscureTextPass
+                                ? FontAwesomeIcons.eye
+                                : FontAwesomeIcons.eyeSlash,
+                            size: 16.0,
+                            color: this.foregroundColor,
+                          ),
+                          onPressed: _togglePass,
+                        ),
+//                        GestureDetector(
+//                          onTap: _togglePass,
+//                          child: Icon(
+//                            _obscureTextPass
+//                                ? FontAwesomeIcons.eye
+//                                : FontAwesomeIcons.eyeSlash,
+//                            size: 16.0,
+//                            color: this.foregroundColor,
+//                          ),
+//                        ),
+                      ],
                     ),
                   ),
-                  new Expanded(
+
+                  /// 再次输入密码
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    margin: const EdgeInsets.only(
+                        left: 40.0, right: 40.0, top: 10.0),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                            color: this.foregroundColor,
+                            width: 0.5,
+                            style: BorderStyle.solid),
+                      ),
+                    ),
+                    padding: const EdgeInsets.only(left: 0.0, right: 10.0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        InkWell(
-                          onTap: _selectDate,
+                        new Padding(
+                          padding: EdgeInsets.only(
+                              top: 10.0, bottom: 10.0, right: 00.0),
+                          child: Icon(
+                            Icons.lock,
+                            color: this.foregroundColor,
+                          ),
+                        ),
+                        SizedBox(width: 16.0),
+                        new Expanded(
+                          child: TextField(
+                            controller: userPasswordAgainController,
+                            obscureText: _obscureTextPassAgain,
+                            textAlign: TextAlign.left,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: '再次输入密码',
+                              hintStyle: TextStyle(
+                                color: this.foregroundColor.withOpacity(0.3),
+                              ),
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            _obscureTextPassAgain
+                                ? FontAwesomeIcons.eye
+                                : FontAwesomeIcons.eyeSlash,
+                            size: 16.0,
+                            color: this.foregroundColor,
+                          ),
+                          onPressed: _togglePassAgain,
+                        ),
+//                        GestureDetector(
+//                          onTap: _togglePassAgain,
+//                          child: Icon(
+//                            _obscureTextPassAgain
+//                                ? FontAwesomeIcons.eye
+//                                : FontAwesomeIcons.eyeSlash,
+//                            size: 16.0,
+//                            color: this.foregroundColor,
+//                          ),
+//                        ),
+                      ],
+                    ),
+                  ),
+
+                  /// 性别
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    margin: const EdgeInsets.only(
+                        left: 40.0, right: 40.0, top: 10.0),
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.only(left: 0.0, right: 10.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        new Padding(
+                          padding: EdgeInsets.only(
+                              top: 10.0, bottom: 10.0, right: 00.0),
+                          child: Icon(
+                            Icons.supervised_user_circle,
+                            color: this.foregroundColor,
+                          ),
+                        ),
+                        Expanded(
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              Text(userBirth),
-                              Icon(Icons.arrow_drop_down),
+                              Text(
+                                _switchSex ? '女' : '男',
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  color: this.foregroundColor.withOpacity(0.8),
+                                ),
+                              ),
+                              Icon(
+                                _switchSex
+                                    ? Icons.pregnant_woman
+                                    : Icons.accessibility_new,
+                                color: this.foregroundColor.withOpacity(0.8),
+                              ),
+                              Switch(
+                                value: _switchSex,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _switchSex = value;
+                                  });
+                                },
+                              ),
                             ],
                           ),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            /// 类别
-            Container(
-              width: MediaQuery.of(context).size.width,
-              margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 10.0),
-              alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 0.0, right: 10.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  new Padding(
-                    padding:
-                        EdgeInsets.only(top: 10.0, bottom: 10.0, right: 00.0),
-                    child: Icon(
-                      Icons.group_work,
-                      color: this.foregroundColor,
-                    ),
-                  ),
-                  new Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        DropdownButton(
-                          onChanged: (value) {
-                            setState(() {
-                              _typeItem = value;
-                            });
-                          },
-                          elevation: 24,
-                          items: getTypeListData(),
-                          value: _typeItem,
-                          hint: Text('选择类别'),
                         ),
                       ],
                     ),
                   ),
-                ],
-              ),
-            ),
 
-            /// 注册
-            Container(
-              width: MediaQuery.of(context).size.width,
-              margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 30.0),
-              alignment: Alignment.center,
-              child: Row(
-                children: <Widget>[
-                  new Expanded(
-                    child: OutlineButton(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 20.0, horizontal: 20.0),
-                      color: this.highlightColor,
-                      onPressed: () {
-                        _signin();
+                  /// 生日
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    margin: const EdgeInsets.only(
+                        left: 40.0, right: 40.0, top: 10.0),
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.only(left: 0.0, right: 10.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Padding(
+                          padding: EdgeInsets.only(
+                              top: 10.0, bottom: 10.0, right: 00.0),
+                          child: Icon(
+                            Icons.cake,
+                            color: this.foregroundColor,
+                          ),
+                        ),
+                        new Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              InkWell(
+                                onTap: _selectDate,
+                                child: Row(
+                                  children: <Widget>[
+                                    Text(userBirth),
+                                    Icon(Icons.arrow_drop_down),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  /// 类别
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    margin: const EdgeInsets.only(
+                        left: 40.0, right: 40.0, top: 10.0),
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.only(left: 0.0, right: 10.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Padding(
+                          padding: EdgeInsets.only(
+                              top: 10.0, bottom: 10.0, right: 00.0),
+                          child: Icon(
+                            Icons.group_work,
+                            color: this.foregroundColor,
+                          ),
+                        ),
+                        new Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              DropdownButton(
+                                onChanged: (value) {
+                                  setState(() {
+                                    _typeItem = value;
+                                  });
+                                },
+                                elevation: 24,
+                                items: getTypeListData(),
+                                value: _typeItem,
+                                hint: Text('选择类别'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  /// 注册
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    margin: const EdgeInsets.only(
+                        left: 40.0, right: 40.0, top: 30.0),
+                    alignment: Alignment.center,
+                    child: Row(
+                      children: <Widget>[
+                        new Expanded(
+                          child: OutlineButton(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 20.0, horizontal: 20.0),
+                            color: this.highlightColor,
+                            onPressed: () {
+                              _signin();
 //                        Navigator.of(context).push(MaterialPageRoute(
 //                            builder: (context) => SigninPage()));
-                      },
-                      child: Text(
-                        "注    册",
-                        style: TextStyle(color: this.foregroundColor),
-                      ),
+                            },
+                            child: Text(
+                              "注    册",
+                              style: TextStyle(color: this.foregroundColor),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],

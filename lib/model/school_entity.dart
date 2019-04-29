@@ -1,4 +1,4 @@
-import 'dart:convert' show json;
+
 
 class SchoolEntity {
   int total;
@@ -48,7 +48,8 @@ class SchoolData {
     this.schoolAddr = '',
     this.schoolUrl = '',
     this.schoolName = '',
-    this.schoolLogo = 'https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1555489983&di=42cad67b738af8d3ef0bd83a0ee00f44&src=http://android-artworks.25pp.com/fs08/2018/08/31/6/2_766b650936a0100b8eda4269e7193532_con.png',
+    this.schoolLogo =
+        'https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1555489983&di=42cad67b738af8d3ef0bd83a0ee00f44&src=http://android-artworks.25pp.com/fs08/2018/08/31/6/2_766b650936a0100b8eda4269e7193532_con.png',
   });
 
   SchoolData.fromJson(Map<String, dynamic> json) {

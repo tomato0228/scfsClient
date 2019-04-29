@@ -1,11 +1,11 @@
-import 'package:tomato_scfs/model/class_entity.dart';
+import 'package:tomato_scfs/model/chat_contacts_entity.dart';
 import 'package:tomato_scfs/model/chat_entity.dart';
-import 'package:tomato_scfs/model/user_entity.dart';
+import 'package:tomato_scfs/model/class_entity.dart';
+import 'package:tomato_scfs/model/course_entity.dart';
+import 'package:tomato_scfs/model/homework_entity.dart';
 import 'package:tomato_scfs/model/notice_entity.dart';
 import 'package:tomato_scfs/model/school_entity.dart';
-import 'package:tomato_scfs/model/homework_entity.dart';
-import 'package:tomato_scfs/model/course_entity.dart';
-import 'package:tomato_scfs/model/chat_contacts_entity.dart';
+import 'package:tomato_scfs/model/user_entity.dart';
 
 class EntityFactory {
   static T generateOBJ<T>(json) {

@@ -1,5 +1,3 @@
-import 'dart:convert' show json;
-
 import 'package:azlistview/azlistview.dart';
 
 class UserEntity {
@@ -61,7 +59,7 @@ class ContactsEntity {
   }
 }
 
-class UserData extends ISuspensionBean  {
+class UserData extends ISuspensionBean {
   String userSignature;
   String userSex;
   String userPassword;
@@ -120,10 +118,10 @@ class UserData extends ISuspensionBean  {
     data['userName'] = this.userName;
     data['userId'] = this.userId;
     data['userProfile'] = this.userProfile;
-    data['userDate']= this.userDate;
-    data['tagIndex']= tagIndex;
-    data['namePinyin']= namePinyin;
-    data['isShowSuspension']= isShowSuspension;
+    data['userDate'] = this.userDate;
+    data['tagIndex'] = tagIndex;
+    data['namePinyin'] = namePinyin;
+    data['isShowSuspension'] = isShowSuspension;
     return data;
   }
 

@@ -124,6 +124,7 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
       );
     return Flexible(
       child: ListView.builder(
+        padding: EdgeInsets.only(left: 8.0, right: 8.0),
         itemCount: _homeworkDatas.length,
         itemBuilder: (context, index) =>
             buildItem(index, _homeworkDatas[index]),
@@ -366,7 +367,7 @@ class HomeworkPageState extends BaseWidgetState<HomeworkPage> {
   Widget getContentWidget(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.only(top: 16.0),
         child: Column(
           children: <Widget>[
             Row(

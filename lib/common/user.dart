@@ -1,7 +1,8 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tomato_scfs/model/user_entity.dart';
-import 'dart:convert';
 
 class User {
   static final User singleton = User._internal();
@@ -29,8 +30,9 @@ class User {
       cookie = cookies;
     }
 
-    if (sp.getString("userData") != null){
-      UserData userData1 = UserData.fromJson(json.decode(sp.getString("userData")));
+    if (sp.getString("userData") != null) {
+      UserData userData1 =
+          UserData.fromJson(json.decode(sp.getString("userData")));
       if (userData1 != null) {
         userData = userData1;
       }

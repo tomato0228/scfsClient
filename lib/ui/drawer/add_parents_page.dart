@@ -196,9 +196,10 @@ class AddParentsPageState extends State<AddParentsPage> {
       autofocus: true,
       style: TextStyle(color: Colors.white),
       decoration: InputDecoration(
-          hintStyle: TextStyle(color: Colors.white),
-          border: InputBorder.none,
-          hintText: "搜索更多干货"),
+        hintStyle: TextStyle(color: Colors.white),
+        border: InputBorder.none,
+        hintText: "搜索家长：姓名/电话/邮箱",
+      ),
       focusNode: focusNode,
       controller: editingController,
     );

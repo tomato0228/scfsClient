@@ -185,7 +185,13 @@ class Utils {
     var nowDateY = nowDateYear.toString() + '年';
     var fromDateY = fromDateYear + '年';
     if (nowDateY == fromDateY) {
-      return fromDateMonth + '月' + fromDateDay + '日 ' + fromDateHours + ':' + fromDateMinutes;
+      return fromDateMonth +
+          '月' +
+          fromDateDay +
+          '日 ' +
+          fromDateHours +
+          ':' +
+          fromDateMinutes;
     }
     /******* 其它年份：不显示时间，仅显示年月日，格式为：XXXX年XX月XX日； **********/
     return fromDateYear + '年' + fromDateMonth + '月' + fromDateDay + '日';

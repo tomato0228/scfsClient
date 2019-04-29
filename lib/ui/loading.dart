@@ -43,9 +43,11 @@ class _LoadingState extends State<LoadingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         child: Image.asset(
           "assets/images/loading.png",
-          fit: BoxFit.fill,
+          fit: BoxFit.cover,
         ),
       ),
     );

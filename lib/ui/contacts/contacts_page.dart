@@ -38,9 +38,8 @@ class ContactsPageState extends BaseWidgetState<ContactsPage> {
   @override
   Widget getContentWidget(BuildContext context) {
     return Scaffold(
-      body: RefreshIndicator(
-        color: Colors.deepOrangeAccent,
-        backgroundColor: Colors.white,
+      body: Container(
+        padding: EdgeInsets.only(top: 16.0),
         child: Column(
           children: <Widget>[
             Column(
@@ -115,29 +114,33 @@ class ContactsPageState extends BaseWidgetState<ContactsPage> {
               ],
             ),
             Flexible(
-              child: Container(
-                child: (_contactsDatas == null || _contactsDatas.length == 0)
-                    ? Container(
-                        alignment: Alignment(0.0, 0.0),
-                        child: Text(
-                          '没有联系人',
-                          style: TextStyle(
-                            fontSize: 24.0,
-                            color: Colors.black54,
+              child: RefreshIndicator(
+                color: Colors.deepOrangeAccent,
+                backgroundColor: Colors.white,
+                child: Container(
+                  child: (_contactsDatas == null || _contactsDatas.length == 0)
+                      ? Container(
+                          alignment: Alignment(0.0, 0.0),
+                          child: Text(
+                            '没有联系人',
+                            style: TextStyle(
+                              fontSize: 24.0,
+                              color: Colors.black54,
+                            ),
                           ),
+                        )
+                      : ListView.builder(
+                          padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                          itemBuilder: (context, index) =>
+                              buildItem(context, _contactsDatas[index]),
+                          itemCount: _contactsDatas.length,
                         ),
-                      )
-                    : ListView.builder(
-                        padding: EdgeInsets.all(10.0),
-                        itemBuilder: (context, index) =>
-                            buildItem(context, _contactsDatas[index]),
-                        itemCount: _contactsDatas.length,
-                      ),
+                ),
+                onRefresh: _onRefresh,
               ),
             ),
           ],
         ),
-        onRefresh: _onRefresh,
       ),
     );
   }
