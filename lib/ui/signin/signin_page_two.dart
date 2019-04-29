@@ -82,14 +82,17 @@ class SigninPageTwoState extends State<SigninPageTwo> {
 //        height: MediaQuery.of(context).size.height,
         child: Column(
           children: <Widget>[
-            Container(
-              padding: const EdgeInsets.only(top: 80.0, bottom: 10.0),
-              child: Center(
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      height: 128.0,
-                      width: 128.0,
+            Flexible(
+              child: ListView(
+                children: <Widget>[
+                  Container(
+                    padding: const EdgeInsets.only(top: 80.0, bottom: 10.0),
+                    child: Center(
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            height: 128.0,
+                            width: 128.0,
 //                      child: CircleAvatar(
 //                        backgroundColor: Colors.transparent,
 //                        foregroundColor: this.foregroundColor,
@@ -102,32 +105,29 @@ class SigninPageTwoState extends State<SigninPageTwo> {
 //                          ),
 //                        ),
 //                      ),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            color: this.foregroundColor,
-                            width: 1.0,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: this.foregroundColor,
+                                  width: 1.0,
+                                ),
+                                shape: BoxShape.circle,
+                                image: DecorationImage(image: this.logo)),
                           ),
-                          shape: BoxShape.circle,
-                          image: DecorationImage(image: this.logo)),
-                    ),
-                    new Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        "家 校 通",
-                        style: TextStyle(
-                          color: this.foregroundColor,
-                          fontSize: 32.0,
-                          fontWeight: FontWeight.w100,
-                        ),
+                          new Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Text(
+                              "家 校 通",
+                              style: TextStyle(
+                                color: this.foregroundColor,
+                                fontSize: 32.0,
+                                fontWeight: FontWeight.w100,
+                              ),
+                            ),
+                          )
+                        ],
                       ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            Flexible(
-              child: ListView(
-                children: <Widget>[
+                    ),
+                  ),
                   Container(
                     width: MediaQuery.of(context).size.width,
                     margin: const EdgeInsets.only(left: 40.0, right: 40.0),
@@ -265,29 +265,29 @@ class SigninPageTwoState extends State<SigninPageTwo> {
                       ],
                     ),
                   ),
-                ],
-              ),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              margin: const EdgeInsets.only(
-                  left: 40.0, right: 40.0, top: 10.0, bottom: 20.0),
-              alignment: Alignment.center,
-              child: Row(
-                children: <Widget>[
-                  new Expanded(
-                    child: FlatButton(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 20.0, horizontal: 20.0),
-                      color: Colors.transparent,
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text(
-                        "已 有 账 户? 登 陆",
-                        style: TextStyle(
-                            color: this.foregroundColor.withOpacity(0.5)),
-                      ),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    margin: const EdgeInsets.only(
+                        left: 40.0, right: 40.0, top: 10.0, bottom: 20.0),
+                    alignment: Alignment.center,
+                    child: Row(
+                      children: <Widget>[
+                        new Expanded(
+                          child: FlatButton(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 20.0, horizontal: 20.0),
+                            color: Colors.transparent,
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(
+                              "已 有 账 户? 登 陆",
+                              style: TextStyle(
+                                  color: this.foregroundColor.withOpacity(0.5)),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
