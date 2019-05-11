@@ -38,7 +38,7 @@ class AboutMyPageState extends State<AboutMyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(S.of(context).appPersonal),
+        title: Text(S.of(context).aboutAuthor),
       ),
       body: Container(
         padding: EdgeInsets.fromLTRB(35, 50, 35, 15),
@@ -137,6 +137,40 @@ class AboutMyPageState extends State<AboutMyPage> {
                         userData.userAddr == null
                             ? '点击设置地址'
                             : userData.userAddr,
+                        style: textStyle,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              onTap: () {},
+            ),
+            GestureDetector(
+              child: Container(
+                margin: const EdgeInsets.fromLTRB(18.0, 10.0, 0.0, 0.0),
+                child: Row(
+                  children: <Widget>[
+                    Text("Blog："),
+                    LimitedBox(
+                      maxWidth: MediaQuery.of(context).size.width * 0.63,
+                      child: Text('https://www.readmore.ltd',
+                        style: textStyle,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              onTap: () {},
+            ),
+            GestureDetector(
+              child: Container(
+                margin: const EdgeInsets.fromLTRB(18.0, 10.0, 0.0, 0.0),
+                child: Row(
+                  children: <Widget>[
+                    Text("GitHub："),
+                    LimitedBox(
+                      maxWidth: MediaQuery.of(context).size.width * 0.63,
+                      child: Text('https://github.com/tomato0228',
                         style: textStyle,
                       ),
                     ),

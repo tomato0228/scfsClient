@@ -49,7 +49,7 @@ class DrawerPageState extends State<DrawerPage> {
             ),
             accountEmail: InkWell(
               child: Text(
-                userData.userEmail ?? '点击设置邮箱',
+                userData.userTel ?? '点击绑定电话',
                 style: TextStyle(
                   color: Colors.black,
                 ),
